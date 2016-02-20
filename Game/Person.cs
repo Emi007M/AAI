@@ -25,6 +25,8 @@ namespace Game
 
         }
 
+
+        //asd
         public override void Draw(){
             img_bitmap = new BitmapImage(new Uri("C:\\Users\\Emilia\\Desktop\\Dropbox\\materials\\6 semester - windesheim\\AI games\\Game\\Game\\References\\p1.jpg", UriKind.RelativeOrAbsolute));
             image = new Image();
