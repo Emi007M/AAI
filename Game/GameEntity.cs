@@ -20,8 +20,8 @@ namespace Game
     {
         protected GameWorld gw;
 
-        protected int pos_x;
-        protected int pos_y;
+      //  protected int pos_x;
+       // protected int pos_y;
 
         protected BitmapImage img_bitmap;
         protected Image image;
@@ -35,26 +35,47 @@ namespace Game
         protected float maxforce;
         protected float maxspeed;
 
+        //public Vector target;
+        protected Vector force;
+
 
 
         public GameEntity(int x, int y, GameWorld gw)
         {
             this.gw = gw;
 
-            pos_x = x;
-            pos_y = y;
+            //pos_x = x;
+            //pos_y = y;
+            location = new Vector(x, y);
+            velocity = new Vector(0, 0);
+            acceleration = new Vector(0, 0);
+            force = new Vector(0, 0);
+
+            maxspeed = 5;
+
         }
 
 
         void update()
         {
             //velocity += acceleration;
-           // if (velocity > maxspeed) velocity = maxspeed;
-           // location += velocity;
-           // acceleration *= 0;
+            // if (velocity > maxspeed) velocity = maxspeed;
+            // location += velocity;
+            // acceleration *= 0;
 
-            Canvas.SetLeft(image, pos_x - image.Width / 2);
-            Canvas.SetTop(image, pos_y - image.Height / 2);
+            //   Vector force = seek(target);
+            //  acceleration. = force.divideBy(mass); // mass = 1.
+            //  velocity = velocity.add(acceleration);
+            acceleration = force /5;
+           // velocity.X += acceleration.X; velocity.Y += acceleration.Y;
+            velocity += acceleration;
+            location.X += velocity.X; location.Y += velocity.Y;
+
+
+            Canvas.SetLeft(image, location.X - image.Width / 2);
+            Canvas.SetTop(image, location.Y - image.Height / 2);
+            Console.WriteLine("Velocity:" + velocity);
+           
 
         }
 
@@ -63,7 +84,7 @@ namespace Game
             acceleration+=force;
         }
 
-        void seek(Vector target)
+        public void seek(Vector target)
         {
             //Vector desired = Vector.sub(target, location);
             //desired.normalize();
@@ -71,16 +92,36 @@ namespace Game
             //PVector steer = PVector.sub(desired, velocity);
             //steer.limit(maxforce);
             //applyForce(steer);
+
+            Vector direction = new Vector(target.X - location.X, target.Y-location.Y);
+            Vector desiredVelocity = normalize(direction) * maxspeed;
+
+            force = new Vector(desiredVelocity.X - velocity.X, desiredVelocity.Y - velocity.Y);
+            Console.WriteLine(force);
+            update();
+            //Draw();
+
+            if (velocity.X > 0.08 || velocity.X < -0.08 || velocity.Y > 0.08 || velocity.Y < -0.08) seek(target);
         }
 
         public virtual void Draw() 
         { 
         }
 
+        Vector normalize(Vector v)
+        {
+            Double r = Math.Sqrt(v.X * v.X + v.Y * v.Y);
+           // if(r!=0)
+            return (new Vector(v.X / r, v.Y / r));
+           // return (new Vector(0, 0));
+        }
+
         public void moveTo(int x, int y)
         {
-            pos_x = x;
-            pos_y = y;
+            //pos_x = x;
+            //pos_y = y;
+            location.X = x;
+            location.Y = y;
             update();
         }
     }

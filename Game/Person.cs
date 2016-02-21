@@ -29,11 +29,14 @@ namespace Game
             img_bitmap = new BitmapImage(new Uri("C:\\Users\\Emilia\\Desktop\\Dropbox\\materials\\6 semester - windesheim\\AI games\\Game\\Game\\References\\p1.jpg", UriKind.RelativeOrAbsolute));
             image = new Image();
             image.Source = img_bitmap;
-            image.Width = img_bitmap.Width;
-            image.Height = img_bitmap.Height;
+            //image.Width = img_bitmap.Width;
+            //image.Height = img_bitmap.Height;
+            image.Width = 20;
+            image.Height = 20;
 
-            Canvas.SetLeft(image, pos_x - image.Width / 2);
-            Canvas.SetTop(image, pos_y - image.Height / 2);
+
+            Canvas.SetLeft(image, location.X - image.Width / 2);
+            Canvas.SetTop(image, location.Y - image.Height / 2);
 
             gw.canv.Children.Add(image);
         }

@@ -30,7 +30,8 @@ namespace Game
         public MainWindow()
         {
             InitializeComponent();
-            doSth();
+            CanvInit();
+            addCursor();
 
             gw = new GameWorld(CanvMain);
             gw.entities.Add(new Person(gw));
@@ -39,12 +40,16 @@ namespace Game
 
         }
 
-        public void doSth()
+        public void CanvInit()
+        {
+            Canvas.SetZIndex(Canv_bttns, 10);
+            
+        }
+
+        public void addCursor()
         {
 
-            Canvas.SetZIndex(Canv_bttns, 10);
-            btn_img = new BitmapImage(new Uri("C:\\Users\\Emilia\\Desktop\\Dropbox\\materials\\6 semester - windesheim\\AI games\\Game\\Game\\References\\target.png", UriKind.RelativeOrAbsolute));
-
+           
             //initialize target cursor
             target_img = new BitmapImage(new Uri("C:\\Users\\Emilia\\Desktop\\Dropbox\\materials\\6 semester - windesheim\\AI games\\Game\\Game\\References\\target.png", UriKind.RelativeOrAbsolute));
            target = new Image();
@@ -123,7 +128,8 @@ namespace Game
 
         private void CanvMain_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            gw.moveMan((int)Mouse.GetPosition(MainGrid).X, (int)Mouse.GetPosition(MainGrid).Y);
+            //gw.moveMan((int)Mouse.GetPosition(MainGrid).X, (int)Mouse.GetPosition(MainGrid).Y);
+            gw.entities.First().seek(new Vector(Mouse.GetPosition(MainGrid).X, (int)Mouse.GetPosition(MainGrid).Y));
         }
     }
 }
