@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Shapes;
 using System.Windows.Controls;
 
@@ -10,7 +9,7 @@ namespace Game
 {
     class GameWorld
     {
-        public List<GameEntity> entities = new List<GameEntity>();
+        public List<MovingEntity> entities = new List<MovingEntity>();
 
         public Canvas canv;
 
@@ -19,9 +18,9 @@ namespace Game
             this.canv = canv;
         }
 
-        public void moveMan(int x, int y)
+        public void moveMan(int index, int x, int y)
         {
-            entities.First().moveTo(x, y);
+            entities.ElementAt(index).moveTo(x, y);
         }
     }
 }
