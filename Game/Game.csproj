@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Treee.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -65,7 +66,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="GameEntity.cs" />
     <Compile Include="GameWorld.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -73,6 +73,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MovingEntity.cs" />
+    <Compile Include="ObstacleEntity.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -112,6 +114,14 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="References\p1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="References\p1.png" />
+    <Resource Include="References\p2.png" />
+    <Resource Include="References\tree.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="References\tree.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
