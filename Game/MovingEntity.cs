@@ -88,15 +88,14 @@ namespace Game
             if (arrivalOn) force += arrival(target);
             if (leaderFollowOn) force += leaderFollow(leader);
 
-            //foreach(ObstacleEntity o in gw.trees)
-            //{
-                force += 3* collisionAvoid(gw.trees);
-          //  }
+            
+                force += 1.5* collisionAvoid(gw.trees);
+  
 
                     acceleration = force/mass;
                     velocity += acceleration;
 
-                    if(Math.Sqrt(velocity.X * velocity.X + velocity.Y * velocity.Y)>maxspeed)
+                    if(length(velocity)>maxspeed)
                         velocity = normalize(velocity) * maxspeed;
 
                     location.X += velocity.X;
@@ -187,13 +186,12 @@ namespace Game
 
             Vector this_center = new Vector(location.X + r / 2, location.Y + r / 2);
 
-            Vector ahead = new Vector(this_center.X+v.X*30, this_center.Y + v.Y * 30);
-            Vector ahead2 = new Vector(this_center.X + v.X * 30 / 2, this_center.Y + v.Y * 30 / 2);
-          //  ahead += location + normalize(velocity);
-          //  ahead2 += location + normalize(velocity);
-            //Vector ahead = location + velocity * 0.1;
-            //Vector ahead2 = location + velocity * 0.1 * 0.5;
-           // Console.Write(velocity.X + " ");
+            Double dynamic_length = length(velocity) *20 / maxspeed;
+
+
+            Vector ahead = new Vector(this_center.X+v.X*dynamic_length, this_center.Y + v.Y * dynamic_length);
+            Vector ahead2 = new Vector(this_center.X + v.X * dynamic_length / 2, this_center.Y + v.Y * dynamic_length / 2);
+     
 
 
             Vector obstacle = default(Vector);
@@ -203,7 +201,7 @@ namespace Game
                 Vector o_center = new Vector(o.location.X + o.r / 2, o.location.Y + o.r / 2);
                
                 // force += collisionAvoid(o);
-                if ( distance(o_center, ahead) <= o.r || distance(o_center, ahead2) <= o.r) //if exists collision
+                if ( distance(o_center, ahead) <= o.r+r || distance(o_center, ahead2) <= o.r+r) //if exists collision
                 {
                     if ((obstacle == null || distance(this_center, o_center) < distance(this_center, obstacle)))
                     {
@@ -253,6 +251,10 @@ namespace Game
                 return (new Vector(v.X / r, v.Y / r));
 
             return (new Vector(0, 0));
+        }
+        double length(Vector v)
+        {
+            return Math.Sqrt(v.X * v.X + v.Y * v.Y);
         }
 
         public void useSeek(Vector target)
