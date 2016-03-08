@@ -17,16 +17,16 @@ using Game;
 
 namespace Game
 {
-    class Treee : ObstacleEntity
+    class Stone : ObstacleEntity
     {
         static Random r = new Random();
 
-        public Treee(GameWorld gw) : base(40,40, gw)
+        public Stone(GameWorld gw) : base(20,20, gw)
         {
             this.Draw();
 
         }
-        public Treee(int x, int y, GameWorld gw) : base(x, y, gw)
+        public Stone(int x, int y, GameWorld gw) : base(x, y, gw)
         {
 
            this.Draw();
@@ -35,12 +35,12 @@ namespace Game
 
         public override void Draw()
         {
-            img_bitmap = new BitmapImage(new Uri("/Game;component/References/tree.png", UriKind.RelativeOrAbsolute));
+            img_bitmap = new BitmapImage(new Uri("/Game;component/References/rock2.png", UriKind.RelativeOrAbsolute));
             Image img = new Image();
             img.Source = img_bitmap;
             // image.Width = img_bitmap.Width;
             // image.Height = img_bitmap.Height;
-            img.Width = img.Height = r.Next(45,65);
+            img.Width = img.Height = r.Next(15,35);
            // float radiusRatio = 2f;
             base.r = (int)(img.Width/2);
 

@@ -57,6 +57,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Castle.cs" />
+    <Compile Include="Stone.cs" />
     <Compile Include="Treee.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -122,6 +124,41 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="References\tree.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="References\bg.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="References\tree2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="References\rock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="References\rock2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="References\castle0.png" />
+    <Resource Include="References\castle1.png" />
+    <Resource Include="References\castle2.png" />
+    <Resource Include="References\castle3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="References\buttons\btn1.png" />
+    <Resource Include="References\buttons\btn2.png" />
+    <Resource Include="References\buttons\btn3.png" />
+    <Resource Include="References\buttons\btn4.png" />
+    <Resource Include="References\buttons\btn5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="References\wood.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="References\buttons\btn_m.png" />
+    <Resource Include="References\buttons\btn_p.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="References\buttons\btn_reset.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

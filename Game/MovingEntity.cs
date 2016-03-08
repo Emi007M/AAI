@@ -25,7 +25,7 @@ namespace Game
 
         protected BitmapImage img_bitmap;
         //protected Image image;
-        protected Canvas image;
+        public Canvas image;
 
         //--
 
@@ -157,6 +157,8 @@ namespace Game
 
             return forceRes;
         }
+
+       
 
         public Vector flee(Vector target)
         {

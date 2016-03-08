@@ -14,12 +14,17 @@ namespace Game
 
         public Canvas canv;
 
+        public Castle castle;
+
         public bool showThings = false;
       //  public bool showThingsFlag = false;
 
         public GameWorld(Canvas canv)
         {
             this.canv = canv;
+
+            castle = new Castle(this);
+            trees.Add(castle);
         }
 
         public void moveMan(int index, int x, int y)
@@ -34,21 +39,36 @@ namespace Game
             int y;
             while (i-- > 0)
             {
-                x = r.Next(580);
-                y = r.Next(460);
+                x = r.Next(880);
+                y = r.Next(560);
 
-                Console.WriteLine("Tree: " + x + " " + y);
+                //    Console.WriteLine("Tree: " + x + " " + y);
+
+                if (!(x>560 && y<290))//not on castle area
                 trees.Add(new Treee(x, y, this));
             }
-           // trees.Add(t);
-            //trees.Add(new Treee(150, 150, this));
-            //entities.Add(new Person(160, 160, 10, 10, this));
+
         }
 
-        public void changeThingsDisplay()
+        public void addRandStones(int i)
+        {
+            Random r = new Random();
+            int x;
+            int y;
+            while (i-- > 0)
+            {
+                x = r.Next(880);
+                y = r.Next(560);
+
+              //  Console.WriteLine("Tree: " + x + " " + y);
+                trees.Add(new Stone(x, y, this));
+            }
+        }
+
+
+        public void changeThingsDisplay() //show/hide grids, radiuses
         {
 
-           // showThings = showThings ? false : true;
             if (showThings)
             {
                 showThings = false;

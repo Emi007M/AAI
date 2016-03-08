@@ -1,8 +1,8 @@
 ﻿<Window x:Class="Game.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Game v0.1" Height="500" Width="600" Icon="References/tree.ico">
-    
+        Title="Game v1.1" Height="700" Width="900" Icon="References/tree.ico" ResizeMode="CanMinimize">
+
     <Window.Resources>
         <Style x:Key="MyButton" TargetType="Button">
             <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -23,20 +23,67 @@
             </Setter>
         </Style>
     </Window.Resources>
-    
-    <Grid x:Name="MainGrid" Background="#FF6F7662" MouseMove="MainGrid_MouseMove">
+
+    <Grid x:Name="MainGrid" MouseMove="MainGrid_MouseMove">
+        <Grid.Background>
+            <ImageBrush ImageSource="References/bg.jpg"/>
+        </Grid.Background>
 
 
-        <TextBlock x:Name="consoleTxt" HorizontalAlignment="Left" Height="15" Margin="30,0,0,22" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Bottom" Width="74"/>
-        <Canvas x:Name="Canv_bttns" HorizontalAlignment="Right" Width="268" Height="59" VerticalAlignment="Bottom">
-            <Button x:Name="btn_add" Content="+" HorizontalAlignment="Right" Width="50" FontSize="16" FontWeight="ExtraBlack" Height="50" VerticalAlignment="Bottom" Cursor="Hand" Click="btn_add_Click" Canvas.Left="193" MouseEnter="btn_add_MouseEnter" Style="{StaticResource MyButton}">
+        <Canvas x:Name="Canv_bttns" HorizontalAlignment="Right" Width="892" Height="59" VerticalAlignment="Bottom" >
+            <Canvas.Background>
+                <ImageBrush ImageSource="References/wood.png" TileMode="Tile" Stretch="UniformToFill" >
+                    <ImageBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                            <RotateTransform CenterY="0.5" CenterX="0.5"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </ImageBrush.RelativeTransform>
+                </ImageBrush>
+            </Canvas.Background>
+
+            <TextBlock x:Name="consoleTxt" HorizontalAlignment="Left" Height="15" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Bottom" Width="74" Canvas.Left="19" Canvas.Top="24"/>
+
+            <Button x:Name="btn_showGrid" Content="" HorizontalAlignment="Right" Width="50" FontSize="16" FontWeight="ExtraBlack" Height="50" VerticalAlignment="Bottom" Cursor="Hand" Click="btn_add_Click" Canvas.Left="98" MouseEnter="btn_add_MouseEnter" Style="{StaticResource MyButton}" Canvas.Top="6">
                 <Button.Background>
-                    <ImageBrush ImageSource="References/button.png" Stretch="Uniform"/>
+                    <ImageBrush ImageSource="References/buttons/btn1.png" Stretch="Uniform"/>
                 </Button.Background>
             </Button>
-            <Button x:Name="btn_rmv" Content="-" HorizontalAlignment="Right" Width="50" FontSize="16" FontWeight="ExtraBlack" Height="50" VerticalAlignment="Bottom" Cursor="Hand" Canvas.Left="129" Style="{StaticResource MyButton}">
+            <Button x:Name="btn_upgrade" Content="" HorizontalAlignment="Right" Width="50" FontSize="16" FontWeight="ExtraBlack" Height="50" VerticalAlignment="Bottom" Cursor="Hand" Canvas.Left="442" Style="{StaticResource MyButton}" Canvas.Top="6" Click="btn_upgrade_Click">
                 <Button.Background>
-                    <ImageBrush ImageSource="References/button.png" Stretch="Uniform"/>
+                    <ImageBrush ImageSource="References/buttons/btn5.png" Stretch="Uniform"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="btn_crops" Content="" HorizontalAlignment="Right" Width="68" FontSize="16" FontWeight="ExtraBlack" Height="67" VerticalAlignment="Bottom" Cursor="Hand" Canvas.Left="576" Style="{StaticResource MyButton}" Canvas.Top="-5">
+                <Button.Background>
+                    <ImageBrush ImageSource="References/buttons/btn2.png" Stretch="Uniform"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="btn_wood" Content="" HorizontalAlignment="Right" Width="56" FontSize="16" FontWeight="ExtraBlack" Height="56" VerticalAlignment="Bottom" Cursor="Hand" Canvas.Left="652" Style="{StaticResource MyButton}" Canvas.Top="2">
+                <Button.Background>
+                    <ImageBrush ImageSource="References/buttons/btn3.png" Stretch="Uniform"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="btn_gold" Content="" HorizontalAlignment="Right" Width="53" FontSize="16" FontWeight="ExtraBlack" Height="53" VerticalAlignment="Bottom" Cursor="Hand" Canvas.Left="721" Style="{StaticResource MyButton}" Canvas.Top="3">
+                <Button.Background>
+                    <ImageBrush ImageSource="References/buttons/btn4.png" Stretch="Uniform"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="btn_reset" Content="" HorizontalAlignment="Right" Width="44" FontSize="16" FontWeight="ExtraBlack" Height="44" VerticalAlignment="Bottom" Cursor="Hand" Canvas.Left="153" Style="{StaticResource MyButton}" Canvas.Top="10" Click="btn_reset_Click" RenderTransformOrigin="0.5,0.5">
+                <Button.Background>
+                    <ImageBrush ImageSource="References/buttons/btn_reset.png" Stretch="Uniform"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="btn_add_man" Content="" HorizontalAlignment="Right" Width="32" FontSize="16" FontWeight="ExtraBlack" Height="32" VerticalAlignment="Bottom" Cursor="Hand" Canvas.Left="398" Style="{StaticResource MyButton}" Canvas.Top="15" Click="btn_add_man_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="References/buttons/btn_m.png" Stretch="Uniform"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="btn_remove_man" Content="" HorizontalAlignment="Right" Width="32" FontSize="16" FontWeight="ExtraBlack" Height="32" VerticalAlignment="Bottom" Cursor="Hand" Canvas.Left="361" Style="{StaticResource MyButton}" Canvas.Top="15" Click="btn_remove_man_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="References/buttons/btn_p.png" Stretch="Uniform"/>
                 </Button.Background>
             </Button>
         </Canvas>

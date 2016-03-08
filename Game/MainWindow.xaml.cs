@@ -36,26 +36,37 @@ namespace Game
         {
             InitializeComponent();
             CanvInit();
-            addCursor();
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 20);
-            
+
+
+            gameInit();
            
-
-            gw = new GameWorld(CanvMain);
-            
-
-            gw.addRandTrees(15);
-
-            gw.entities.Add(new Person(20,20,10,10,gw));
-            gw.entities.Add(new Person (100,300,5,15,gw));
-            //  gw.moveMan(1,100,300);
-
             dispatcherTimer.Start();
 
 
         }
+
+        void gameInit()
+        {
+
+            //gw = null;
+            CanvMain.Children.Clear();
+            gw = new GameWorld(CanvMain);
+
+            addCursor();
+
+            gw.addRandStones(5);
+            gw.addRandTrees(45);
+
+            gw.entities.Add(new Person(700,320,10,10,gw));
+            gw.entities.Add(new Person (730,330,5,15,gw));
+            //  gw.moveMan(1,100,300);
+
+        }
+
+
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             gw.entities.ForEach(delegate(MovingEntity m) { m.update(); });
@@ -73,22 +84,19 @@ namespace Game
 
         public void addCursor()
         {
-
-
             //initialize target cursor
             target_img = new BitmapImage(new Uri("/Game;component/References/target.png", UriKind.RelativeOrAbsolute));
 
-            //target_img = new BitmapImage(new Uri("C:\\Users\\admin\\Source\\Repos\\AAI\\Game\\References\\target.png", UriKind.RelativeOrAbsolute));
             target = new Image();
             target.Source = target_img;
-            //  target.Width = target_img.Width;
-            // target.Height = target_img.Height;
+
             target.Width = 40;
             target.Height = 40;
 
             Canvas.SetLeft(target, Mouse.GetPosition(MainGrid).X - target.Width/2);
             Canvas.SetTop(target, Mouse.GetPosition(MainGrid).Y - target.Height/2);
 
+            Canvas.SetZIndex(target, 5);
             CanvMain.Children.Add(target);
 
         }
@@ -121,17 +129,45 @@ namespace Game
 
         }
 
-       private int count = 0;
 
 
         private void CanvMain_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 
-            gw.entities.ElementAt(0).useArrival(new Vector(Mouse.GetPosition(MainGrid).X, (int)Mouse.GetPosition(MainGrid).Y));
             //gw.entities.ElementAt(1).useArrival(new Vector(Mouse.GetPosition(MainGrid).X, (int)Mouse.GetPosition(MainGrid).Y));
-            gw.entities.ElementAt(1).useLeaderFollow(gw.entities.ElementAt(0));
+            //    gw.entities.ElementAt(1).useLeaderFollow(gw.entities.ElementAt(0));
 
+            if (!gw.entities.Any()) return; //if no moving entities
 
+            foreach(MovingEntity m in gw.entities)
+            {
+                m.useLeaderFollow(gw.entities.ElementAt(0));
+            }
+            
+            gw.entities.ElementAt(0).useArrival(new Vector(Mouse.GetPosition(MainGrid).X, (int)Mouse.GetPosition(MainGrid).Y));
+
+        }
+
+        private void btn_upgrade_Click(object sender, RoutedEventArgs e)
+        {
+            gw.castle.upgrade();
+        }
+
+        private void btn_reset_Click(object sender, RoutedEventArgs e)
+        {
+            gameInit();
+        }
+
+        private void btn_add_man_Click(object sender, RoutedEventArgs e)
+        {
+            Person p = new Person(700, 300, 5, 15, gw);
+            gw.entities.Add(p);
+            p.useLeaderFollow(gw.entities.ElementAt(0));
+        }
+        private void btn_remove_man_Click(object sender, RoutedEventArgs e)
+        {
+            CanvMain.Children.Remove(gw.entities.ElementAt(0).image);
+            gw.entities.RemoveAt(0);
         }
     }
 }
