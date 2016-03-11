@@ -22,7 +22,7 @@ namespace Game
         //static Random r = new Random();
         public int lvl = 0;
 
-        public Castle(GameWorld gw) : base(670, -30, gw)
+        public Castle(GameWorld gw) : base(770, 80, gw)
         {
             this.Draw();
 
@@ -57,8 +57,8 @@ namespace Game
             //canvas containing image and radius
             image = new Canvas();
             image.Width = image.Height = base.r*2;
-            Canvas.SetLeft(image, location.X - image.Width / 4);
-            Canvas.SetTop(image, location.Y - image.Height / 4);
+            Canvas.SetLeft(image, location.X - image.Width / 2);
+            Canvas.SetTop(image, location.Y - image.Height / 2);
 
        
          
@@ -66,7 +66,7 @@ namespace Game
             image.Children.Add(img);
             image.Children.Add(radius);
 
-            Canvas.SetZIndex(image, 4);
+            Canvas.SetZIndex(image, 2);
 
             gw.canv.Children.Add(image);
         }

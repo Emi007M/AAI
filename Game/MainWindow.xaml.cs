@@ -58,7 +58,10 @@ namespace Game
             addCursor();
 
             gw.addRandStones(5);
-            gw.addRandTrees(45);
+            gw.addRandPonds(2);
+            gw.addRandTrees(55);
+            gw.grid = new Grid(gw);
+
 
             gw.entities.Add(new Person(700,320,10,10,gw));
             gw.entities.Add(new Person (730,330,5,15,gw));

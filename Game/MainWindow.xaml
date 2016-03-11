@@ -24,7 +24,7 @@
         </Style>
     </Window.Resources>
 
-    <Grid x:Name="MainGrid" MouseMove="MainGrid_MouseMove">
+    <Grid x:Name="MainGrid" PreviewMouseMove="MainGrid_MouseMove">
         <Grid.Background>
             <ImageBrush ImageSource="References/bg.jpg"/>
         </Grid.Background>

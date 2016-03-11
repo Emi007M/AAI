@@ -16,6 +16,8 @@ namespace Game
 
         public Castle castle;
 
+        public Grid grid;
+
         public bool showThings = false;
       //  public bool showThingsFlag = false;
 
@@ -25,6 +27,8 @@ namespace Game
 
             castle = new Castle(this);
             trees.Add(castle);
+            
+
         }
 
         public void moveMan(int index, int x, int y)
@@ -44,7 +48,7 @@ namespace Game
 
                 //    Console.WriteLine("Tree: " + x + " " + y);
 
-                if (!(x>560 && y<290))//not on castle area
+                if (!(x>550 && y<350))//not on castle area
                 trees.Add(new Treee(x, y, this));
             }
 
@@ -60,8 +64,24 @@ namespace Game
                 x = r.Next(880);
                 y = r.Next(560);
 
-              //  Console.WriteLine("Tree: " + x + " " + y);
+                //  Console.WriteLine("Tree: " + x + " " + y);
                 trees.Add(new Stone(x, y, this));
+            }
+        }
+
+        public void addRandPonds(int i)
+        {
+            Random r = new Random();
+            r.Next();
+
+            int x;
+            int y;
+            while (i-- > 0)
+            {
+                x = r.Next(550);
+                y = r.Next(560);
+
+                trees.Add(new Pond(x, y, this));
             }
         }
 
@@ -76,6 +96,7 @@ namespace Game
                     e.hideRadius();
                 foreach (ObstacleEntity e in trees)
                     e.hideRadius();
+                grid.hide();
             }
             else
             {
@@ -84,6 +105,7 @@ namespace Game
                     e.showRadius();
                 foreach (ObstacleEntity e in trees)
                     e.showRadius();
+                grid.show();
             }
         }
     }

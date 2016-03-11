@@ -186,7 +186,7 @@ namespace Game
             Vector v = new Vector();
             v = normalize(this.velocity);
 
-            Vector this_center = new Vector(location.X + r / 2, location.Y + r / 2);
+            Vector this_center = new Vector(location.X , location.Y );
 
             Double dynamic_length = length(velocity) *20 / maxspeed;
 
@@ -200,7 +200,7 @@ namespace Game
 
             foreach (ObstacleEntity o in gw.trees)
             {
-                Vector o_center = new Vector(o.location.X + o.r / 2, o.location.Y + o.r / 2);
+                Vector o_center = new Vector(o.location.X , o.location.Y );
                
                 // force += collisionAvoid(o);
                 if ( distance(o_center, ahead) <= o.r+r || distance(o_center, ahead2) <= o.r+r) //if exists collision

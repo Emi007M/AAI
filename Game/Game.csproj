@@ -58,6 +58,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Castle.cs" />
+    <Compile Include="Grid.cs" />
+    <Compile Include="Pond.cs" />
     <Compile Include="Stone.cs" />
     <Compile Include="Treee.cs" />
     <Page Include="MainWindow.xaml">
@@ -159,6 +161,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="References\buttons\btn_reset.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="References\woody.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="References\pond.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
