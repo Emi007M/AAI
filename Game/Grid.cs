@@ -96,6 +96,9 @@ namespace Game
                     // \
                     addEdge(i + j * width, i + 1 + width + j * width);
 
+                    // /
+                    addEdge(i + j * width+1, i  + width + j * width);
+
                 }
 
             for (int i = 0; i < width - 1; i++)
