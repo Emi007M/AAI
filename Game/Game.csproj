@@ -125,9 +125,6 @@
     <Resource Include="References\tree.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="References\tree.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="References\bg.jpg" />
   </ItemGroup>
   <ItemGroup>
