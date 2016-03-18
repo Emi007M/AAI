@@ -68,6 +68,16 @@ namespace Game
 
         }
 
+        public double getX()
+        {
+            return location.X;
+        }
+
+        public double getY()
+        {
+            return location.Y;
+        }
+
         internal void showRadius()
         {
             Ellipse c = (Ellipse)image.Children[1];
@@ -90,6 +100,7 @@ namespace Game
 
             
                 force += 1.5* collisionAvoid(gw.trees);
+                   force += 0.7*Separation();
   
 
                     acceleration = force/mass;
@@ -228,7 +239,41 @@ namespace Game
            
         }
 
+        public Vector Separation()
+        {
+         
+            Vector this_center = new Vector(location.X, location.Y);
 
+            Vector finalDir = new Vector();
+            foreach (MovingEntity o in gw.entities)
+            {
+                Vector o_center = new Vector(o.location.X, o.location.Y);
+
+
+                if (distance(o_center, this_center) <= 2*r)
+                {
+                    Vector sepDir= new Vector(location.X - o.location.X, location.Y - o.location.Y);
+                    sepDir = normalize(sepDir)*(2*r) - sepDir;
+                    finalDir += sepDir;
+
+                }
+            }
+            Vector desiredVelocity = normalize(finalDir) * maxspeed/2;
+
+            return desiredVelocity;
+
+        }
+
+
+        public void PathFindSeek(Vector target)
+        {
+            int start = gw.grid.FindClosest(location.X, location.Y);
+            int end = gw.grid.FindClosest(target.X, target.Y);
+            int[] path = gw.grid.Dijkstra(start, end);
+
+          //  Vector nextV =  
+
+        }
 
         public Vector seek(Vector target)
         {

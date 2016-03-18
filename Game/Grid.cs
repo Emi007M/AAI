@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using MathNet.Numerics;
 
 namespace Game
 {
@@ -23,10 +24,10 @@ namespace Game
         public Grid(GameWorld gw)
         {
             this.gw = gw;
-            space = 30;
+            space = 100;
 
-            width = 890/space;
-            height = 600/space;
+            width = 500/space;
+            height = 500/space;
             offset_x = 20;
             offset_y = 20;
 
@@ -34,6 +35,7 @@ namespace Game
 
             gridInit();
 
+            
 
            addObstacles();
 
@@ -43,6 +45,86 @@ namespace Game
 
         }
 
+        int minDistance(int[] dist, bool[] sptSet)
+        {
+            // Initialize min value
+            int min = Int32.MaxValue;
+            int min_index = -1;
+            
+
+            for (int v = 0; v < N; v++)
+                if (sptSet[v] == false && dist[v] <= min)
+                {
+                    min = dist[v];
+                    min_index = v;
+                }
+
+            return min_index;
+        }
+
+        public int[] Dijkstra(int start, int end)
+        {
+
+            int[] dist = new int[N];
+            bool[] sptSet = new bool[N];
+            int[] path = new int[N];
+ 
+
+            for (int i = 0; i < N; i++)
+            {
+                dist[i] = Int32.MaxValue;
+                sptSet[i] = false;
+
+            }
+            dist[start] = 0;
+            path[start] = 0;
+
+            for (int i = 0; i < N; i++)
+            {
+                int u = minDistance(dist, sptSet);
+                if (u == end)
+
+
+
+                    return dist;
+                sptSet[u] = true;
+
+                for (int j = 0; j < N; j++)
+                {
+                    if (matrix[u, j] > 0 && !sptSet[j] && dist[u] != Int32.MaxValue && dist[u] + matrix[u, j] < dist[j])
+                    {
+                        dist[j] = dist[u] + matrix[u, j]; // +1
+                        //path[j] = u;
+                    }
+                }
+            }
+
+            return dist;
+        }
+
+        public int FindClosest(double xe, double ye)
+        {
+             
+       
+            double distance = 1000;
+            int closest = -1;
+            
+
+            for (int i = 0; i < N; i++)
+                for (int j = 0; j < N; j++)
+                {
+                    double xp = getX(matrix[i, j]);
+                    double yp = getY(matrix[i, j]);
+
+                    double r = Math.Sqrt(((xe-xp)*(xe-xp) + (ye-yp)*(ye-yp)));
+
+                    if (r < distance)
+                    {
+                        closest = matrix[i, j];
+                    }
+                }
+            return closest;
+        }
         private void addObstacles()
         {
           foreach(ObstacleEntity o in gw.trees)
@@ -130,7 +212,8 @@ namespace Game
 
         public void removeVertex(int x)
         {
-           
+            if (x > N) return;
+
             for(int i = 0; i< N;i++)
             {
                 matrix[i, x] = -1;
@@ -150,6 +233,21 @@ namespace Game
             return new System.Windows.Point(x,y);
         }
 
+        double getX(int p)
+        {
+            int x = p%width;
+            x = x * space + offset_x;
+            return x;
+
+        }
+        double getY(int p)
+        {
+            int x = p % width;
+            int y = (p - x) / width;
+            y = y * space + offset_y;
+            return y;
+
+        }
         int getVertex(int x, int y)
         {
            // x -= offset_x;
