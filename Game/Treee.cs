@@ -60,11 +60,11 @@ namespace Game
             Canvas.SetLeft(image, location.X - image.Width / 2);
             Canvas.SetTop(image, location.Y - image.Height / 2);
 
-            Button b = new Button();
-            b.Width = b.Height = image.Width;
+         //   Button b = new Button();
+            //b.Width = b.Height = image.Width;
          //   b.Cursor = Cursors.Hand;
          //   b.PreviewMouseUp += cutTree;
-            b.Click += cutTree;
+        //    b.Click += cutTree;
          //   b.PreviewMouseLeftButtonDown += cutTree;
             image.Children.Add(img);
             image.Children.Add(radius);
@@ -81,19 +81,19 @@ namespace Game
         }
 
 
-        public void cutTree(object sender, RoutedEventArgs e)
-        {
-            cut = true;
+        //public void cutTree(object sender, RoutedEventArgs e)
+        //{
+        //    cut = true;
 
-            Image img = (Image)image.Children[0];
-            img.Source = new BitmapImage(new Uri("/Game;component/References/woody.png", UriKind.RelativeOrAbsolute));
-            img.Width = img.Height = r.Next(10,20);
+        //    Image img = (Image)image.Children[0];
+        //    img.Source = new BitmapImage(new Uri("/Game;component/References/woody.png", UriKind.RelativeOrAbsolute));
+        //    img.Width = img.Height = r.Next(10,20);
             
 
-            base.r = 0;
-            image.Children.RemoveAt(1);
+        //    base.r = 0;
+        //    image.Children.RemoveAt(1);
 
-            Console.WriteLine("drzewko");
-        }
+        //    Console.WriteLine("drzewko");
+        //}
     }
 }

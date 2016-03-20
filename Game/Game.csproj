@@ -58,6 +58,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Castle.cs" />
+    <Compile Include="Collecting.cs" />
     <Compile Include="Grid.cs" />
     <Compile Include="Pond.cs" />
     <Compile Include="Stone.cs" />
@@ -164,6 +165,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="References\pond.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="References\buttons\btn6.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -20,9 +20,12 @@ namespace Game
     {
         protected GameWorld gw;
 
-       
+        public int capacity = -1;
+
+
+
         protected BitmapImage img_bitmap;
-        protected Canvas image;
+        public Canvas image;
 
         //--
 

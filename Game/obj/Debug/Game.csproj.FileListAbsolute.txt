@@ -1,18 +1,3 @@
-C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\bin\Debug\Game.exe.config
-C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\bin\Debug\Game.exe
-C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\bin\Debug\Game.pdb
-C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\obj\Debug\Game.csprojResolveAssemblyReference.cache
-C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\obj\Debug\MainWindow.baml
-C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\obj\Debug\MainWindow.g.cs
-C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\obj\Debug\App.g.cs
-C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\obj\Debug\Game_MarkupCompile.cache
-C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\obj\Debug\Game.g.resources
-C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\obj\Debug\Game.Properties.Resources.resources
-C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\obj\Debug\Game.csproj.GenerateResource.Cache
-C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\obj\Debug\Game.exe
-C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\obj\Debug\Game.pdb
-C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\bin\Debug\MathNet.Numerics.dll
-C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\bin\Debug\MathNet.Numerics.xml
 C:\Users\admin\Source\Repos\AAI\Game\bin\Debug\Game.exe.config
 C:\Users\admin\Source\Repos\AAI\Game\obj\Debug\Game.exe
 C:\Users\admin\Source\Repos\AAI\Game\obj\Debug\Game.pdb
@@ -28,3 +13,18 @@ C:\Users\admin\Source\Repos\AAI\Game\obj\Debug\Game_MarkupCompile.cache
 C:\Users\admin\Source\Repos\AAI\Game\obj\Debug\Game.g.resources
 C:\Users\admin\Source\Repos\AAI\Game\obj\Debug\Game.Properties.Resources.resources
 C:\Users\admin\Source\Repos\AAI\Game\obj\Debug\Game.csproj.GenerateResource.Cache
+C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\bin\Debug\Game.exe.config
+C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\bin\Debug\Game.exe
+C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\bin\Debug\Game.pdb
+C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\bin\Debug\MathNet.Numerics.dll
+C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\bin\Debug\MathNet.Numerics.xml
+C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\obj\Debug\MainWindow.baml
+C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\obj\Debug\MainWindow.g.cs
+C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\obj\Debug\App.g.cs
+C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\obj\Debug\Game_MarkupCompile.cache
+C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\obj\Debug\Game.g.resources
+C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\obj\Debug\Game.Properties.Resources.resources
+C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\obj\Debug\Game.csproj.GenerateResource.Cache
+C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\obj\Debug\Game.exe
+C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\obj\Debug\Game.pdb
+C:\Users\Emilia\Desktop\Dropbox\materials\6 semester - windesheim\AI games\Game\Game\obj\Debug\Game.csprojResolveAssemblyReference.cache

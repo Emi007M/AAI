@@ -9,7 +9,7 @@ namespace Game
 {
     class GameWorld
     {
-        public List<MovingEntity> entities = new List<MovingEntity>();
+        public List<MovingEntity> soldiers = new List<MovingEntity>();
         public List<ObstacleEntity> trees = new List<ObstacleEntity>();
 
         public Canvas canv;
@@ -17,6 +17,8 @@ namespace Game
         public Castle castle;
 
         public Grid grid;
+
+        public Collecting collecting;
 
         public bool showThings = false;
       //  public bool showThingsFlag = false;
@@ -27,13 +29,14 @@ namespace Game
 
             castle = new Castle(this);
             trees.Add(castle);
-            
+
+
 
         }
 
         public void moveMan(int index, int x, int y)
         {
-            entities.ElementAt(index).moveTo(x, y);
+            soldiers.ElementAt(index).moveTo(x, y);
         }
 
         public void addRandTrees(int i)
@@ -61,7 +64,7 @@ namespace Game
             int y;
             while (i-- > 0)
             {
-                x = r.Next(880);
+                x = r.Next(550);
                 y = r.Next(560);
 
                 //  Console.WriteLine("Tree: " + x + " " + y);
@@ -92,7 +95,7 @@ namespace Game
             if (showThings)
             {
                 showThings = false;
-                foreach (MovingEntity e in entities)
+                foreach (MovingEntity e in soldiers)
                     e.hideRadius();
                 foreach (ObstacleEntity e in trees)
                     e.hideRadius();
@@ -101,12 +104,24 @@ namespace Game
             else
             {
                 showThings = true;
-                foreach (MovingEntity e in entities)
+                foreach (MovingEntity e in soldiers)
                     e.showRadius();
                 foreach (ObstacleEntity e in trees)
                     e.showRadius();
                 grid.show();
             }
         }
+
+        internal void findPath(double v1, double v2, double x1, double x2)
+        {
+            int a = grid.getVertex((int)v1, (int)v2);
+            int b = grid.getVertex((int)x1, (int)x2);
+            int[] p = grid.Dijkstra(a, b);
+            grid.drawPaths(p, v1, v2, x1, x2);
+
+            
+        }
+
+       
     }
 }

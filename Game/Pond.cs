@@ -19,16 +19,19 @@ namespace Game
 {
     class Pond : ObstacleEntity
     {
+        
+
         static Random r = new Random();
 
         public Pond(GameWorld gw) : base(20,20, gw)
         {
+            capacity = 20;
             this.Draw();
 
         }
         public Pond(int x, int y, GameWorld gw) : base(x, y, gw)
         {
-
+            capacity = 20;
            this.Draw();
 
         }
@@ -59,12 +62,19 @@ namespace Game
             Canvas.SetLeft(image, location.X - image.Width / 2);
             Canvas.SetTop(image, location.Y - image.Height / 2);
 
-       
-         
+
+            Label txt_cap = new Label();
+            txt_cap.Content = "";
+            txt_cap.FontWeight = FontWeights.Black;
+            txt_cap.Foreground = Brushes.DarkBlue;
+            Canvas.SetLeft(txt_cap, image.Width / 3);
+            Canvas.SetTop(txt_cap, image.Height / 3);
+            Canvas.SetZIndex(txt_cap, 0);
+
 
             image.Children.Add(img);
             image.Children.Add(radius);
-           
+            image.Children.Add(txt_cap);
 
             gw.canv.Children.Add(image);
         }

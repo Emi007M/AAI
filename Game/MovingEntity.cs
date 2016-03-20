@@ -29,12 +29,12 @@ namespace Game
 
         //--
 
-        protected Vector location;
+        public Vector location;
         protected Vector velocity;
         protected Vector acceleration;
 
         protected float mass;
-        protected float r;
+        public float r;
         protected float maxforce;
         protected float maxspeed;
 
@@ -187,7 +187,7 @@ namespace Game
             return forceRes;
         }
 
-        private double distance(Vector a, Vector b)
+        public static double distance(Vector a, Vector b)
         {
             return Math.Sqrt((a.X - b.X) * (a.X - b.X)  + (a.Y - b.Y) * (a.Y - b.Y));
         }
@@ -245,7 +245,7 @@ namespace Game
             Vector this_center = new Vector(location.X, location.Y);
 
             Vector finalDir = new Vector();
-            foreach (MovingEntity o in gw.entities)
+            foreach (MovingEntity o in gw.soldiers)
             {
                 Vector o_center = new Vector(o.location.X, o.location.Y);
 
@@ -265,15 +265,15 @@ namespace Game
         }
 
 
-        public void PathFindSeek(Vector target)
-        {
-            int start = gw.grid.FindClosest(location.X, location.Y);
-            int end = gw.grid.FindClosest(target.X, target.Y);
-            int[] path = gw.grid.Dijkstra(start, end);
+        //public void PathFindSeek(Vector target)
+        //{
+        //    int start = gw.grid.FindClosest(location.X, location.Y);
+        //    int end = gw.grid.FindClosest(target.X, target.Y);
+        //    //int[] path = gw.grid.Dijkstra(start, end);
 
-          //  Vector nextV =  
+        //  //  Vector nextV =  
 
-        }
+        //}
 
         public Vector seek(Vector target)
         {

@@ -19,15 +19,17 @@ namespace Game
         GameWorld gw;
 
         int[,] matrix;  //incidence matrix of all vertices and edges of a grid
-        public Path vertices, edges;
+        public Path vertices, edges, path;
+        public int[,] lastPath;
+        bool drawPath = false;
 
         public Grid(GameWorld gw)
         {
             this.gw = gw;
-            space = 100;
+            space = 30;
 
-            width = 500/space;
-            height = 500/space;
+            width = 890/space;
+            height = 600/space;
             offset_x = 20;
             offset_y = 20;
 
@@ -62,13 +64,13 @@ namespace Game
             return min_index;
         }
 
-        public int[] Dijkstra(int start, int end)
+        public int[] Dijkstra(int start, int end) //takes starting and ending points
         {
 
             int[] dist = new int[N];
             bool[] sptSet = new bool[N];
-            int[] path = new int[N];
- 
+            // int[] path = new int[N];
+            LinkedList<int> path = new LinkedList<int>();
 
             for (int i = 0; i < N; i++)
             {
@@ -77,7 +79,7 @@ namespace Game
 
             }
             dist[start] = 0;
-            path[start] = 0;
+            //path[start] = 0;
 
             for (int i = 0; i < N; i++)
             {
@@ -85,8 +87,8 @@ namespace Game
                 if (u == end)
 
 
-
-                    return dist;
+                    break;
+                   // return dist;
                 sptSet[u] = true;
 
                 for (int j = 0; j < N; j++)
@@ -98,33 +100,221 @@ namespace Game
                     }
                 }
             }
+            int vert = end;
+            path.AddFirst(end);
+            for(int i = dist[end]-1; i>=0; i--)
+            {
+                foreach(int neighbour in getNeighbours(vert))
+                {
+                    if (dist[neighbour] == i)
+                    {
+                        path.AddFirst(neighbour);
+                        vert = neighbour;
+                        break;
+                    }
+                }
+            }
+            int[] ret = path.ToArray<int>();
+           //drawPaths(ret);
 
-            return dist;
+            return ret ;
         }
 
+        internal void drawPaths(int[] path, double v1, double v2, double x1, double x2)
+        {
+            drawPath = true;
+            lastPath = new int[2, path.Length+2];
+
+            lastPath[0, 0] = (int)v1;
+            lastPath[1, 0] = (int)v2;
+            
+
+            for (int i = 1; i <= path.Length; i++)
+            {
+                lastPath[0, i] = (int)getCoords(path[i-1]).X;
+                lastPath[1, i] = (int)getCoords(path[i-1]).Y;
+            }
+
+            lastPath[0, lastPath.Length/2 - 1] = (int)x1;
+            lastPath[1, lastPath.Length/2 - 1] = (int)x2;
+
+
+            pathSmoothing();
+
+            if (this.path.StrokeThickness == 2)
+            {
+                hide(); show();
+            }
+
+            Console.WriteLine(lastPath);
+        }
+
+
+        //public void drawPaths(int[] path)
+        //{
+        //    drawPath = true;
+        //    lastPath = new int[2, path.Length];
+        //    for (int i = 0; i < path.Length; i++)
+        //    {
+        //        lastPath[0, i] = (int)getCoords(path[i]).X;
+        //        lastPath[1, i] = (int)getCoords(path[i]).Y;
+
+
+        //    }
+
+        //    pathSmoothing();
+
+        //    if (this.path.StrokeThickness == 2)
+        //    {
+        //        hide(); show();
+        //    }
+        //}
+
+        private void pathSmoothing()
+        {
+            
+            int e1 = 0, e2=0;
+
+            while(e1!=lastPath.Length/2-1)
+            {
+                e2 = e1 + 1;
+                while(e2!=lastPath.Length/2)
+                {
+                    if (canWalkBetween(e1, e2))
+                    {
+                        removeFromPath(e1,e2);
+                        e2 = e1 + 2;
+                    }
+                    else
+                    {
+                        e2++;
+                    }
+
+                }
+                e1++;
+            }
+    }
+
+        private bool canWalkBetween(int e1, int e2)
+        {
+
+            double x1 = lastPath[0, e1], y1 = lastPath[1, e1],
+                x2 = lastPath[0, e2], y2 = lastPath[1, e2];
+
+            if (x1 - x2 != 0)//if line is not vertical
+            {
+
+            //find y=ax+b
+            double a =(double) ((y1 - y2) / (x1 - x2));
+            double b = y1 - a * x1;
+
+            // y=-1/a*x+b consisting center of obstacle
+            double a2 = -1 / a, b2;
+            System.Windows.Vector P;
+            foreach(ObstacleEntity o in gw.trees)
+            {
+                b2 = o.location.Y - a2 * o.location.X;
+                P = new System.Windows.Vector((b - b2) / (a2 - a), a * (b - b2) / (a2 - a) + b);
+
+
+                   // Console.WriteLine(x1 + "," + y1 + " " + x2 + "," + y2 + " obs=" + o.location + ",r=" + o.r+", inter="+P.X+","+P.Y+ " a="+a+" b="+b);
+
+                    if (MovingEntity.distance(P,o.location)<=(double)o.r*2)
+                {
+                    //check if point of crossection of 2 lines belongs to the edge
+                    if((o.location.X>=x1||o.location.X>=x2) && (o.location.X <= x1 || o.location.X <= x2) &&
+                       (o.location.Y >= y1 || o.location.Y >= y2) && (o.location.Y <= y1 || o.location.Y <= y2))
+                    {
+
+                        return false;
+                    }
+                }
+            }
+
+            }
+            else //vertical straight
+            {
+                
+                double b =  x1;
+ 
+                System.Windows.Vector P;
+                foreach (ObstacleEntity o in gw.trees)
+                {
+                   
+                    P = new System.Windows.Vector(b,o.location.Y);
+
+                    if (MovingEntity.distance(P, o.location) <= (double)o.r*2)
+                    {
+                        //check if point of crossection of 2 lines belongs to the edge
+                        if ((o.location.Y >= y1 || o.location.Y >= y2) && (o.location.Y <= y1 || o.location.Y <= y2))
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+
+            return true;
+        }  
+
+        void removeFromPath(int from, int to)
+        {
+            int[,] ret = new int[2, lastPath.Length/2 - (to-from-1)];
+            int j = 0;
+
+            for(int i=0;i<ret.Length/2;i++)
+            {
+                if (j == from+1) j = to;
+
+                ret[0, i] = lastPath[0, j];
+                ret[1, i] = lastPath[1, j];
+                j++;
+            }
+            lastPath = ret;
+        }
+
+
+
+        //
         public int FindClosest(double xe, double ye)
         {
              
        
             double distance = 1000;
             int closest = -1;
-            
+
 
             for (int i = 0; i < N; i++)
-                for (int j = 0; j < N; j++)
+            {
+
+                // double xp = getX(matrix[i, j]);
+                // double yp = getY(matrix[i, j]);
+                if (matrix[i, i] == -1) continue;
+                double r = Math.Sqrt(((xe - getCoords(i).X) * (xe - getCoords(i).X) + (ye - getCoords(i).Y) * (ye - getCoords(i).Y)));
+
+                if (r < distance)
                 {
-                    double xp = getX(matrix[i, j]);
-                    double yp = getY(matrix[i, j]);
-
-                    double r = Math.Sqrt(((xe-xp)*(xe-xp) + (ye-yp)*(ye-yp)));
-
-                    if (r < distance)
-                    {
-                        closest = matrix[i, j];
-                    }
+                    distance = r;
+                    closest = i;
                 }
+            }
             return closest;
         }
+
+        List<int> getNeighbours(int vertex)
+        {
+            List<int> neighbours = new List<int>();
+
+            for (int i = 0; i < N; i++)
+                if (matrix[vertex, i] == 1)
+                    neighbours.Add(i);
+
+
+            return neighbours;
+        }
+
+
         private void addObstacles()
         {
           foreach(ObstacleEntity o in gw.trees)
@@ -176,10 +366,10 @@ namespace Game
                     addEdge(i + j * width, i + width + j * width);
 
                     // \
-                    addEdge(i + j * width, i + 1 + width + j * width);
+                 //   addEdge(i + j * width, i + 1 + width + j * width);
 
                     // /
-                    addEdge(i + j * width+1, i  + width + j * width);
+                //    addEdge(i + j * width+1, i  + width + j * width);
 
                 }
 
@@ -248,15 +438,20 @@ namespace Game
             return y;
 
         }
-        int getVertex(int x, int y)
+        public int getVertex(int _x, int _y)
         {
            // x -= offset_x;
            // y -= offset_y;
-            x /= space;
-            y /= space;
+            int x = _x / space;
+            int y = _y / space;
 
+            int vert = y * width + x;
+     
+            if(vert>=0 && vert<N && matrix[vert,vert]!= -1)
+                return vert;
 
-            return y * width + x;
+            int ret = FindClosest(_x, _y);
+            return ret;
 
         }
 
@@ -269,7 +464,7 @@ namespace Game
             for (int i = 0; i < N; i++)
                 {
                     if (matrix[i, 0] != -1) //if point exists
-                        g_vertices.Children.Add(new EllipseGeometry(getCoords(i), 2.0, 2.0));
+                        g_vertices.Children.Add(new EllipseGeometry(getCoords(i), 1.0, 1.0));
                 }
 
 
@@ -285,7 +480,6 @@ namespace Game
                 }
 
 
-
             //  Canvas.SetZIndex(image, 3);
 
 
@@ -298,9 +492,14 @@ namespace Game
             edges.Stroke = Brushes.Black;
             edges.StrokeThickness = 1;
 
+
+            path = new Path();
+
             gw.canv.Children.Add(vertices);
             gw.canv.Children.Add(edges);
 
+
+     
             this.hide();
         }
 
@@ -308,12 +507,31 @@ namespace Game
         {
             vertices.Fill = null;
             edges.StrokeThickness = 0;
+            path.StrokeThickness = 0;
         }
 
         public void show()
         {
             vertices.Fill = Brushes.Black;
             edges.StrokeThickness = 1;
+            
+            GeometryGroup g_path = new GeometryGroup();
+            path = new Path();
+            path.Data = g_path;
+            path.Stroke = Brushes.Green;
+            path.StrokeThickness = 2;
+            gw.canv.Children.Add(path);
+            if (drawPath)
+            {
+                
+                for (int i = 1; i <lastPath.Length/2; i++)
+                    g_path.Children.Add(new LineGeometry(new System.Windows.Point(lastPath[0, i - 1], lastPath[1, i - 1]), new System.Windows.Point(lastPath[0, i], lastPath[1, i])));
+
+
+                
+               
+            }
+
         }
 
     }
