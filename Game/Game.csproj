@@ -57,12 +57,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Castle.cs" />
+    <Compile Include="GameEntities\ObstacleEntities\Castle.cs" />
     <Compile Include="Collecting.cs" />
+    <Compile Include="Goals\CompositeGoal.cs" />
+    <Compile Include="Goals\Goal.cs" />
+    <Compile Include="Goals\Goal_FollowPath.cs" />
+    <Compile Include="Goals\Goal_Think.cs" />
+    <Compile Include="Goals\Goal_TraverseEdge.cs" />
+    <Compile Include="Goals\Seek.cs" />
+    <Compile Include="Goals\Think.cs" />
     <Compile Include="Grid.cs" />
-    <Compile Include="Pond.cs" />
-    <Compile Include="Stone.cs" />
-    <Compile Include="Treee.cs" />
+    <Compile Include="GameEntities\ObstacleEntities\Pond.cs" />
+    <Compile Include="GameEntities\ObstacleEntities\Stone.cs" />
+    <Compile Include="GameEntities\ObstacleEntities\Treee.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -78,9 +85,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MovingEntity.cs" />
-    <Compile Include="ObstacleEntity.cs" />
-    <Compile Include="Person.cs" />
+    <Compile Include="GameEntities\MovingEntities\MovingEntity.cs" />
+    <Compile Include="GameEntities\ObstacleEntities\ObstacleEntity.cs" />
+    <Compile Include="GameEntities\MovingEntities\Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

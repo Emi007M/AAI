@@ -75,7 +75,10 @@ namespace Game
             
             //  gw.moveMan(1,100,300);
 
+
             gw.collecting = new Collecting(gw);
+
+            gw.soldiers.ElementAt(0).goal = new Goals.Goal_Think(gw.soldiers.ElementAt(0));
 
             isPath = -1;
         }
@@ -84,27 +87,27 @@ namespace Game
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            //going by the path
-            if (isPath != -1)
-            {
+            ////going by the path
+            //if (isPath != -1)
+            //{
 
-                if (isPath == gw.grid.lastPath.Length / 2 - 1)
-                {
-                    gw.soldiers.ElementAt(0).useArrival(new Vector(gw.grid.lastPath[0, isPath], gw.grid.lastPath[1, isPath]));
-                    isPath = -1;
+            //    if (isPath == gw.grid.lastPath.Length / 2 - 1)
+            //    {
+            //        gw.soldiers.ElementAt(0).useArrival(new Vector(gw.grid.lastPath[0, isPath], gw.grid.lastPath[1, isPath]));
+            //        isPath = -1;
 
-                }
-                else
-                {
-                    gw.soldiers.ElementAt(0).useSeek(new Vector(gw.grid.lastPath[0, isPath], gw.grid.lastPath[1, isPath]));
+            //    }
+            //    else
+            //    {
+            //        gw.soldiers.ElementAt(0).useSeek(new Vector(gw.grid.lastPath[0, isPath], gw.grid.lastPath[1, isPath]));
 
-                    if ((int)gw.soldiers.ElementAt(0).getX() > gw.grid.lastPath[0, isPath] - 15 && (int)gw.soldiers.ElementAt(0).getX() < gw.grid.lastPath[0, isPath] + 15
-                        && (int)gw.soldiers.ElementAt(0).getY() > gw.grid.lastPath[1, isPath] - 15 && (int)gw.soldiers.ElementAt(0).getY() < gw.grid.lastPath[1, isPath] + 15)
-                        isPath++;
-                }
+            //        if ((int)gw.soldiers.ElementAt(0).getX() > gw.grid.lastPath[0, isPath] - 15 && (int)gw.soldiers.ElementAt(0).getX() < gw.grid.lastPath[0, isPath] + 15
+            //            && (int)gw.soldiers.ElementAt(0).getY() > gw.grid.lastPath[1, isPath] - 15 && (int)gw.soldiers.ElementAt(0).getY() < gw.grid.lastPath[1, isPath] + 15)
+            //            isPath++;
+            //    }
 
                 
-            }
+            //}
 
 
             //-----resources-----
@@ -221,16 +224,16 @@ namespace Game
             Console.WriteLine("click!");
             if (!gw.soldiers.Any()) return; //if no moving soldiers
 
-            foreach (MovingEntity m in gw.soldiers)
-            {
+            foreach (MovingEntity m in gw.soldiers) 
                 m.useLeaderFollow(gw.soldiers.ElementAt(0));
-            }
+            
 
-            // gw.soldiers.ElementAt(0).useArrival(new Vector(Mouse.GetPosition(MainGrid).X, (int)Mouse.GetPosition(MainGrid).Y));
-            gw.findPath(gw.soldiers.ElementAt(0).getX(), gw.soldiers.ElementAt(0).getY(), Mouse.GetPosition(MainGrid).X, Mouse.GetPosition(MainGrid).Y);
+            //// gw.soldiers.ElementAt(0).useArrival(new Vector(Mouse.GetPosition(MainGrid).X, (int)Mouse.GetPosition(MainGrid).Y));
+            //gw.findPath(gw.soldiers.ElementAt(0).getX(), gw.soldiers.ElementAt(0).getY(), Mouse.GetPosition(MainGrid).X, Mouse.GetPosition(MainGrid).Y);
 
-            isPath = 1;
+            //isPath = 1;
 
+            gw.soldiers.ElementAt(0).goal.AddGoal_FollowPath(new Vector(Mouse.GetPosition(MainGrid).X, Mouse.GetPosition(MainGrid).Y));
 
             Console.WriteLine("clicked!");
         }
@@ -293,8 +296,9 @@ namespace Game
             }
 
             if (closestPond==null) return;
-            gw.findPath(gw.soldiers.ElementAt(0).getX(), gw.soldiers.ElementAt(0).getY(), closestPond.location.X, closestPond.location.Y);
-            isPath = 1;
+            //gw.findPath(gw.soldiers.ElementAt(0).getX(), gw.soldiers.ElementAt(0).getY(), closestPond.location.X, closestPond.location.Y);
+            //isPath = 1;
+            gw.soldiers.ElementAt(0).goal.AddGoal_FollowPath(closestPond.location);
 
             foreach (MovingEntity m in gw.soldiers)
             {

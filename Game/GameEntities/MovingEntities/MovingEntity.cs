@@ -18,7 +18,8 @@ namespace Game
 {
     class MovingEntity
     {
-        protected GameWorld gw;
+        public GameWorld gw;
+        public Goals.Goal_Think goal = null;
 
       //  protected int pos_x;
        // protected int pos_y;
@@ -92,6 +93,8 @@ namespace Game
 
         public void update()
         {
+            if (goal != null) goal.Process();
+
             force = zeroVec;
             if (seekOn) force += seek(target);
             if (fleeOn) force += flee(target);
