@@ -116,7 +116,7 @@ namespace Game
         {
             int a = grid.getVertex((int)v1, (int)v2);
             int b = grid.getVertex((int)x1, (int)x2);
-            int[] p = grid.Dijkstra(a, b);
+            int[] p = grid.Astar(a, b);
             grid.drawPaths(p, v1, v2, x1, x2);
 
             

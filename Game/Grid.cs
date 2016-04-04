@@ -28,7 +28,7 @@ namespace Game
             this.gw = gw;
             space = 30;
 
-            width = 890/space;
+            width = 900/space;
             height = 600/space;
             offset_x = 20;
             offset_y = 20;
@@ -120,6 +120,94 @@ namespace Game
             return ret ;
         }
 
+        int getHeuristic(int j, int end)
+        {
+            int endX = end % width;
+            int endY = (endX - end) / width;
+
+            int jX = j % width;
+            int jY = (jX - j) / width;
+
+            return Math.Abs(endX - jX) + Math.Abs(endY - jY);
+            
+        }
+
+        int AminDistance(int[] dist, bool[] sptSet, int[] score)
+        {
+            // Initialize min value
+            double min = Int32.MaxValue;
+            int min_index = -1;
+
+
+            for (int v = 0; v < N; v++)
+
+                if (sptSet[v] == false && dist[v]+score[v] <= min)
+                {
+                    min = dist[v]+score[v];
+                    min_index = v;
+                }
+
+            return min_index;
+        }
+        public int[] Astar(int start, int end) //takes starting and ending points
+        {
+  
+            int[] dist = new int[N];
+            int[] score = new int[N];
+            bool[] sptSet = new bool[N];
+            // int[] path = new int[N];
+            LinkedList<int> path = new LinkedList<int>();
+
+            for (int i = 0; i < N; i++)
+            {
+                dist[i] = Int32.MaxValue/2;
+                score[i] = Int32.MaxValue/2;
+                sptSet[i] = false;
+
+            }
+            dist[start] = 0;
+            score[start] = getHeuristic(start, end);
+            //path[start] = 0;
+
+            for (int i = 0; i < N; i++)
+            {
+                int u = AminDistance(dist, sptSet,score);
+                if (u == end)
+
+
+                    break;
+                // return dist;
+                sptSet[u] = true;
+
+                for (int j = 0; j < N; j++)
+                {
+                    if (matrix[u, j] > 0 && !sptSet[j] && dist[u] != Int32.MaxValue && dist[u] + matrix[u, j] < dist[j])
+                    {
+                        dist[j] = dist[u] + matrix[u, j]; // +1
+                        score[j] = getHeuristic(j, end);
+                        //path[j] = u;
+                    }
+                }
+            }
+            int vert = end;
+            path.AddFirst(end);
+            for (int i = dist[end] - 1; i >= 0; i--)
+            {
+                foreach (int neighbour in getNeighbours(vert))
+                {
+                    if (dist[neighbour] == i)
+                    {
+                        path.AddFirst(neighbour);
+                        vert = neighbour;
+                        break;
+                    }
+                }
+            }
+            int[] ret = path.ToArray<int>();
+            //drawPaths(ret);
+
+            return ret;
+        }
         internal void drawPaths(int[] path, double v1, double v2, double x1, double x2)
         {
             drawPath = true;
@@ -430,6 +518,7 @@ namespace Game
             return x;
 
         }
+
         double getY(int p)
         {
             int x = p % width;
