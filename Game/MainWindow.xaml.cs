@@ -63,7 +63,7 @@ namespace Game
             gw.addRandStones(5);
             gw.addRandPonds(2);
             gw.addRandTrees(55);
-            gw.grid = new Grid(gw);
+            gw.grid = new Grid.Grid(gw);
 
             gw.soldiers.Add(new Person(700, 320, 10, 15, gw));
             gw.soldiers.Add(new Person(720, 330, 10, 15, gw));

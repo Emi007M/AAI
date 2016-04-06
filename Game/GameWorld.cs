@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Shapes;
 using System.Windows.Controls;
+using Game.Grid;
 
 namespace Game
 {
@@ -16,7 +17,7 @@ namespace Game
 
         public Castle castle;
 
-        public Grid grid;
+        public Game.Grid.Grid grid;
 
         public Collecting collecting;
 
