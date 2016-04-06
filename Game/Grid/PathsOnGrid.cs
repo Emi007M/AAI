@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using MathNet.Numerics;
 
 namespace Game.Grid
 {
@@ -255,11 +251,10 @@ namespace Game.Grid
 
                     // Console.WriteLine(x1 + "," + y1 + " " + x2 + "," + y2 + " obs=" + o.location + ",r=" + o.r+", inter="+P.X+","+P.Y+ " a="+a+" b="+b);
 
-                    if (MovingEntity.distance(P, o.location) <= (double)o.r * 2)
+                    if (MovingEntity.distance(P, o.location) <= (double)o.r)
                     {
-                        //check if point of crossection of 2 lines belongs to the edge
-                        if ((o.location.X >= x1 || o.location.X >= x2) && (o.location.X <= x1 || o.location.X <= x2) &&
-                           (o.location.Y >= y1 || o.location.Y >= y2) && (o.location.Y <= y1 || o.location.Y <= y2))
+                        if ((P.X >= x1 || P.X >= x2) && (P.X <= x1 || P.X <= x2) &&
+                           (P.Y >= y1 || P.Y >= y2) && (P.Y <= y1 || P.Y <= y2))
                         {
 
                             return false;
@@ -279,10 +274,10 @@ namespace Game.Grid
 
                     P = new System.Windows.Vector(b, o.location.Y);
 
-                    if (MovingEntity.distance(P, o.location) <= (double)o.r * 2)
+                    if (MovingEntity.distance(P, o.location) <= (double)o.r)
                     {
                         //check if point of crossection of 2 lines belongs to the edge
-                        if ((o.location.Y >= y1 || o.location.Y >= y2) && (o.location.Y <= y1 || o.location.Y <= y2))
+                        if ((P.Y >= y1 || P.Y >= y2) && (P.Y <= y1 || P.Y <= y2))
                         {
                             return false;
                         }
