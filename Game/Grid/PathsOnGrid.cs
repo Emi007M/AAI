@@ -103,6 +103,52 @@ namespace Game.Grid
             return ret;
         }
 
+        public int DijkstraClosest(int start, IEnumerable<ObstacleEntity> targets) //takes starting and targets finds index point
+        {
+
+            int[] dist = new int[N];
+            bool[] sptSet = new bool[N];
+
+            int end = -1;
+
+            for (int i = 0; i < N; i++)
+            {
+                dist[i] = Int32.MaxValue;
+                sptSet[i] = false;
+
+            }
+            dist[start] = 0;
+            //path[start] = 0;
+
+            for (int i = 0; i < N; i++)
+            {
+                int u = minDistance(dist, sptSet);
+                foreach(ObstacleEntity target in targets)
+                {
+                if (MovingEntity.distance(new System.Windows.Vector(grid.getX(u), grid.getY(u)),target.location)<2*target.r)
+                    {
+                       return end = u;
+            
+                    }
+
+              
+                sptSet[u] = true;
+
+                for (int j = 0; j < N; j++)
+                {
+                    if (grid.matrix[u, j] > 0 && !sptSet[j] && dist[u] != Int32.MaxValue && dist[u] + grid.matrix[u, j] < dist[j])
+                    {
+                        dist[j] = dist[u] + grid.space; // +1
+                      
+                    }
+                }
+                }
+            }
+           
+            return end;
+        }
+
+
         //A* algorithm
         int getHeuristic(int j, int end)//returns heuristic for index points
         {

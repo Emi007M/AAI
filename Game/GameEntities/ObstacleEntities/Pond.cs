@@ -1,19 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-
-using Game;
 
 namespace Game
 {
@@ -41,10 +32,8 @@ namespace Game
             img_bitmap = new BitmapImage(new Uri("/Game;component/References/pond.png", UriKind.RelativeOrAbsolute));
             Image img = new Image();
             img.Source = img_bitmap;
-            // image.Width = img_bitmap.Width;
-            // image.Height = img_bitmap.Height;
-            img.Width = img.Height = r.Next(55,95);
-           // float radiusRatio = 2f;
+        
+            img.Width = img.Height = r.Next(55,95);    
             base.r = (int)(img.Width/2);
 
             img.RenderTransform = new RotateTransform(r.Next(30) * 180 / Math.PI, base.r, base.r);
@@ -56,13 +45,13 @@ namespace Game
             radius.StrokeThickness = 0;
             radius.Stroke = Brushes.Green;
 
-            //canvas containing image and radius
+            //--canvas containing image and radius
             image = new Canvas();
             image.Width = image.Height = base.r*2;
             Canvas.SetLeft(image, location.X - image.Width / 2);
             Canvas.SetTop(image, location.Y - image.Height / 2);
 
-
+            //capacity label
             Label txt_cap = new Label();
             txt_cap.Content = "";
             txt_cap.FontWeight = FontWeights.Black;

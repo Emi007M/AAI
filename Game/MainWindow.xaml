@@ -66,7 +66,7 @@
                     <ImageBrush ImageSource="References/buttons/btn3.png" Stretch="Uniform"/>
                 </Button.Background>
             </Button>
-            <Button x:Name="btn_gold" Content="" HorizontalAlignment="Right" Width="53" FontSize="16" FontWeight="ExtraBlack" Height="53" VerticalAlignment="Bottom" Cursor="Hand" Canvas.Left="721" Style="{StaticResource MyButton}" Canvas.Top="3">
+            <Button x:Name="btn_stone" Content="" HorizontalAlignment="Right" Width="53" FontSize="16" FontWeight="ExtraBlack" Height="53" VerticalAlignment="Bottom" Cursor="Hand" Canvas.Left="721" Style="{StaticResource MyButton}" Canvas.Top="3" Click="btn_stone_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="References/buttons/btn4.png" Stretch="Uniform"/>
                 </Button.Background>

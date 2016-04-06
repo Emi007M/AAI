@@ -17,23 +17,41 @@ namespace Game
         public int maxPondsCapacity = 20;
         public int waterAmount = 0;
 
+        public List<Stone> stones;
+        public int maxStonesCapacity = 10;
+        public int stoneAmount = 0;
+
         public Collecting(GameWorld gw)
         {
             this.gw = gw;
             capacity = 3;
 
-           
+
 
             ponds = gw.trees.OfType<Pond>().ToList();
+            stones = gw.trees.OfType<Stone>().ToList();
 
 
         }
 
         public Pond isNearWater(MovingEntity e)
         {
-            foreach(Pond p in ponds)
+            foreach (Pond p in ponds)
             {
-                if(MovingEntity.distance(e.location, p.location)< e.r + p.r)
+                if (MovingEntity.distance(e.location, p.location) < 2 * p.r)
+                {
+                    return p;
+                }
+            }
+
+            return null;
+
+        }
+        public Stone isNearStone(MovingEntity e)
+        {
+            foreach (Stone p in stones)
+            {
+                if (MovingEntity.distance(e.location, p.location) < 2 * p.r)
                 {
                     return p;
                 }

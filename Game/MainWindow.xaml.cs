@@ -138,6 +138,25 @@ namespace Game
                         }
 
                     }
+
+
+                    //stone
+                    Stone s = gw.collecting.isNearStone(gw.soldiers.ElementAt(0));
+                    if (s != null)
+                    {
+                        Console.WriteLine("close to stone");
+                        //gather stone
+                        if (s.capacity > 0 && sCapacity < gw.collecting.capacity * gw.soldiers.Count())
+                        {
+                            s.capacity -= 1;
+                            sCapacity++;
+                            gw.collecting.stoneAmount++;
+                            if (timerCounter == 0) s.capacity--;
+                        }
+
+                    }
+
+
                     //todo
 
                 }
@@ -148,8 +167,16 @@ namespace Game
                 if (timerCounter == 0)
                 {
 
-                    foreach(Pond p in gw.collecting.ponds)
+                    foreach (Pond p in gw.collecting.ponds)
                     { if (p.capacity < gw.collecting.maxPondsCapacity) p.capacity++; }
+                }
+
+                //respawning stone
+                if (timerCounter == 0)
+                {
+
+                    foreach (Stone s in gw.collecting.stones)
+                    { if (s.capacity < gw.collecting.maxStonesCapacity) s.capacity++; }
                 }
 
 
@@ -159,6 +186,12 @@ namespace Game
                     Console.WriteLine(p.capacity);
                     Label txt = (Label)p.image.Children[2];
                     txt.Content = p.capacity + "/" + gw.collecting.maxPondsCapacity;
+                }
+                foreach (Stone p in gw.collecting.stones)
+                {
+                    Console.WriteLine(p.capacity);
+                    Label txt = (Label)p.image.Children[2];
+                    txt.Content = p.capacity + "/" + gw.collecting.maxStonesCapacity;
                 }
 
                 soldiers_capacity.Text = sCapacity + "/" + gw.collecting.capacity * gw.soldiers.Count();
@@ -281,30 +314,30 @@ namespace Game
 
             if (!gw.soldiers.Any()) return;
 
-            double dist = 1000;
 
-            Pond closestPond = null;
-            foreach(Pond p in gw.collecting.ponds)
-            {
-                double d = MovingEntity.distance(gw.soldiers.ElementAt(0).location, p.location);
-                if (d<dist && p.capacity>1)
-                {
-                    dist = d;
-                    closestPond = p;
-                }
-             
-            }
-
-            if (closestPond==null) return;
-            //gw.findPath(gw.soldiers.ElementAt(0).getX(), gw.soldiers.ElementAt(0).getY(), closestPond.location.X, closestPond.location.Y);
-            //isPath = 1;
-            gw.soldiers.ElementAt(0).goal.AddGoal_FollowPath(closestPond.location);
+            gw.soldiers.ElementAt(0).goal.AddGoal_FindClosestWater();
 
             foreach (MovingEntity m in gw.soldiers)
             {
                 m.useLeaderFollow(gw.soldiers.ElementAt(0));
             }
         }
+
+        private void btn_stone_Click(object sender, RoutedEventArgs e)
+        {
+            //look for the closest pond using dijkstra
+
+            if (!gw.soldiers.Any()) return;
+
+
+            gw.soldiers.ElementAt(0).goal.AddGoal_FindClosestStone();
+
+            foreach (MovingEntity m in gw.soldiers)
+            {
+                m.useLeaderFollow(gw.soldiers.ElementAt(0));
+            }
+        }
+
     }
 }
 
