@@ -13,25 +13,19 @@ namespace Game.Grid
     class Grid
     {
         int width, height;
-        int space;
+        internal int space;
         int offset_x, offset_y;
-        int N;
-        GameWorld gw;
+        internal int N;
+        internal GameWorld gw;
 
 
         //structures
-        int[,] matrix;  //incidence matrix of all vertices and edges of a grid
+        internal int[,] matrix;  //incidence matrix of all vertices and edges of a grid
                         // 0 - vertex, no edges, 1 - edge, -1 - no vertex
 
-        GeometryGroup g_path1;
-        public int[,] lastPath;
-        public int[,] smoothedPath;
+        
 
-        //to paint
-        bool drawPath = false;
-        public Path vertices, edges, path1, path2, path3;
-
-        PathsOnGrid paths;
+        public PathsOnGrid Paths;
 
 
 
@@ -57,7 +51,7 @@ namespace Game.Grid
 
 
 
-            paths = new PathsOnGrid(this);
+            Paths = new PathsOnGrid(this);
 
             this.Draw();
 
@@ -119,6 +113,7 @@ namespace Game.Grid
             }
 
         }
+
 
 
         ///---methods for handling obstacles
@@ -211,7 +206,7 @@ namespace Game.Grid
         //---auxiliary methods
 
         //returns real coordinates for point index
-        System.Windows.Point getCoords(int p)
+        internal System.Windows.Point getCoords(int p)
         {
             int x = p % width;
             int y = (p - x) / width;
@@ -221,14 +216,14 @@ namespace Game.Grid
 
             return new System.Windows.Point(x, y);
         }
-        double getX(int p)
+        internal double getX(int p)
         {
             int x = p % width;
             x = x * space + offset_x;
             return x;
 
         }
-        double getY(int p)
+        internal double getY(int p)
         {
             int x = p % width;
             int y = (p - x) / width;
@@ -286,7 +281,7 @@ namespace Game.Grid
         }
 
         //returns list of indexes of directly connected points to the index point 
-        List<int> getNeighbours(int vertex)
+        internal List<int> getNeighbours(int vertex)
         {
             List<int> neighbours = new List<int>();
 
@@ -300,320 +295,7 @@ namespace Game.Grid
 
 
 
-        ///---Path algorithms
-
-        //Dijkstra algorithm
-        int minDistance(int[] dist, bool[] sptSet)
-        {
-            // Initialize min value
-            int min = Int32.MaxValue;
-            int min_index = -1;
-
-
-            for (int v = 0; v < N; v++)
-                if (sptSet[v] == false && dist[v] <= min)
-                {
-                    min = dist[v];
-                    min_index = v;
-                }
-
-            return min_index;
-        }
-        public int[] Dijkstra(int start, int end) //takes starting and ending points
-        {
-
-            int[] dist = new int[N];
-            bool[] sptSet = new bool[N];
-            // int[] path = new int[N];
-            LinkedList<int> path = new LinkedList<int>();
-
-            for (int i = 0; i < N; i++)
-            {
-                dist[i] = Int32.MaxValue;
-                sptSet[i] = false;
-
-            }
-            dist[start] = 0;
-            //path[start] = 0;
-
-            for (int i = 0; i < N; i++)
-            {
-                int u = minDistance(dist, sptSet);
-                if (u == end)
-
-
-                    break;
-                // return dist;
-                sptSet[u] = true;
-
-                for (int j = 0; j < N; j++)
-                {
-                    if (matrix[u, j] > 0 && !sptSet[j] && dist[u] != Int32.MaxValue && dist[u] + matrix[u, j] < dist[j])
-                    {
-                        dist[j] = dist[u] + matrix[u, j]; // +1
-                        //path[j] = u;
-                    }
-                }
-            }
-            int vert = end;
-            path.AddFirst(end);
-            for (int i = dist[end] - 1; i >= 0; i--)
-            {
-                foreach (int neighbour in getNeighbours(vert))
-                {
-                    if (dist[neighbour] == i)
-                    {
-                        path.AddFirst(neighbour);
-                        vert = neighbour;
-                        break;
-                    }
-                }
-            }
-            int[] ret = path.ToArray<int>();
-            //drawPaths(ret);
-
-            return ret;
-        }
-
-        //A* algorithm
-        int getHeuristic(int j, int end)//returns heuristic for index points
-        {
-            return (int)(Math.Abs(getX(end) - getX(j)) + Math.Abs(getY(end) - getY(j)));
-        }
-        int AminDistance(int[] dist, bool[] sptSet, int[] score)
-        {
-            // Initialize min value
-            double min = Int32.MaxValue;
-            int min_index = -1;
-
-
-            for (int v = 0; v < N; v++)
-
-                if (sptSet[v] == false && dist[v] + score[v] <= min)
-                {
-                    min = dist[v] + score[v];
-                    min_index = v;
-                }
-
-            return min_index;
-        }
-        public int[] Astar(int start, int end) //takes starting and ending points
-        {
-            g_path1 = new GeometryGroup();
-            //initialzation
-            int[] dist = new int[N];
-            int[] score = new int[N];
-            bool[] sptSet = new bool[N];
-
-            for (int i = 0; i < N; i++)
-            {
-                dist[i] = Int32.MaxValue / 2;
-                score[i] = Int32.MaxValue / 2;
-                sptSet[i] = false;
-            }
-            dist[start] = 0;
-            score[start] = getHeuristic(start, end);
-
-            //start Astar
-            int u = start;
-
-            for (int i = 0; i < N; i++)
-            {
-                if (u == end) break;
-
-                sptSet[u] = true;
-
-                foreach (int n in getNeighbours(u))
-                {
-                    if (!sptSet[n])
-                    {
-                        dist[n] = dist[u] + space; // +1 space
-                        score[n] = getHeuristic(n, end);
-                        g_path1.Children.Add(new LineGeometry(new System.Windows.Point(getX(u), getY(u)), new System.Windows.Point(getX(n), getY(n))));
-
-                    }
-                }
-
-                u = AminDistance(dist, sptSet, score);
-
-            }
-
-
-            //forming path
-            LinkedList<int> path = new LinkedList<int>();
-
-            int vert = end;
-            path.AddFirst(end);
-            for (int i = dist[end] - 1; i >= 0; i--)
-            {
-                foreach (int neighbour in getNeighbours(vert))
-                {
-                    if (dist[neighbour] == i)
-                    {
-                        path.AddFirst(neighbour);
-                        vert = neighbour;
-                        break;
-                    }
-                }
-            }
-            int[] ret = path.ToArray<int>();
-         
-            return ret;
-        }
-
-        //Path smoothing algorithm
-        private void pathSmoothing()
-        {
-            smoothedPath = new int[2, lastPath.Length / 2];
-            for (int i = 0; i < lastPath.Length / 2; i++)
-            {
-                smoothedPath[0, i] = lastPath[0, i];
-                smoothedPath[1, i] = lastPath[1, i];
-            }
-
-            int e1 = 0, e2 = 0;
-            int to_remove = -1;
-
-            while (e1 != smoothedPath.Length / 2 - 1)
-            {
-                e2 = e1 + 1;
-                to_remove = e2;
-                while (e2 != smoothedPath.Length / 2)
-                {
-                    if (canWalkBetween(e1, e2, smoothedPath))
-                    {
-                        Console.WriteLine(e1 + " " + e2);
-                        to_remove = e2;
-                        // smoothedPath = removeFromPath(e1,e2, smoothedPath);
-                        //e2=e1+2;
-                        e2++;
-                    }
-                    else
-                    {
-                        e2++;
-                    }
-
-                }
-                smoothedPath = removeFromPath(e1, to_remove, smoothedPath);
-
-                e1++;
-            }
-        }
-        private bool canWalkBetween(int e1, int e2, int[,] path)
-        {
-
-            double x1 = path[0, e1], y1 = path[1, e1],
-                x2 = path[0, e2], y2 = path[1, e2];
-
-            if (x1 - x2 != 0)//if line is not vertical
-            {
-
-                //find y=ax+b
-                double a = (double)((y1 - y2) / (x1 - x2));
-                double b = y1 - a * x1;
-
-                // y=-1/a*x+b consisting center of obstacle
-                double a2 = -1 / a, b2;
-                System.Windows.Vector P;
-                foreach (ObstacleEntity o in gw.trees)
-                {
-                    b2 = o.location.Y - a2 * o.location.X;
-                    P = new System.Windows.Vector((b - b2) / (a2 - a), a * (b - b2) / (a2 - a) + b);
-
-
-                    // Console.WriteLine(x1 + "," + y1 + " " + x2 + "," + y2 + " obs=" + o.location + ",r=" + o.r+", inter="+P.X+","+P.Y+ " a="+a+" b="+b);
-
-                    if (MovingEntity.distance(P, o.location) <= (double)o.r * 2)
-                    {
-                        //check if point of crossection of 2 lines belongs to the edge
-                        if ((o.location.X >= x1 || o.location.X >= x2) && (o.location.X <= x1 || o.location.X <= x2) &&
-                           (o.location.Y >= y1 || o.location.Y >= y2) && (o.location.Y <= y1 || o.location.Y <= y2))
-                        {
-
-                            return false;
-                        }
-                    }
-                }
-
-            }
-            else //vertical straight
-            {
-
-                double b = x1;
-
-                System.Windows.Vector P;
-                foreach (ObstacleEntity o in gw.trees)
-                {
-
-                    P = new System.Windows.Vector(b, o.location.Y);
-
-                    if (MovingEntity.distance(P, o.location) <= (double)o.r * 2)
-                    {
-                        //check if point of crossection of 2 lines belongs to the edge
-                        if ((o.location.Y >= y1 || o.location.Y >= y2) && (o.location.Y <= y1 || o.location.Y <= y2))
-                        {
-                            return false;
-                        }
-                    }
-                }
-            }
-
-
-            return true;
-        }
-        int[,] removeFromPath(int from, int to, int[,] path)
-        {
-            int[,] ret = new int[2, path.Length / 2 - (to - from - 1)];
-            int j = 0;
-
-            for (int i = 0; i < ret.Length / 2; i++)
-            {
-                if (j == from + 1) j = to;
-
-                ret[0, i] = path[0, j];
-                ret[1, i] = path[1, j];
-                j++;
-            }
-
-            return ret;
-        }
-
-
-
-        internal void drawPaths(int[] path, double v1, double v2, double x1, double x2)
-        {
-
-            lastPath = new int[2, path.Length + 2];
-            smoothedPath = new int[2, path.Length + 2];
-
-            lastPath[0, 0] = (int)v1;
-            lastPath[1, 0] = (int)v2;
-
-
-            for (int i = 1; i <= path.Length; i++)
-            {
-                lastPath[0, i] = (int)getCoords(path[i - 1]).X;
-                lastPath[1, i] = (int)getCoords(path[i - 1]).Y;
-            }
-
-            lastPath[0, lastPath.Length / 2 - 1] = (int)x1;
-            lastPath[1, lastPath.Length / 2 - 1] = (int)x2;
-
-
-            pathSmoothing();
-
-            if (this.path2.StrokeThickness != 0)
-            {
-                hide(); show();
-            }
-
-            drawPath = true;
-
-        }
-
-
-
-
+       
 
 
         //
@@ -629,11 +311,11 @@ namespace Game.Grid
                     g_vertices.Children.Add(new EllipseGeometry(getCoords(i), 1.0, 1.0));
             }
 
-            vertices = new Path();
-            vertices.Data = g_vertices;
-            vertices.Fill = Brushes.Black;
+            Paths.vertices = new Path();
+            Paths.vertices.Data = g_vertices;
+            Paths.vertices.Fill = Brushes.Black;
 
-            gw.canv.Children.Add(vertices);
+            gw.canv.Children.Add(Paths.vertices);
 
 
             //Grid edges
@@ -647,19 +329,19 @@ namespace Game.Grid
                     }
                 }
 
-            edges = new Path();
-            edges.Data = g_edges;
-            edges.Stroke = Brushes.Black;
-            edges.StrokeThickness = 1;
+            Paths.edges = new Path();
+            Paths.edges.Data = g_edges;
+            Paths.edges.Stroke = Brushes.Black;
+            Paths.edges.StrokeThickness = 1;
 
-            gw.canv.Children.Add(edges);
+            gw.canv.Children.Add(Paths.edges);
 
 
             //paths
 
-            path1 = new Path();
-            path2 = new Path();
-            path3 = new Path();
+            Paths.path1 = new Path();
+            Paths.path2 = new Path();
+            Paths.path3 = new Path();
 
 
 
@@ -670,51 +352,51 @@ namespace Game.Grid
 
         public void hide()
         {
-            vertices.Fill = null;
-            edges.StrokeThickness = 0;
-            path1.StrokeThickness = 0;
-            path2.StrokeThickness = 0;
-            path3.StrokeThickness = 0;
+            Paths.vertices.Fill = null;
+            Paths.edges.StrokeThickness = 0;
+            Paths.path1.StrokeThickness = 0;
+            Paths.path2.StrokeThickness = 0;
+            Paths.path3.StrokeThickness = 0;
         }
 
         public void show()
         {
-            vertices.Fill = Brushes.Black;
-            edges.StrokeThickness = 1;
+            Paths.vertices.Fill = Brushes.Black;
+            Paths.edges.StrokeThickness = 1;
 
             //trying path
             //   GeometryGroup g_path1 = new GeometryGroup();
-            path1 = new Path();
-            path1.Stroke = Brushes.Yellow;
-            path1.StrokeThickness = 1;
-            gw.canv.Children.Add(path1);
+            Paths.path1 = new Path();
+            Paths.path1.Stroke = Brushes.Yellow;
+            Paths.path1.StrokeThickness = 1;
+            gw.canv.Children.Add(Paths.path1);
 
             //astar path
             GeometryGroup g_path2 = new GeometryGroup();
-            path2 = new Path();
-            path2.Data = g_path2;
-            path2.Stroke = Brushes.BlueViolet;
-            path2.StrokeThickness = 2;
-            gw.canv.Children.Add(path2);
+            Paths.path2 = new Path();
+            Paths.path2.Data = g_path2;
+            Paths.path2.Stroke = Brushes.BlueViolet;
+            Paths.path2.StrokeThickness = 2;
+            gw.canv.Children.Add(Paths.path2);
 
             //smooth path
             GeometryGroup g_path3 = new GeometryGroup();
-            path3 = new Path();
-            path3.Data = g_path3;
-            path3.Stroke = Brushes.Purple;
-            path3.StrokeThickness = 2;
-            gw.canv.Children.Add(path3);
+            Paths.path3 = new Path();
+            Paths.path3.Data = g_path3;
+            Paths.path3.Stroke = Brushes.Purple;
+            Paths.path3.StrokeThickness = 2;
+            gw.canv.Children.Add(Paths.path3);
 
 
-            if (drawPath)
+            if (Paths.drawPath)
             {
-                path1.Data = g_path1;
+                Paths.path1.Data = Paths.g_path1;
 
-                for (int i = 1; i < lastPath.Length / 2; i++)
-                    g_path2.Children.Add(new LineGeometry(new System.Windows.Point(lastPath[0, i - 1], lastPath[1, i - 1]), new System.Windows.Point(lastPath[0, i], lastPath[1, i])));
+                for (int i = 1; i < Paths.lastPath.Length / 2; i++)
+                    g_path2.Children.Add(new LineGeometry(new System.Windows.Point(Paths.lastPath[0, i - 1], Paths.lastPath[1, i - 1]), new System.Windows.Point(Paths.lastPath[0, i], Paths.lastPath[1, i])));
 
-                for (int i = 1; i < smoothedPath.Length / 2; i++)
-                    g_path3.Children.Add(new LineGeometry(new System.Windows.Point(smoothedPath[0, i - 1], smoothedPath[1, i - 1]), new System.Windows.Point(smoothedPath[0, i], smoothedPath[1, i])));
+                for (int i = 1; i < Paths.smoothedPath.Length / 2; i++)
+                    g_path3.Children.Add(new LineGeometry(new System.Windows.Point(Paths.smoothedPath[0, i - 1], Paths.smoothedPath[1, i - 1]), new System.Windows.Point(Paths.smoothedPath[0, i], Paths.smoothedPath[1, i])));
 
 
             }

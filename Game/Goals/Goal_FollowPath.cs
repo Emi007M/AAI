@@ -30,7 +30,7 @@ namespace Game.Goals
             if(path==null)
             {
                 owner.gw.findPath(owner.getX(), owner.getY(), target.X, target.Y);
-                path = owner.gw.grid.lastPath;
+                path = owner.gw.grid.Paths.smoothedPath;
             }
 
             System.Windows.Vector edge = new System.Windows.Vector(path[0, i], path[1, i]);
