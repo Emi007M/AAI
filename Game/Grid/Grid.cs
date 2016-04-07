@@ -367,7 +367,7 @@ namespace Game.Grid
             //trying path
             //   GeometryGroup g_path1 = new GeometryGroup();
             Paths.path1 = new Path();
-            Paths.path1.Stroke = Brushes.Yellow;
+            Paths.path1.Stroke = Brushes.LightGreen;
             Paths.path1.StrokeThickness = 1;
             gw.canv.Children.Add(Paths.path1);
 

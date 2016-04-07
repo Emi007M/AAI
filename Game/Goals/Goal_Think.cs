@@ -20,9 +20,9 @@ namespace Game.Goals
         {
             status = (int)Status.active;
 
-            AddGoal_GoBackToBase();
-            AddGoal_FollowPath(new System.Windows.Vector(300, 500));
-            AddGoal_FindClosestWater();
+          //  AddGoal_GoBackToBase();
+           // AddGoal_FollowPath(new System.Windows.Vector(300, 500));
+          //  AddGoal_FindClosestWater();
            //
         }
 

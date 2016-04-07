@@ -33,6 +33,7 @@ namespace Game
         public Vector location;
         protected Vector velocity;
         protected Vector acceleration;
+        protected int explorePhase;
 
         protected float mass;
         public float r;
@@ -43,6 +44,7 @@ namespace Game
         public Boolean fleeOn = false;
         public Boolean arrivalOn = false;
         public Boolean leaderFollowOn = false;
+        public Boolean exploreOn = false;
 
         public Vector zeroVec = new Vector(0,0);
         public Vector target;
@@ -59,6 +61,7 @@ namespace Game
             mass = _mass;
             maxspeed = _maxspeed;
 
+            explorePhase = 0;
             location = new Vector(x, y);
             velocity = new Vector(0, 0);
             acceleration = new Vector(0, 0);
@@ -100,12 +103,14 @@ namespace Game
             if (fleeOn) force += flee(target);
             if (arrivalOn) force += arrival(target);
             if (leaderFollowOn) force += leaderFollow(leader);
+            if (exploreOn) force += explore();
+
+           
+            force += 1.3* collisionAvoid(gw.trees);
+                   force += 0.7*Separation();
+
 
             
-                force += 1.5* collisionAvoid(gw.trees);
-                   force += 0.7*Separation();
-  
-
                     acceleration = force/mass;
                     velocity += acceleration;
 
@@ -290,6 +295,73 @@ namespace Game
             return forceRes;
         }
 
+
+        public Vector explore()
+        {
+            Vector direction = new Vector();
+            switch (explorePhase)
+            {
+                
+                case 0: 
+                    direction = new Vector(825 - location.X, 375 - location.Y);
+                    if (direction.Length < 50) explorePhase = 1;
+                    break;
+                case 1:
+                    direction = new Vector(860 - location.X, 590 - location.Y);
+                    if (direction.Length < 90) explorePhase = 2;
+                    break;
+                case 2:
+                    direction = new Vector(530 - location.X,560 - location.Y);
+                    if (direction.Length < 90) explorePhase = 3;
+                    break;
+                case 3:
+                    direction = new Vector(440 - location.X, 380 - location.Y);
+                    if (direction.Length < 90) explorePhase = 4;
+                    break;
+                case 4:
+                    direction = new Vector(60 - location.X, 580 - location.Y);
+                    if (direction.Length < 90) explorePhase = 5;
+                    break;
+                case 5:
+                    direction = new Vector(60 - location.X, 260 - location.Y);
+                    if (direction.Length < 90) explorePhase =6;
+                    break;
+                case 6:
+                    direction = new Vector(230 - location.X, 170 - location.Y);
+                    if (direction.Length < 90) explorePhase = 7;
+                    break;
+                case 7:
+                    direction = new Vector(40- location.X, 30 - location.Y);
+                    if (direction.Length < 100) explorePhase = 8;
+                    break;
+                case 8:
+                    direction = new Vector(440 - location.X, 50 - location.Y);
+                    if (direction.Length < 50) explorePhase = 9;
+                    break;
+                case 9:
+                    direction = new Vector(500 - location.X, 260 - location.Y);
+                    if (direction.Length < 90) explorePhase = 10;
+                    break;
+                case 10:
+                    direction = new Vector(560 - location.X, 400 - location.Y);
+                    if (direction.Length < 90) explorePhase = 0;
+                    break;
+
+            }
+        
+            Vector desiredVelocity = normalize(direction) * maxspeed;
+            if (direction.Length < 10 * velocity.Length + maxspeed)
+            {
+                desiredVelocity = direction / (10 * maxspeed + (mass / 2));
+                //desiredVelocity = direction/10;
+            }
+
+            Vector forceRes = new Vector(desiredVelocity.X - velocity.X, desiredVelocity.Y - velocity.Y);
+
+            return forceRes;
+        }
+
+
         public virtual void Draw() 
         { 
         }
@@ -301,6 +373,16 @@ namespace Game
                 return (new Vector(v.X / r, v.Y / r));
 
             return (new Vector(0, 0));
+        }
+        Vector truncate(Vector v)
+        {
+            if (v.Length < maxspeed) return v;
+            else {
+
+                Double r = Math.Sqrt(v.X * v.X + v.Y * v.Y);
+                return (new Vector(v.X / r, v.Y / r) * maxspeed);
+            }
+            
         }
         double length(Vector v)
         {
@@ -317,6 +399,11 @@ namespace Game
         {
             this.target = target;
             this.fleeOn = true;
+
+        }
+        public void useExplore()
+        {
+            this.exploreOn = true;
 
         }
         public void useArrival(Vector target)

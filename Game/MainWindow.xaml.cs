@@ -61,8 +61,8 @@ namespace Game
             addCursor();
 
             gw.addRandStones(5);
-            gw.addRandPonds(2);
-            gw.addRandTrees(55);
+            gw.addRandPonds(3);
+            gw.addRandTrees(25);
             gw.grid = new Grid.Grid(gw);
 
             gw.soldiers.Add(new Person(700, 320, 10, 15, gw));
@@ -78,6 +78,7 @@ namespace Game
 
             gw.collecting = new Collecting(gw);
 
+            gw.soldiers.ElementAt(0).useExplore();
             gw.soldiers.ElementAt(0).goal = new Goals.Goal_Think(gw.soldiers.ElementAt(0));
 
             isPath = -1;
@@ -120,7 +121,7 @@ namespace Game
 
                 if(gw.soldiers.Any())
                 {
-
+                    
                     //--actions
 
                     //water
@@ -259,15 +260,16 @@ namespace Game
 
             foreach (MovingEntity m in gw.soldiers) 
                 m.useLeaderFollow(gw.soldiers.ElementAt(0));
-            
+
 
             //// gw.soldiers.ElementAt(0).useArrival(new Vector(Mouse.GetPosition(MainGrid).X, (int)Mouse.GetPosition(MainGrid).Y));
             //gw.findPath(gw.soldiers.ElementAt(0).getX(), gw.soldiers.ElementAt(0).getY(), Mouse.GetPosition(MainGrid).X, Mouse.GetPosition(MainGrid).Y);
 
             //isPath = 1;
 
-            gw.soldiers.ElementAt(0).goal.AddGoal_FollowPath(new Vector(Mouse.GetPosition(MainGrid).X, Mouse.GetPosition(MainGrid).Y));
-
+             gw.soldiers.ElementAt(0).goal.AddGoal_FollowPath(new Vector(Mouse.GetPosition(MainGrid).X, Mouse.GetPosition(MainGrid).Y));
+           // gw.soldiers.ElementAt(0).goal.RemoveAllSubgoals();
+            //gw.soldiers.ElementAt(0).useExplore();
             Console.WriteLine("clicked!");
         }
 
