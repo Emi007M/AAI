@@ -56,12 +56,12 @@
                     <ImageBrush ImageSource="References/buttons/btn5.png" Stretch="Uniform"/>
                 </Button.Background>
             </Button>
-            <Button x:Name="btn_water" Content="" HorizontalAlignment="Right" Width="68" FontSize="16" FontWeight="ExtraBlack" Height="67" VerticalAlignment="Bottom" Cursor="Hand" Canvas.Left="576" Style="{StaticResource MyButton}" Canvas.Top="-5" Click="btn_water_Click">
+            <Button x:Name="btn_water" Content="" HorizontalAlignment="Right" Width="63" FontSize="16" FontWeight="ExtraBlack" Height="59" VerticalAlignment="Bottom" Cursor="Hand" Canvas.Left="653" Style="{StaticResource MyButton}" Click="btn_water_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="References/buttons/btn6.png" Stretch="Uniform"/>
                 </Button.Background>
             </Button>
-            <Button x:Name="btn_wood" Content="" HorizontalAlignment="Right" Width="56" FontSize="16" FontWeight="ExtraBlack" Height="56" VerticalAlignment="Bottom" Cursor="Hand" Canvas.Left="652" Style="{StaticResource MyButton}" Canvas.Top="2">
+            <Button x:Name="btn_return" Content="" HorizontalAlignment="Right" Width="48" FontSize="16" FontWeight="ExtraBlack" Height="51" VerticalAlignment="Bottom" Cursor="Hand" Canvas.Left="798" Style="{StaticResource MyButton}" Canvas.Top="3" Click="btn_return_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="References/buttons/btn3.png" Stretch="Uniform"/>
                 </Button.Background>

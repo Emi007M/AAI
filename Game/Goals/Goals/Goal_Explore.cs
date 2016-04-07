@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 
 namespace Game.Goals
 {
-    class Seek : Goal
+    class Goal_Explore : Goal
     {
+       
 
-        public Seek(MovingEntity p): base(p) { }
+        public Goal_Explore(MovingEntity p) : base(p)
+        {
+          
+        }
 
 
         public override void Activate()
@@ -17,7 +21,8 @@ namespace Game.Goals
             status = (int)Status.active;
 
 
-            owner.seekOn = true;
+           
+             owner.exploreOn = true;
         }
 
 
@@ -25,12 +30,16 @@ namespace Game.Goals
         {
             if (!isActive()) Activate();
 
+         if(true) ///TTOOODOO
+                status = (int)Status.completed;
+
             return status;
         }
 
         public override void Terminate()
         {
-            owner.seekOn = false;
+           
+              owner.exploreOn = false;
         }
 
 

@@ -60,12 +60,15 @@
     <Compile Include="GameEntities\ObstacleEntities\Castle.cs" />
     <Compile Include="Collecting.cs" />
     <Compile Include="Goals\CompositeGoal.cs" />
+    <Compile Include="Goals\CompositeGoals\Goal_HarvestClosestStone.cs" />
+    <Compile Include="Goals\CompositeGoals\Goal_HarvestClosestWater.cs" />
+    <Compile Include="Goals\CompositeGoals\Goal_Return.cs" />
     <Compile Include="Goals\Goal.cs" />
-    <Compile Include="Goals\Goal_FollowPath.cs" />
+    <Compile Include="Goals\CompositeGoals\Goal_FollowPath.cs" />
+    <Compile Include="Goals\Goals\Goal_Explore.cs" />
     <Compile Include="Goals\Goal_Think.cs" />
-    <Compile Include="Goals\Goal_TraverseEdge.cs" />
-    <Compile Include="Goals\Seek.cs" />
-    <Compile Include="Goals\Think.cs" />
+    <Compile Include="Goals\Goals\Goal_TraverseEdge.cs" />
+    <Compile Include="Goals\Goals\Goal_Wait.cs" />
     <Compile Include="Grid\Grid.cs" />
     <Compile Include="GameEntities\ObstacleEntities\Pond.cs" />
     <Compile Include="GameEntities\ObstacleEntities\Stone.cs" />
@@ -176,6 +179,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="References\buttons\btn6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="References\buttons\btn5_disabled.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

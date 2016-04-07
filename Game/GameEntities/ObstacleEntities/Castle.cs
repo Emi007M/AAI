@@ -22,35 +22,38 @@ namespace Game
         //static Random r = new Random();
         public int lvl = 0;
 
+        int[] WaterCapacity = { 10, 20, 50, 1000 };
+        int[] StoneCapacity = { 20, 20, 50, 1000};
+
+        public int WaterAmount = 0;
+        public int StoneAmount = 0;
+
         public Castle(GameWorld gw) : base(770, 80, gw)
         {
             this.Draw();
-
+            WaterAmount = StoneAmount = lvl = 0;
         }
-        //public Castle(int x, int y, GameWorld gw) : base(x, y, gw)
-        //{
 
-        //   this.Draw();
-
-        //}
+        public int getWaterCapacity()
+        {
+            return WaterCapacity[lvl];
+        }
+        public int getStoneCapacity()
+        {
+            return StoneCapacity[lvl];
+        }
 
         public override void Draw()
         {
             img_bitmap = new BitmapImage(new Uri("/Game;component/References/castle0.png", UriKind.RelativeOrAbsolute));
             Image img = new Image();
             img.Source = img_bitmap;
-            // image.Width = img_bitmap.Width;
-            // image.Height = img_bitmap.Height;
             img.Width = img.Height = 228*2;
-           // float radiusRatio = 2f;
             base.r = (int)228;
-
-           // img.RenderTransform = new RotateTransform(r.Next(30) * 180 / Math.PI, base.r, base.r);
 
 
             Ellipse radius = new Ellipse();
             radius.Width = radius.Height = base.r * 2;
-           // radius.RenderTransform = new TranslateTransform(-base.r+base.r/radiusRatio, -base.r +base.r /radiusRatio);
             radius.StrokeThickness = 0;
             radius.Stroke = Brushes.Blue;
 
@@ -60,15 +63,35 @@ namespace Game
             Canvas.SetLeft(image, location.X - image.Width / 2);
             Canvas.SetTop(image, location.Y - image.Height / 2);
 
-       
-         
+
+            //capacity label
+            Label txt_cap = new Label();
+            txt_cap.Content = "";
+            txt_cap.FontWeight = FontWeights.Black;
+            txt_cap.FontSize = 16.0;
+            txt_cap.Foreground = Brushes.Black;
+            txt_cap.Background = Brushes.LightGray;
+            Canvas.SetLeft(txt_cap, 40);
+            Canvas.SetTop(txt_cap, 150);
+            Canvas.SetZIndex(txt_cap, 0);
+
+
+
 
             image.Children.Add(img);
             image.Children.Add(radius);
+            image.Children.Add(txt_cap);
 
             Canvas.SetZIndex(image, 2);
 
             gw.canv.Children.Add(image);
+        }
+
+
+
+        public Boolean canBeUpgraded()
+        {
+            return (WaterAmount >= getWaterCapacity() && StoneAmount >= getStoneCapacity());
         }
 
         public void upgrade()
@@ -76,8 +99,13 @@ namespace Game
             Image c = (Image)image.Children[0];
             if (lvl < 3)
             {
+
+                WaterAmount -= getWaterCapacity();
+                StoneAmount -= getStoneCapacity();
+
                 lvl++;
                 c.Source = new BitmapImage(new Uri("/Game;component/References/castle"+lvl+".png", UriKind.RelativeOrAbsolute));
+
 
             }
         }

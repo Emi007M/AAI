@@ -20,9 +20,11 @@ namespace Game.Goals
         {
             status = (int)Status.active;
 
-          //  AddGoal_GoBackToBase();
-           // AddGoal_FollowPath(new System.Windows.Vector(300, 500));
-          //  AddGoal_FindClosestWater();
+            // AddGoal_FollowPath(new System.Windows.Vector(300, 500));
+            AddGoal_FindClosestWater();
+            AddGoal_FindClosestStone();
+
+           // AddGoal_GoBackToBase();
            //
         }
 
@@ -31,8 +33,18 @@ namespace Game.Goals
         {
             if (!isActive()) Activate();
 
-            status = (int)ProcessSubgoals();
+    /////////////////DAFAQ
+
+            if (owner.gw.sCapacity == owner.gw.collecting.capacity * owner.gw.soldiers.Count())
+            {
+                foreach (Goal g in Subgoals)
+                    g.Terminate();
+
+                AddGoal_GoBackToBase();
+            }
 //
+            status = (int)ProcessSubgoals();
+
             return status;
         }
 
@@ -45,7 +57,8 @@ namespace Game.Goals
 
         public void AddGoal_Explore()
         {
-            //
+            AddSubgoal(new Goal_Explore(owner));
+
         }
 
         public void AddGoal_FollowPath(System.Windows.Vector target)
@@ -57,44 +70,46 @@ namespace Game.Goals
 
         public void AddGoal_GoBackToBase()
         {
-            //owner.gw.findPath(owner.getX(), owner.getY(), 750.0, 320.0);
-            //int[,] path = owner.gw.grid.lastPath;
-            AddSubgoal(new Goal_FollowPath(owner, new System.Windows.Vector(750.0,320.0)));
+            AddSubgoal(new Goal_Return(owner));
+
         }
 
         internal void AddGoal_FindClosestWater()
         {
 
-            int start = owner.gw.grid.getVertex((int)owner.getX(), (int)owner.getY());
-            IEnumerable<ObstacleEntity> targets = owner.gw.collecting.ponds;
+            //int start = owner.gw.grid.getVertex((int)owner.getX(), (int)owner.getY());
+            //IEnumerable<ObstacleEntity> targets = owner.gw.collecting.ponds;
 
-            int target = owner.gw.grid.Paths.DijkstraClosest(start, targets);
-            System.Windows.Vector t = new System.Windows.Vector(owner.gw.grid.getX(target), owner.gw.grid.getY(target));
+            //int target = owner.gw.grid.Paths.DijkstraClosest(start, targets);
+            //System.Windows.Vector t = new System.Windows.Vector(owner.gw.grid.getX(target), owner.gw.grid.getY(target));
 
-            AddGoal_FollowPath(t);
+            //AddGoal_FollowPath(t);
 
-            foreach (MovingEntity m in owner.gw.soldiers)
-            {
-                m.useLeaderFollow(owner);
-            }
+            //foreach (MovingEntity m in owner.gw.soldiers)
+            //{
+            //    m.useLeaderFollow(owner);
+            //}
+
+            AddSubgoal(new Goal_HarvestClosestWater(owner));
         }
-
 
         internal void AddGoal_FindClosestStone()
         {
 
-            int start = owner.gw.grid.getVertex((int)owner.getX(), (int)owner.getY());
-            IEnumerable<ObstacleEntity> targets = owner.gw.collecting.stones;
+            //int start = owner.gw.grid.getVertex((int)owner.getX(), (int)owner.getY());
+            //IEnumerable<ObstacleEntity> targets = owner.gw.collecting.stones;
 
-            int target = owner.gw.grid.Paths.DijkstraClosest(start, targets);
-            System.Windows.Vector t = new System.Windows.Vector(owner.gw.grid.getX(target), owner.gw.grid.getY(target));
+            //int target = owner.gw.grid.Paths.DijkstraClosest(start, targets);
+            //System.Windows.Vector t = new System.Windows.Vector(owner.gw.grid.getX(target), owner.gw.grid.getY(target));
 
-            AddGoal_FollowPath(t);
+            //AddGoal_FollowPath(t);
 
-            foreach (MovingEntity m in owner.gw.soldiers)
-            {
-                m.useLeaderFollow(owner);
-            }
+            //foreach (MovingEntity m in owner.gw.soldiers)
+            //{
+            //    m.useLeaderFollow(owner);
+            //}
+
+            AddSubgoal(new Goal_HarvestClosestStone(owner));
         }
 
 
