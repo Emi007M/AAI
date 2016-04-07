@@ -78,7 +78,7 @@ namespace Game
 
             gw.collecting = new Collecting(gw);
 
-            gw.soldiers.ElementAt(0).useExplore();
+            
             gw.soldiers.ElementAt(0).goal = new Goals.Goal_Think(gw.soldiers.ElementAt(0));
 
             isPath = -1;
@@ -317,7 +317,7 @@ namespace Game
             if (!gw.soldiers.Any()) return;
 
 
-            gw.soldiers.ElementAt(0).goal.AddGoal_FindClosestWater();
+            gw.soldiers.ElementAt(0).goal.AddGoal_StopAtClosestWater();
 
             foreach (MovingEntity m in gw.soldiers)
             {
@@ -332,7 +332,7 @@ namespace Game
             if (!gw.soldiers.Any()) return;
 
 
-            gw.soldiers.ElementAt(0).goal.AddGoal_FindClosestStone();
+            gw.soldiers.ElementAt(0).goal.AddGoal_StopAtClosestStone();
 
             foreach (MovingEntity m in gw.soldiers)
             {
