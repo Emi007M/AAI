@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="FuzzyLogic.cs" />
     <Compile Include="GameEntities\ObstacleEntities\Castle.cs" />
     <Compile Include="Collecting.cs" />
     <Compile Include="Goals\CompositeGoal.cs" />
