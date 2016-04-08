@@ -6,18 +6,24 @@ using System.Threading.Tasks;
 
 namespace Game.Goals
 {
-    class Seek : Goal
+    class Goal_Return : CompositeGoal
     {
+       
 
-        public Seek(MovingEntity p): base(p) { }
+
+        public Goal_Return(MovingEntity p) : base(p)
+        {
+           
+        }
 
 
         public override void Activate()
         {
             status = (int)Status.active;
 
-
-            owner.seekOn = true;
+            AddSubgoal(new Goal_Wait(owner,200));
+            AddSubgoal(new Goal_FollowPath(owner, new System.Windows.Vector(750.0, 320.0)));
+         
         }
 
 
@@ -25,18 +31,23 @@ namespace Game.Goals
         {
             if (!isActive()) Activate();
 
+
+            //status = Subgoals.First().Process();
+            status = (int)ProcessSubgoals();
+
+
             return status;
         }
 
         public override void Terminate()
         {
-            owner.seekOn = false;
+          
         }
 
 
         public override void AddSubgoal(Goal g)
         {
-            throw new NotImplementedException();
+            Subgoals.AddFirst(g);
         }
     }
 }

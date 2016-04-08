@@ -1,20 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Controls;
-using System.Windows.Threading;
 
 
 namespace Game
@@ -34,7 +24,7 @@ namespace Game
         private BackgroundWorker worker = null;
 
         int isPath = -1;
-        int sCapacity = 0;
+       
 
         public MainWindow()
         {
@@ -78,7 +68,7 @@ namespace Game
 
             gw.collecting = new Collecting(gw);
 
-            gw.soldiers.ElementAt(0).useExplore();
+   //         gw.soldiers.ElementAt(0).useExplore();
             gw.soldiers.ElementAt(0).goal = new Goals.Goal_Think(gw.soldiers.ElementAt(0));
 
             isPath = -1;
@@ -88,27 +78,7 @@ namespace Game
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            ////going by the path
-            //if (isPath != -1)
-            //{
-
-            //    if (isPath == gw.grid.lastPath.Length / 2 - 1)
-            //    {
-            //        gw.soldiers.ElementAt(0).useArrival(new Vector(gw.grid.lastPath[0, isPath], gw.grid.lastPath[1, isPath]));
-            //        isPath = -1;
-
-            //    }
-            //    else
-            //    {
-            //        gw.soldiers.ElementAt(0).useSeek(new Vector(gw.grid.lastPath[0, isPath], gw.grid.lastPath[1, isPath]));
-
-            //        if ((int)gw.soldiers.ElementAt(0).getX() > gw.grid.lastPath[0, isPath] - 15 && (int)gw.soldiers.ElementAt(0).getX() < gw.grid.lastPath[0, isPath] + 15
-            //            && (int)gw.soldiers.ElementAt(0).getY() > gw.grid.lastPath[1, isPath] - 15 && (int)gw.soldiers.ElementAt(0).getY() < gw.grid.lastPath[1, isPath] + 15)
-            //            isPath++;
-            //    }
-
-                
-            //}
+      
 
 
             //-----resources-----
@@ -130,10 +100,10 @@ namespace Game
                     {
                         Console.WriteLine("close to water");
                         //gather water
-                        if (p.capacity > 0 && sCapacity < gw.collecting.capacity * gw.soldiers.Count())
+                        if (p.capacity > 0 && gw.sCapacity < gw.collecting.capacity * gw.soldiers.Count())
                         {
                             p.capacity -= 1;
-                            sCapacity++;
+                            gw.sCapacity++;
                             gw.collecting.waterAmount++;
                             if (timerCounter == 0) p.capacity--;
                         }
@@ -147,55 +117,85 @@ namespace Game
                     {
                         Console.WriteLine("close to stone");
                         //gather stone
-                        if (s.capacity > 0 && sCapacity < gw.collecting.capacity * gw.soldiers.Count())
+                        if (s.capacity > 0 && gw.sCapacity < gw.collecting.capacity * gw.soldiers.Count())
                         {
                             s.capacity -= 1;
-                            sCapacity++;
+                            gw.sCapacity++;
                             gw.collecting.stoneAmount++;
                             if (timerCounter == 0) s.capacity--;
                         }
 
                     }
 
+                    if (gw.collecting.isNearCastle(gw.soldiers.ElementAt(0)))
+                    {
+                        gw.castle.StoneAmount += gw.collecting.stoneAmount;
+                        gw.castle.WaterAmount += gw.collecting.waterAmount;
 
-                    //todo
+                        gw.collecting.stoneAmount = gw.collecting.waterAmount = gw.sCapacity = 0;
+
+
+                        if (gw.castle.canBeUpgraded())
+                        {
+                            //set upgrade btn enabled
+                            System.Windows.Media.ImageBrush brush = new System.Windows.Media.ImageBrush();
+                            brush.ImageSource = new BitmapImage(new Uri("../../References/buttons/btn5.png", UriKind.RelativeOrAbsolute));
+                            btn_upgrade.Background = brush;
+                            btn_upgrade.Cursor = Cursors.Hand;
+                        }
+
+
+                    }
+
+
+                
+
 
                 }
 
 
+                //--Respawning resources
 
                 //respawning water
                 if (timerCounter == 0)
                 {
-
                     foreach (Pond p in gw.collecting.ponds)
                     { if (p.capacity < gw.collecting.maxPondsCapacity) p.capacity++; }
                 }
-
                 //respawning stone
                 if (timerCounter == 0)
                 {
-
                     foreach (Stone s in gw.collecting.stones)
                     { if (s.capacity < gw.collecting.maxStonesCapacity) s.capacity++; }
                 }
 
 
-                //updating labels
+                //--Updating labels
                 foreach (Pond p in gw.collecting.ponds)
                 {
-                    Console.WriteLine(p.capacity);
+           //         Console.WriteLine(p.capacity);
                     Label txt = (Label)p.image.Children[2];
                     txt.Content = p.capacity + "/" + gw.collecting.maxPondsCapacity;
                 }
                 foreach (Stone p in gw.collecting.stones)
                 {
-                    Console.WriteLine(p.capacity);
+             //       Console.WriteLine(p.capacity);
                     Label txt = (Label)p.image.Children[2];
                     txt.Content = p.capacity + "/" + gw.collecting.maxStonesCapacity;
                 }
+                {//castle
+                    Label txt = (Label)gw.castle.image.Children[2];
+                    txt.Content = " water: " + gw.castle.WaterAmount + "/" + gw.castle.getWaterCapacity();
+                    txt.Content += "\nstones: " + gw.castle.StoneAmount + "/" + gw.castle.getStoneCapacity();
+                }
 
-                soldiers_capacity.Text = sCapacity + "/" + gw.collecting.capacity * gw.soldiers.Count();
+                soldiers_capacity.Text = gw.sCapacity + "/" + gw.collecting.capacity * gw.soldiers.Count();
+
+
+
+
+
+
             }
 
 
@@ -214,6 +214,11 @@ namespace Game
         {
             Canvas.SetZIndex(Canv_bttns, 10);
 
+            //set upgrade btn disabled
+            System.Windows.Media.ImageBrush brush = new System.Windows.Media.ImageBrush();
+            brush.ImageSource = new BitmapImage(new Uri("../../References/buttons/btn5_disabled.png", UriKind.RelativeOrAbsolute));
+            btn_upgrade.Background = brush;
+            btn_upgrade.Cursor = Cursors.No;
         }
 
         public void addCursor()
@@ -290,7 +295,14 @@ namespace Game
 
         private void btn_upgrade_Click(object sender, RoutedEventArgs e)
         {
+            if (!gw.castle.canBeUpgraded()) return;
+
             gw.castle.upgrade();
+           
+            System.Windows.Media.ImageBrush brush = new System.Windows.Media.ImageBrush();
+            brush.ImageSource = new BitmapImage(new Uri("../../References/buttons/btn5_disabled.png", UriKind.RelativeOrAbsolute));
+            btn_upgrade.Background = brush;
+            btn_upgrade.Cursor = Cursors.No;
         }
 
         private void btn_add_man_Click(object sender, RoutedEventArgs e)
@@ -340,6 +352,10 @@ namespace Game
             }
         }
 
+        private void btn_return_Click(object sender, RoutedEventArgs e)
+        {
+            gw.soldiers.ElementAt(0).goal.AddGoal_GoBackToBase();
+        }
     }
 }
 

@@ -11,6 +11,8 @@ namespace Game
     class GameWorld
     {
         public List<MovingEntity> soldiers = new List<MovingEntity>();
+        public int sCapacity = 0;
+
         public List<ObstacleEntity> trees = new List<ObstacleEntity>();
 
         public Canvas canv;
