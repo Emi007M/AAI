@@ -21,8 +21,10 @@ namespace Game.Goals
             status = (int)Status.active;
 
             // AddGoal_FollowPath(new System.Windows.Vector(300, 500));
-            AddGoal_FindClosestWater();
-            AddGoal_FindClosestStone();
+            //    AddGoal_FindClosestWater();
+            //    AddGoal_FindClosestStone();
+
+            AddGoal_Explore();
 
            // AddGoal_GoBackToBase();
            //

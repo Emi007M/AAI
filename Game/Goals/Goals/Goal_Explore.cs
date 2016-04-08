@@ -30,8 +30,14 @@ namespace Game.Goals
         {
             if (!isActive()) Activate();
 
-         if(true) ///TTOOODOO
+         if(owner.gw.collecting.Desired==Collecting.Resources.Stone && owner.gw.collecting.isNearStone(owner) !=null
+                || owner.gw.collecting.Desired == Collecting.Resources.Water && owner.gw.collecting.isNearWater(owner) != null
+                )
+            {
+                Console.WriteLine("CLOSEEEE");
                 status = (int)Status.completed;
+                Terminate();
+            }
 
             return status;
         }

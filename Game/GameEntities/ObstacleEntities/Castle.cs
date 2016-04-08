@@ -22,7 +22,7 @@ namespace Game
         //static Random r = new Random();
         public int lvl = 0;
 
-        int[] WaterCapacity = { 10, 20, 50, 1000 };
+        int[] WaterCapacity = { 10, 30, 50, 1000 };
         int[] StoneCapacity = { 20, 20, 50, 1000};
 
         public int WaterAmount = 0;

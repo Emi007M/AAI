@@ -8,7 +8,7 @@ namespace Game
 {
     class Collecting
     {
-        //enum Resources{Water, Wood};
+        public enum Resources{Water, Stone};
 
         GameWorld gw;
         public int capacity; //capacity of a single unit
@@ -21,7 +21,7 @@ namespace Game
         public int maxStonesCapacity = 10;
         public int stoneAmount = 0; //how much units have right know
 
-        
+        public Resources Desired = Resources.Water;
 
 
 
