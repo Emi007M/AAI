@@ -33,7 +33,7 @@ namespace Game.Goals
                 m.useLeaderFollow(owner);
             }
 
-            AddSubgoal(new Goal_Wait(owner,500));
+            //AddSubgoal(new Goal_Wait(owner,500));
             AddSubgoal(new Goal_FollowPath(owner, t));
 
         }
