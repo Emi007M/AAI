@@ -20,7 +20,7 @@ namespace Game.Goals
         {
             status = (int)Status.active;
 
-          
+            owner.gw.leaveResources = true;
             //todo
           //  owner.seekOn = true;
         }
@@ -40,7 +40,8 @@ namespace Game.Goals
         public override void Terminate()
         {
             //todo
-          //  owner.seekOn = false;
+            //  owner.seekOn = false;
+            owner.gw.leaveResources = false;
         }
 
 

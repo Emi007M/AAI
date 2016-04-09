@@ -24,6 +24,8 @@ namespace Game
         private BackgroundWorker worker = null;
 
         int isPath = -1;
+
+        
        
 
         public MainWindow()
@@ -46,7 +48,7 @@ namespace Game
 
             //gw = null;
             CanvMain.Children.Clear();
-            gw = new GameWorld(CanvMain);
+            gw = new GameWorld(CanvMain, this);
 
             addCursor();
 
@@ -127,13 +129,13 @@ namespace Game
 
                     }
 
-                    if (gw.collecting.isNearCastle(gw.soldiers.ElementAt(0)))
+                    if (gw.collecting.isNearCastle(gw.soldiers.ElementAt(0)) && gw.leaveResources)
                     {
                         gw.castle.StoneAmount += gw.collecting.stoneAmount;
                         gw.castle.WaterAmount += gw.collecting.waterAmount;
 
                         gw.collecting.stoneAmount = gw.collecting.waterAmount = gw.sCapacity = 0;
-
+                        
 
                         if (gw.castle.canBeUpgraded())
                         {

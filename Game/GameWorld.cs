@@ -15,6 +15,7 @@ namespace Game
         public List<ObstacleEntity> trees = new List<ObstacleEntity>();
         public FuzzyLogic fl;
         public Canvas canv;
+        public MainWindow mainWindow;
 
         public int explorePhase;
         public Castle castle;
@@ -22,13 +23,15 @@ namespace Game
         public Game.Grid.Grid grid;
 
         public Collecting collecting;
+        public bool leaveResources = false;
 
         public bool showThings = false;
       //  public bool showThingsFlag = false;
 
-        public GameWorld(Canvas canv)
+        public GameWorld(Canvas canv, MainWindow mainWindow)
         {
             this.canv = canv;
+            this.mainWindow = mainWindow;
 
             castle = new Castle(this);
             trees.Add(castle);

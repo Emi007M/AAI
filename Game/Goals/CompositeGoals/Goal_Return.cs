@@ -21,7 +21,7 @@ namespace Game.Goals
         {
             status = (int)Status.active;
             AddSubgoal(new Goal_GetBagBuckets(owner));
-            AddSubgoal(new Goal_Wait(owner, 10));
+            AddSubgoal(new Goal_Wait(owner, 30));
             AddSubgoal(new Goal_FollowPath(owner, new System.Windows.Vector(750.0, 320.0)));
 
         }

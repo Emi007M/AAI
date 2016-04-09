@@ -88,6 +88,7 @@
             </Button>
             <TextBlock x:Name="water_capacity" HorizontalAlignment="Left" Height="15" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="46" Canvas.Left="602" Canvas.Top="15" FontWeight="Bold" Text="water" Foreground="#FF070557"/>
             <TextBlock x:Name="stone_capacity" HorizontalAlignment="Left" Height="15" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="46" Canvas.Left="602" Canvas.Top="32" FontWeight="Bold" Text="stones" Foreground="#FF242425"/>
+            <TextBlock x:Name="fuzzy_txt" HorizontalAlignment="Left" Height="167" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="308" Canvas.Left="19" Canvas.Top="-581" FontWeight="Bold" Text="fuzzy" Foreground="#FF070557" Background="#66F9F9F9"/>
         </Canvas>
         <Canvas x:Name="CanvMain" Margin="0,0,0,64" Cursor="None" MouseLeftButtonDown="CanvMain_MouseLeftButtonDown"/>
 

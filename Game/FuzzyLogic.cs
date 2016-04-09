@@ -47,7 +47,10 @@ namespace Game
             UpdateWater(gw.castle.WaterAmount);
             UpdateStone(gw.castle.StoneAmount);
 
-           info +="Fuzzy data:\n";
+            info += "now there is " + gw.castle.WaterAmount + " water and " + gw.castle.StoneAmount + " stone.";
+            info += "\nand target is " + desiredWater + ", " + desiredStone;        
+
+           info +="\nFuzzy data:\n";
            info += " Water:  needed=" + water_needed + ", not_needed=" + water_not_needed + "\n";
            info += " Stones: needed=" + stone_needed + ", not_needed=" + stone_not_needed +"\n";
 
@@ -74,6 +77,8 @@ namespace Game
             info+="So take " + Buckets + " buckets and " + Bags + " barrows.";
 
             Console.WriteLine(this);
+            gw.mainWindow.fuzzy_txt.Text = this.ToString();
+                
         }
 
         private void UpdateData()
@@ -95,7 +100,7 @@ namespace Game
             }
             else
             {
-                double a = 1 / desiredWater;
+                double a =(double) 1 / desiredWater;
 
                 water_needed = -a * x + 1;
                 water_not_needed = a * x;
@@ -110,7 +115,7 @@ namespace Game
             }
             else
             {
-                double a = 1 / desiredStone;
+                double a = (double) 1 / desiredStone;
 
                 stone_needed = -a * x + 1;
                 stone_not_needed = a * x;
@@ -143,19 +148,19 @@ namespace Game
             //Defuzzification
             if (MaxAv < maxTake / 2) //first half
             {
-                Buckets = (int)(-1 / (maxTake / 2) * MaxAv + 1) * maxTake;
+                Buckets = (int)((double)((double)-1 / (double)(maxTake / 2) * MaxAv + 1) * maxTake);
                 Bags = 0;
 
-                int both = (int)(1 / (maxTake / 2) * MaxAv) * maxTake;
+                int both = (int)(double)(((double)1 / ((double)maxTake / 2) * MaxAv) * maxTake);
                 Buckets += both / 2;
                 Bags += both / 2;
             }
             else if(MaxAv > maxTake/2) //second half
             {
                 Buckets = 0;
-                Bags = (int)(1 / (maxTake / 2) * MaxAv - 1) * maxTake;
+                Bags = (int)(double)(((double)1 / ((double)maxTake / 2) * MaxAv - 1) * maxTake);
 
-                int both = (int)(-1 / (maxTake / 2) * MaxAv - 2) * maxTake;
+                int both = (int)(double)(((double)-1 / ((double)maxTake / 2) * MaxAv - 2) * maxTake);
                 Buckets += both / 2;
                 Bags += both / 2;
             }
