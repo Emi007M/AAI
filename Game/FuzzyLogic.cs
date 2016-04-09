@@ -47,12 +47,10 @@ namespace Game
             UpdateWater(gw.castle.WaterAmount);
             UpdateStone(gw.castle.StoneAmount);
 
-            info += "now there is " + gw.castle.WaterAmount + " water and " + gw.castle.StoneAmount + " stone.";
-            info += "\nand target is " + desiredWater + ", " + desiredStone;        
-
-           info +="\nFuzzy data:\n";
-           info += " Water:  needed=" + water_needed + ", not_needed=" + water_not_needed + "\n";
-           info += " Stones: needed=" + stone_needed + ", not_needed=" + stone_not_needed +"\n";
+            info += "Fuzzy logic for data: \nwater: " + gw.castle.WaterAmount + "/"+ desiredWater+", stones: " + gw.castle.StoneAmount + "/" + desiredStone + "\n";
+          
+           info += "\nWater:  needed=" + Math.Round(water_needed,3) + ", not_needed=" + Math.Round(water_not_needed,3) + "\n";
+           info += "Stones: needed=" + Math.Round(stone_needed,3) + ", not_needed=" + Math.Round(stone_not_needed,3) +"\n";
 
 
             //Fuzzy Rules
@@ -68,7 +66,7 @@ namespace Game
             double tmp2 = AND(stone_not_needed, water_not_needed);
             collect_both = OR(tmp1, tmp2);
 
-            info += "Collect: water=" + collect_water + ", stones=" + collect_stone + ", both=" + collect_both + "\n";
+            info += "Collect: water=" + Math.Round(collect_water,3) + ", stones=" + Math.Round(collect_stone,3) + ", both=" + Math.Round(collect_both,3) + "\n\n";
 
 
             //Defuzzification
@@ -137,13 +135,13 @@ namespace Game
             //count both
             double max_b = maxTake / 2;
 
-            info += "Max: water=" + max_w + ", stones=" + max_s + ", both=" + max_b + "\n";
+            info += "Max: water=" + Math.Round(max_w,3) + ", stones=" + Math.Round(max_s,3) + ", both=" + Math.Round(max_b,3) + "\n";
 
 
             //MaxAv
             double MaxAv = (max_w * collect_water + max_s * collect_stone + max_b * collect_both) / (collect_water + collect_stone + collect_both);
 
-            info += "MaxAv=" + MaxAv + "\n";
+            info += "MaxAv=" + Math.Round(MaxAv,3) + "\n";
 
             //Defuzzification
             if (MaxAv < maxTake / 2) //first half
@@ -152,6 +150,7 @@ namespace Game
                 Bags = 0;
 
                 int both = (int)(double)(((double)1 / ((double)maxTake / 2) * MaxAv) * maxTake);
+                info += "Crisp values: buckets=" + Buckets + ", bags=" + Bags + ", random=" + both+"\n";
                 int x = new Random().Next(both);
                 Buckets += x;
                 Bags += both - x;
@@ -162,12 +161,15 @@ namespace Game
                 Bags = (int)(double)(((double)1 / ((double)maxTake / 2) * MaxAv - 1) * maxTake);
 
                 int both = (int)(double)(((double)-1 / ((double)maxTake / 2) * MaxAv - 2) * maxTake);
+                info += "Crisp values: buckets=" + Buckets + ", bags=" + Bags + ", random=" + both + "\n";
                 int x = new Random().Next(both);
                 Buckets += x;
                 Bags += both - x;
             }
             else //exactly at half
             {
+                info += "Crisp values: buckets=" + 0 + ", bags=" + 0 + ", random=" + maxTake + "\n";
+
                 int x = new Random().Next(maxTake);
                 Buckets = x;
                 Bags = maxTake - x;

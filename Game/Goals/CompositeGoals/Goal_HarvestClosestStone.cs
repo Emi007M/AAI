@@ -23,7 +23,8 @@ namespace Game.Goals
             status = (int)Status.active;
 
             int start = owner.gw.grid.getVertex((int)owner.getX(), (int)owner.getY());
-            IEnumerable<ObstacleEntity> targets = owner.gw.collecting.stones;
+            IEnumerable<ObstacleEntity> targets = from s in owner.gw.collecting.stones where s.capacity>0 select s;
+
 
             int target = owner.gw.grid.Paths.DijkstraClosest(start, targets);
             System.Windows.Vector t = new System.Windows.Vector(owner.gw.grid.getX(target), owner.gw.grid.getY(target));

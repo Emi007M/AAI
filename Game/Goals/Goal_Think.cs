@@ -20,6 +20,7 @@ namespace Game.Goals
 
         int gather = 0;
 
+
         public Goal_Think(MovingEntity p) : base(p)
         {
 
@@ -67,45 +68,18 @@ namespace Game.Goals
         {
             if (owner.gw.collecting.capacityWater <= owner.gw.collecting.waterAmount)
             {
-                if (owner.gw.collecting.capacityWater <= owner.gw.collecting.stoneAmount) return 50;
+                if (owner.gw.collecting.capacityStone <= owner.gw.collecting.stoneAmount) return 50;
             }
             return 0;
         }
-        //public int CalculateWater()
-        //{
-        //    //  Vector ownerC = new Vector(owner.location.X, owner.location.Y);
-        //    foreach (Pond p in owner.gw.collecting.ponds)
-        //    {
-        //        // Vector p_center = new Vector(p.location.X, p.location.Y);
-        //        double lenght = Math.Sqrt((Math.Pow(owner.getX() - p.location.X, 2)) + Math.Pow(owner.getY() - p.location.Y, 2));
-        //        if (lenght < 2 * p.r)
-        //        {
-        //            return 100  - 80 * owner.gw.collecting.waterAmount; //- x*owner.gw.castle.waterAmount
+     
 
-        //        }
-        //    }
-        //    return 0;
-        //}
-
-        public int CalculateExplore()
-        {
-
-            return 0;
-        }
-        //public int CalculateStone()
+        //public int CalculateExplore()
         //{
 
-        //    foreach (Stone s in owner.gw.collecting.stones)
-        //    {
-        //        // Vector p_center = new Vector(p.location.X, p.location.Y);
-        //        double lenght = Math.Sqrt((Math.Pow(owner.getX() - s.location.X, 2)) + Math.Pow(owner.getY() - s.location.Y, 2));
-        //        if (lenght < 2 * s.r)
-        //        {
-        //            return 99 * owner.gw.soldiers.Count - 80 * owner.gw.collecting.stoneAmount; //- x*owner.gw.castle.waterAmount
-        //        }
-        //    }
         //    return 0;
         //}
+     
         public override int Process()
         {
             if (!isActive()) Activate();
@@ -123,14 +97,11 @@ namespace Game.Goals
             return desirability.ToList().IndexOf(desirability.Max()); //returns 0 for gather,        1 for home,      
            
 
-
-
         }
         public override void Terminate()
         {
             RemoveAllSubgoals();
-            
-            //
+    
         }
 
 
@@ -141,54 +112,22 @@ namespace Game.Goals
         }
 
         public void AddGoal_FollowPath(System.Windows.Vector target)
-        {
-            //  owner.gw.findPath(owner.getX(), owner.getY(), target.X, target.Y);
-            //int[,] path = owner.gw.grid.lastPath;
+        { 
             AddSubgoal(new Goal_FollowPath(owner, target));
         }
 
         public void AddGoal_GoBackToBase()
         {
             AddSubgoal(new Goal_Return(owner));
-
         }
 
         internal void AddGoal_FindClosestWater()
         {
-
-            //int start = owner.gw.grid.getVertex((int)owner.getX(), (int)owner.getY());
-            //IEnumerable<ObstacleEntity> targets = owner.gw.collecting.ponds;
-
-            //int target = owner.gw.grid.Paths.DijkstraClosest(start, targets);
-            //System.Windows.Vector t = new System.Windows.Vector(owner.gw.grid.getX(target), owner.gw.grid.getY(target));
-
-            //AddGoal_FollowPath(t);
-
-            //foreach (MovingEntity m in owner.gw.soldiers)
-            //{
-            //    m.useLeaderFollow(owner);
-            //}
-        
-
             AddSubgoal(new Goal_HarvestClosestWater(owner));
         }
 
-
         internal void AddGoal_FindClosestStone()
         {
-
-            //int start = owner.gw.grid.getVertex((int)owner.getX(), (int)owner.getY());
-            //IEnumerable<ObstacleEntity> targets = owner.gw.collecting.stones;
-
-            //int target = owner.gw.grid.Paths.DijkstraClosest(start, targets);
-            //System.Windows.Vector t = new System.Windows.Vector(owner.gw.grid.getX(target), owner.gw.grid.getY(target));
-
-            //AddGoal_FollowPath(t);
-
-            //foreach (MovingEntity m in owner.gw.soldiers)
-            //{
-            //    m.useLeaderFollow(owner);
-            //}
             AddSubgoal(new Goal_HarvestClosestStone(owner));
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Windows;
 
 namespace Game.Grid
 {
@@ -20,10 +21,17 @@ namespace Game.Grid
         public Path vertices, edges, path1, path2, path3;
 
 
+        //exploring
+        public List<Vector> explorePath;
+
+
+
         public PathsOnGrid(Grid g)
         {
             grid = g;
             N = grid.N;
+
+            explorePath = new List<Vector>();
         }
 
 
@@ -123,28 +131,28 @@ namespace Game.Grid
             for (int i = 0; i < N; i++)
             {
                 int u = minDistance(dist, sptSet);
-                foreach(ObstacleEntity target in targets)
+                foreach (ObstacleEntity target in targets)
                 {
-                if (MovingEntity.distance(new System.Windows.Vector(grid.getX(u), grid.getY(u)),target.location)<2*target.r)
+                    if (MovingEntity.distance(new System.Windows.Vector(grid.getX(u), grid.getY(u)), target.location) < 2 * target.r)
                     {
-                       return end = u;
-            
+                        return end = u;
+
                     }
 
-              
-                sptSet[u] = true;
 
-                for (int j = 0; j < N; j++)
-                {
-                    if (grid.matrix[u, j] > 0 && !sptSet[j] && dist[u] != Int32.MaxValue && dist[u] + grid.matrix[u, j] < dist[j])
+                    sptSet[u] = true;
+
+                    for (int j = 0; j < N; j++)
                     {
-                        dist[j] = dist[u] + grid.space; // +1
-                      
+                        if (grid.matrix[u, j] > 0 && !sptSet[j] && dist[u] != Int32.MaxValue && dist[u] + grid.matrix[u, j] < dist[j])
+                        {
+                            dist[j] = dist[u] + grid.space; // +1
+
+                        }
                     }
-                }
                 }
             }
-           
+
             return end;
         }
 
@@ -256,7 +264,7 @@ namespace Game.Grid
                 {
                     if (canWalkBetween(e1, e2, smoothedPath))
                     {
-                     //   Console.WriteLine(e1 + " " + e2);
+                        //   Console.WriteLine(e1 + " " + e2);
                         to_remove = e2;
                         // smoothedPath = removeFromPath(e1,e2, smoothedPath);
                         //e2=e1+2;
@@ -384,6 +392,33 @@ namespace Game.Grid
 
         }
 
+
+        //exploring
+        public void InitExplorePath()
+        {
+            explorePath = new List<Vector>();
+
+            Console.WriteLine("ExplorePath: out of " + grid.N + " vertices:");
+
+            int i = 0;
+            Random rand = new Random();
+            int v;
+            while (i<grid.N)
+            {
+                v = rand.Next(10) + i;
+                if (grid.matrix[v, v] != -1)
+                {
+                    explorePath.Add(new Vector(grid.getX(v), grid.getY(v)));
+                    Console.WriteLine("Vertex: "+v);
+                }
+
+                i += grid.N / 40;
+            }
+
+
+
+
+        }
 
 
 

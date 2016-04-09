@@ -29,14 +29,13 @@ namespace Game.Goals
         public override int Process()
         {
             if (!isActive()) Activate();
-            //  Console.WriteLine("explore process");
+            //  Console.WriteLine("taking bags and buckets process");
             status = (int)Status.completed;
             return status;
         }
 
         public override void Terminate()
         {
-
 
             owner.dontMoveOn = false;
         }

@@ -68,7 +68,7 @@
     <Compile Include="Goals\Goal.cs" />
     <Compile Include="Goals\CompositeGoals\Goal_FollowPath.cs" />
     <Compile Include="Goals\Goals\Goal_DontMove.cs" />
-    <Compile Include="Goals\Goals\Goal_Explore.cs" />
+    <Compile Include="Goals\CompositeGoals\Goal_Explore.cs" />
     <Compile Include="Goals\Goals\Goal_GetBagsBuckets.cs" />
     <Compile Include="Goals\Goal_Think.cs" />
     <Compile Include="Goals\Goals\Goal_TraverseEdge.cs" />

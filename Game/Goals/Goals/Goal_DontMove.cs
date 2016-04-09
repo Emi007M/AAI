@@ -20,8 +20,6 @@ namespace Game.Goals
         {
             status = (int)Status.active;
 
-
-
             owner.dontMoveOn = true;
         }
 
@@ -29,15 +27,14 @@ namespace Game.Goals
         public override int Process()
         {
             if (!isActive()) Activate();
-            //  Console.WriteLine("explore process");
+            //  Console.WriteLine("stay still process");
 
             return status;
         }
 
         public override void Terminate()
         {
-
-           
+        
             owner.dontMoveOn = false;
         }
 

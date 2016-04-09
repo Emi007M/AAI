@@ -21,8 +21,7 @@ namespace Game.Goals
             status = (int)Status.active;
 
             owner.gw.leaveResources = true;
-            //todo
-          //  owner.seekOn = true;
+     
         }
 
 
@@ -32,15 +31,17 @@ namespace Game.Goals
 
             counter--;
             if (counter <= 0)
+            {
+                owner.gw.leaveResources = false;
                 status = (int)Status.completed;
+            }
 
             return status;
         }
 
         public override void Terminate()
         {
-            //todo
-            //  owner.seekOn = false;
+          
             owner.gw.leaveResources = false;
         }
 
