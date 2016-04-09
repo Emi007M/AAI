@@ -21,7 +21,7 @@ namespace Game
 
         //crisp calculated values
         public int Buckets { get; private set; } //for water
-        public int Barrows { get; private set; } //for stones
+        public int Bags { get; private set; } //for stones
 
         private string info;
         
@@ -30,7 +30,7 @@ namespace Game
         public FuzzyLogic(GameWorld gw)
         {
             this.gw = gw;
-            Buckets = Barrows = 0;
+            Buckets = Bags = 0;
 
             lvl = gw.castle.lvl;
             UpdateData();
@@ -71,7 +71,7 @@ namespace Game
             //Defuzzification
             CountMaxAv();
 
-            info+="So take " + Buckets + " buckets and " + Barrows + " barrows.";
+            info+="So take " + Buckets + " buckets and " + Bags + " barrows.";
 
             Console.WriteLine(this);
         }
@@ -119,7 +119,7 @@ namespace Game
 
         private void CountMaxAv()
         {
-            int maxTake = gw.sCapacity * gw.soldiers.Count();
+            int maxTake = gw.collecting.sCapacity * gw.soldiers.Count();
 
             //Max
 
@@ -144,25 +144,25 @@ namespace Game
             if (MaxAv < maxTake / 2) //first half
             {
                 Buckets = (int)(-1 / (maxTake / 2) * MaxAv + 1) * maxTake;
-                Barrows = 0;
+                Bags = 0;
 
                 int both = (int)(1 / (maxTake / 2) * MaxAv) * maxTake;
                 Buckets += both / 2;
-                Barrows += both / 2;
+                Bags += both / 2;
             }
             else if(MaxAv > maxTake/2) //second half
             {
                 Buckets = 0;
-                Barrows = (int)(1 / (maxTake / 2) * MaxAv - 1) * maxTake;
+                Bags = (int)(1 / (maxTake / 2) * MaxAv - 1) * maxTake;
 
                 int both = (int)(-1 / (maxTake / 2) * MaxAv - 2) * maxTake;
                 Buckets += both / 2;
-                Barrows += both / 2;
+                Bags += both / 2;
             }
             else //exactly at half
             {
                 Buckets = maxTake / 2;
-                Barrows = maxTake / 2;
+                Bags = maxTake / 2;
             }
 
         }

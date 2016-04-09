@@ -47,7 +47,7 @@ namespace Game.Goals
         {
             if (!isActive()) Activate();
 
-            if (owner.gw.collecting.waterAmount >= owner.gw.collecting.capacity && owner.gw.collecting.isNearWater(owner) != null)
+            if (owner.gw.collecting.waterAmount >= owner.gw.collecting.capacityWater ||( owner.gw.collecting.isNearWater(owner) != null && owner.gw.collecting.isNearWater(owner).capacity == 0))
             {
                 RemoveAllSubgoals();
                 

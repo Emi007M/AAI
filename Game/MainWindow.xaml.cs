@@ -100,10 +100,10 @@ namespace Game
                     {
                         Console.WriteLine("close to water");
                         //gather water
-                        if (p.capacity > 0 && gw.sCapacity < gw.collecting.capacity * gw.soldiers.Count())
+                        if (p.capacity > 0 && gw.collecting.waterAmount < gw.collecting.capacityWater)
                         {
                             p.capacity -= 1;
-                            gw.sCapacity++;
+                           // gw.sCapacity++;
                             gw.collecting.waterAmount++;
                             if (timerCounter == 0) p.capacity--;
                         }
@@ -117,10 +117,10 @@ namespace Game
                     {
                         Console.WriteLine("close to stone");
                         //gather stone
-                        if (s.capacity > 0 && gw.sCapacity < gw.collecting.capacity * gw.soldiers.Count())
+                        if (s.capacity > 0 && gw.collecting.stoneAmount < gw.collecting.capacityStone)
                         {
                             s.capacity -= 1;
-                            gw.sCapacity++;
+                            //gw.sCapacity++;
                             gw.collecting.stoneAmount++;
                             if (timerCounter == 0) s.capacity--;
                         }
@@ -185,11 +185,13 @@ namespace Game
                 }
                 {//castle
                     Label txt = (Label)gw.castle.image.Children[2];
-                    txt.Content = " water: " + gw.castle.WaterAmount + "/" + gw.castle.getWaterCapacity();
+                    txt.Content = "   Lvl " + gw.castle.lvl;
+                    txt.Content += "\nwater:  " + gw.castle.WaterAmount + "/" + gw.castle.getWaterCapacity();
                     txt.Content += "\nstones: " + gw.castle.StoneAmount + "/" + gw.castle.getStoneCapacity();
                 }
 
-                soldiers_capacity.Text = gw.sCapacity + "/" + gw.collecting.capacity * gw.soldiers.Count();
+                water_capacity.Text = gw.collecting.waterAmount + "/" + gw.fl.Buckets;
+                stone_capacity.Text = gw.collecting.stoneAmount + "/" + gw.fl.Bags;
 
 
 

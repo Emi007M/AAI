@@ -69,6 +69,7 @@
     <Compile Include="Goals\CompositeGoals\Goal_FollowPath.cs" />
     <Compile Include="Goals\Goals\Goal_DontMove.cs" />
     <Compile Include="Goals\Goals\Goal_Explore.cs" />
+    <Compile Include="Goals\Goals\Goal_GetBagsBuckets.cs" />
     <Compile Include="Goals\Goal_Think.cs" />
     <Compile Include="Goals\Goals\Goal_TraverseEdge.cs" />
     <Compile Include="Goals\Goals\Goal_Wait.cs" />
@@ -185,6 +186,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="References\buttons\btn5_disabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="References\buttons\btn_return.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

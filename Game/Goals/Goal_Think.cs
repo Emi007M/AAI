@@ -65,7 +65,10 @@ namespace Game.Goals
         }
         private int CalculateGoHome()
         {
-            if (owner.gw.collecting.capacity * 2 <= owner.gw.collecting.stoneAmount + owner.gw.collecting.waterAmount) return 50;
+            if (owner.gw.collecting.capacityWater <= owner.gw.collecting.waterAmount)
+            {
+                if (owner.gw.collecting.capacityWater <= owner.gw.collecting.stoneAmount) return 50;
+            }
             return 0;
         }
         //public int CalculateWater()

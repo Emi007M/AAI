@@ -37,7 +37,8 @@ namespace Game.Goals
             
             if (!isActive()) Activate();
 
-            if (owner.gw.collecting.waterAmount < owner.gw.collecting.capacity && owner.gw.collecting.isNearWater(owner) != null)
+            if (owner.gw.collecting.waterAmount < owner.gw.collecting.capacityWater && owner.gw.collecting.isNearWater(owner) != null
+                &&owner.gw.collecting.isNearWater(owner).capacity != 0)
             {
                 //Console.WriteLine("Exploring interupted - water");
                 //  RemoveAllSubgoals();
@@ -52,7 +53,8 @@ namespace Game.Goals
 
             }
 
-            else if (owner.gw.collecting.stoneAmount < owner.gw.collecting.capacity && owner.gw.collecting.isNearStone(owner) != null)
+            else if (owner.gw.collecting.stoneAmount < owner.gw.collecting.capacityStone && owner.gw.collecting.isNearStone(owner) != null
+                && owner.gw.collecting.isNearStone(owner).capacity != 0)
             {
                 // Console.WriteLine("Exploring interupted - stone");
 
@@ -78,7 +80,6 @@ namespace Game.Goals
 
         public override void Terminate()
         {
-            status = (int)Status.completed;
             RemoveAllSubgoals();
             Console.WriteLine("Gather terminated");
         }

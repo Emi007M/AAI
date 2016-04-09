@@ -46,7 +46,8 @@ namespace Game.Goals
         {
             if (!isActive()) Activate();
 
-            if (owner.gw.collecting.stoneAmount >= owner.gw.collecting.capacity && owner.gw.collecting.isNearStone(owner) != null)
+            if (owner.gw.collecting.stoneAmount >= owner.gw.collecting.capacityStone || (owner.gw.collecting.isNearStone(owner) != null && owner.gw.collecting.isNearStone(owner).capacity == 0))
+
             {
                 RemoveAllSubgoals();
 

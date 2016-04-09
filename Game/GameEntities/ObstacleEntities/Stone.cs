@@ -23,14 +23,14 @@ namespace Game
 
         public Stone(GameWorld gw) : base(20,20, gw)
         {
-            capacity = 10;
+            capacity = 0;
             this.Draw();
 
         }
         public Stone(int x, int y, GameWorld gw) : base(x, y, gw)
         {
 
-            capacity = 10;
+            capacity = 0;
            this.Draw();
 
         }

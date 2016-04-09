@@ -11,14 +11,16 @@ namespace Game
         public enum Resources{Water, Stone};
 
         GameWorld gw;
-        public int capacity; //capacity of a single unit
+        public int capacityWater; 
+        public int capacityStone;
+        public int sCapacity = 3;
 
         public List<Pond> ponds;
-        public int maxPondsCapacity = 20;
+        public int maxPondsCapacity = 5;
         public int waterAmount = 0; //how much units have right know
 
         public List<Stone> stones;
-        public int maxStonesCapacity = 20;
+        public int maxStonesCapacity = 3;
         public int stoneAmount = 0; //how much units have right know
 
         public Resources Desired = Resources.Water;
@@ -28,7 +30,9 @@ namespace Game
         public Collecting(GameWorld gw)
         {
             this.gw = gw;
-            capacity = 3;
+
+            capacityWater = 0;
+            capacityStone = 0;
             waterAmount = stoneAmount = 0;
 
 

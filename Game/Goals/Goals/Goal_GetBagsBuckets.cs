@@ -6,46 +6,45 @@ using System.Threading.Tasks;
 
 namespace Game.Goals
 {
-    class Goal_Return : CompositeGoal
+    class Goal_GetBagBuckets : Goal
     {
-       
 
 
-        public Goal_Return(MovingEntity p) : base(p)
+        public Goal_GetBagBuckets(MovingEntity p) : base(p)
         {
-           
+
         }
 
 
         public override void Activate()
         {
             status = (int)Status.active;
-            AddSubgoal(new Goal_GetBagBuckets(owner));
-            AddSubgoal(new Goal_Wait(owner, 10));
-            AddSubgoal(new Goal_FollowPath(owner, new System.Windows.Vector(750.0, 320.0)));
-
+            owner.gw.fl.CalculateFuzzy();
+            owner.gw.collecting.capacityWater = owner.gw.fl.Buckets;
+            owner.gw.collecting.capacityStone = owner.gw.fl.Bags;
+            Console.WriteLine("fuzzy calculated and set!");
         }
 
 
         public override int Process()
         {
             if (!isActive()) Activate();
-
-            status = (int)ProcessSubgoals();
-
-
+            //  Console.WriteLine("explore process");
+            status = (int)Status.completed;
             return status;
         }
 
         public override void Terminate()
         {
-          
+
+
+            owner.dontMoveOn = false;
         }
 
 
         public override void AddSubgoal(Goal g)
         {
-            Subgoals.AddFirst(g);
+            throw new NotImplementedException();
         }
     }
 }

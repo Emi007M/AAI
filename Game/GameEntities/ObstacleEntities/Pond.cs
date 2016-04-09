@@ -16,13 +16,13 @@ namespace Game
 
         public Pond(GameWorld gw) : base(20,20, gw)
         {
-            capacity = 20;
+            capacity = 1;
             this.Draw();
 
         }
         public Pond(int x, int y, GameWorld gw) : base(x, y, gw)
         {
-            capacity = 20;
+            capacity = 1;
            this.Draw();
 
         }

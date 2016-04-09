@@ -12,11 +12,11 @@ namespace Game
     {
         public List<MovingEntity> soldiers = new List<MovingEntity>();
         public int sCapacity = 0;
-
         public List<ObstacleEntity> trees = new List<ObstacleEntity>();
-
+        public FuzzyLogic fl;
         public Canvas canv;
 
+        public int explorePhase;
         public Castle castle;
 
         public Game.Grid.Grid grid;
@@ -32,7 +32,7 @@ namespace Game
 
             castle = new Castle(this);
             trees.Add(castle);
-
+            fl = new FuzzyLogic(this);
 
 
         }
