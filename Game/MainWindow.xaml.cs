@@ -185,11 +185,13 @@ namespace Game
                 }
                 {//castle
                     Label txt = (Label)gw.castle.image.Children[2];
-                    txt.Content = " water: " + gw.castle.WaterAmount + "/" + gw.castle.getWaterCapacity();
+                    txt.Content = "   Lvl " + gw.castle.lvl;
+                    txt.Content += "\nwater:  " + gw.castle.WaterAmount + "/" + gw.castle.getWaterCapacity();
                     txt.Content += "\nstones: " + gw.castle.StoneAmount + "/" + gw.castle.getStoneCapacity();
                 }
 
-                soldiers_capacity.Text = gw.sCapacity + "/" + gw.collecting.capacity * gw.soldiers.Count();
+                //water_capacity.Text = gw.collecting.waterAmount + "/" + gw.fuzzyshit;
+                //stone_capacity.Text = gw.collecting.stoneAmount + "/" + gw.fuzzyshit;
 
 
 
