@@ -44,7 +44,7 @@ namespace Game.Goals
             return status == (int)Status.failed;
         }
 
-        public int GetType()
+        new public int GetType()
         {
             return type;
         }

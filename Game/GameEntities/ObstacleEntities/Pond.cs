@@ -12,7 +12,7 @@ namespace Game
     {
         
 
-        static Random r = new Random();
+        new static Random r = new Random();
 
         public Pond(GameWorld gw) : base(20,20, gw)
         {

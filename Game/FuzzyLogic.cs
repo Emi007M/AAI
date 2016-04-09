@@ -152,8 +152,9 @@ namespace Game
                 Bags = 0;
 
                 int both = (int)(double)(((double)1 / ((double)maxTake / 2) * MaxAv) * maxTake);
-                Buckets += both / 2;
-                Bags += both / 2;
+                int x = new Random().Next(both);
+                Buckets += x;
+                Bags += both - x;
             }
             else if(MaxAv > maxTake/2) //second half
             {
@@ -161,13 +162,16 @@ namespace Game
                 Bags = (int)(double)(((double)1 / ((double)maxTake / 2) * MaxAv - 1) * maxTake);
 
                 int both = (int)(double)(((double)-1 / ((double)maxTake / 2) * MaxAv - 2) * maxTake);
-                Buckets += both / 2;
-                Bags += both / 2;
+                int x = new Random().Next(both);
+                Buckets += x;
+                Bags += both - x;
             }
             else //exactly at half
             {
-                Buckets = maxTake / 2;
-                Bags = maxTake / 2;
+                int x = new Random().Next(maxTake);
+                Buckets = x;
+                Bags = maxTake - x;
+              
             }
 
         }

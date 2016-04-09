@@ -17,13 +17,13 @@ namespace Game
         BitmapImage target_img;
         Image target;
 
-        BitmapImage btn_img;
-        private Vector targetC = new Vector();
+     //   BitmapImage btn_img;
+    //    private Vector targetC = new Vector();
         GameWorld gw;
 
         private BackgroundWorker worker = null;
 
-        int isPath = -1;
+        int isPath;
 
         
        
@@ -74,6 +74,8 @@ namespace Game
             gw.soldiers.ElementAt(0).goal = new Goals.Goal_Think(gw.soldiers.ElementAt(0));
 
             isPath = -1;
+
+            fuzzy_txt.Visibility = Visibility.Hidden;
         }
 
         private int timerCounter = 0;
@@ -365,6 +367,16 @@ namespace Game
         {
             gw.soldiers.ElementAt(0).goal.RemoveAllSubgoals();
             gw.soldiers.ElementAt(0).goal.AddGoal_GoBackToBase();
+        }
+
+        private void checkBox_fuzzy_Checked(object sender, RoutedEventArgs e)
+        {
+            fuzzy_txt.Visibility = Visibility.Visible;
+        }
+
+        private void checkBox_fuzzy_Unchecked(object sender, RoutedEventArgs e)
+        {
+            fuzzy_txt.Visibility = Visibility.Hidden;
         }
     }
 }

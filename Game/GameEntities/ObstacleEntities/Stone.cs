@@ -19,7 +19,7 @@ namespace Game
 {
     class Stone : ObstacleEntity
     {
-        static Random r = new Random();
+        new static Random r = new Random();
 
         public Stone(GameWorld gw) : base(20,20, gw)
         {

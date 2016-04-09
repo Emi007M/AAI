@@ -46,7 +46,7 @@ namespace Game
         {
             foreach (Pond p in ponds)
             {
-                if (MovingEntity.distance(e.location, p.location) < 2 * p.r)
+                if (MovingEntity.distance(e.location, p.location) < p.r+e.r+30)
                 {
                     return p;
                 }
@@ -59,7 +59,7 @@ namespace Game
         {
             foreach (Stone p in stones)
             {
-                if (MovingEntity.distance(e.location, p.location) < 2 * p.r)
+                if (MovingEntity.distance(e.location, p.location) < p.r + e.r + 30)
                 {
                     return p;
                 }
@@ -72,7 +72,7 @@ namespace Game
         public bool isNearCastle(MovingEntity e)
         {
             int cX = 750, cY=320;
-            int delta = 20;
+            int delta = 30;
 
             return (e.location.X > cX - delta && e.location.X < cX + delta
                  && e.location.Y > cY - delta && e.location.Y < cY + delta);

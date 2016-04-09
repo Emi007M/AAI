@@ -19,7 +19,7 @@ namespace Game
 {
     class Treee : ObstacleEntity
     {
-        static Random r = new Random();
+        new static Random r = new Random();
         public Boolean cut = false;
 
         public Treee(GameWorld gw) : base(40,40, gw)

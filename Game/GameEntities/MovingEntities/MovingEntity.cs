@@ -24,7 +24,7 @@ namespace Game
       //  protected int pos_x;
        // protected int pos_y;
 
-        protected BitmapImage img_bitmap;
+      //  protected BitmapImage img_bitmap;
         //protected Image image;
         public Canvas image;
 
@@ -37,7 +37,7 @@ namespace Game
 
         protected float mass;
         public float r;
-        protected float maxforce;
+        //protected float maxforce;
         protected float maxspeed;
 
         public Boolean seekOn = false;
