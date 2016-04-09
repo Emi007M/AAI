@@ -256,7 +256,7 @@ namespace Game.Grid
                 {
                     if (canWalkBetween(e1, e2, smoothedPath))
                     {
-                        Console.WriteLine(e1 + " " + e2);
+                     //   Console.WriteLine(e1 + " " + e2);
                         to_remove = e2;
                         // smoothedPath = removeFromPath(e1,e2, smoothedPath);
                         //e2=e1+2;

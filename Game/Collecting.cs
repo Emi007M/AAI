@@ -18,7 +18,7 @@ namespace Game
         public int waterAmount = 0; //how much units have right know
 
         public List<Stone> stones;
-        public int maxStonesCapacity = 10;
+        public int maxStonesCapacity = 20;
         public int stoneAmount = 0; //how much units have right know
 
         public Resources Desired = Resources.Water;

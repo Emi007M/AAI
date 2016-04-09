@@ -45,6 +45,7 @@ namespace Game
         public Boolean arrivalOn = false;
         public Boolean leaderFollowOn = false;
         public Boolean exploreOn = false;
+        public Boolean dontMoveOn = false;
 
         public Vector zeroVec = new Vector(0,0);
         public Vector target;
@@ -104,7 +105,7 @@ namespace Game
             if (arrivalOn) force += arrival(target);
             if (leaderFollowOn) force += leaderFollow(leader);
             if (exploreOn) force += explore();
-
+           
            
             force += 1.3* collisionAvoid(gw.trees);
                    force += 0.7*Separation();
@@ -113,6 +114,7 @@ namespace Game
             
                     acceleration = force/mass;
                     velocity += acceleration;
+            if (dontMoveOn) velocity = new Vector();
 
                     if(length(velocity)>maxspeed)
                         velocity = normalize(velocity) * maxspeed;
@@ -404,6 +406,11 @@ namespace Game
         public void useExplore()
         {
             this.exploreOn = true;
+
+        }
+        public void useDontMoveOn()
+        {
+            this.dontMoveOn = true;
 
         }
         public void useArrival(Vector target)

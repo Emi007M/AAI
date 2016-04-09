@@ -85,7 +85,7 @@ namespace Game
             timerCounter++;
             if(timerCounter==50||timerCounter==100||timerCounter==150||timerCounter==200)
             {
-                Console.WriteLine("counter next");
+               // Console.WriteLine("counter next");
 
                 timerCounter = (timerCounter==200) ? 0 : timerCounter+1;
 
@@ -260,7 +260,7 @@ namespace Game
         private void CanvMain_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 
-            Console.WriteLine("click!");
+          //  Console.WriteLine("click!");
             if (!gw.soldiers.Any()) return; //if no moving soldiers
 
             foreach (MovingEntity m in gw.soldiers) 
@@ -271,11 +271,12 @@ namespace Game
             //gw.findPath(gw.soldiers.ElementAt(0).getX(), gw.soldiers.ElementAt(0).getY(), Mouse.GetPosition(MainGrid).X, Mouse.GetPosition(MainGrid).Y);
 
             //isPath = 1;
-
-             gw.soldiers.ElementAt(0).goal.AddGoal_FollowPath(new Vector(Mouse.GetPosition(MainGrid).X, Mouse.GetPosition(MainGrid).Y));
+            gw.soldiers.ElementAt(0).goal.RemoveAllSubgoals();
+            gw.soldiers.ElementAt(0).goal.AddGoal_FollowPath(new Vector(Mouse.GetPosition(MainGrid).X, Mouse.GetPosition(MainGrid).Y));
+           
            // gw.soldiers.ElementAt(0).goal.RemoveAllSubgoals();
             //gw.soldiers.ElementAt(0).useExplore();
-            Console.WriteLine("clicked!");
+          //  Console.WriteLine("clicked!");
         }
 
 
@@ -284,11 +285,13 @@ namespace Game
 
         private void btn_grid_Click(object sender, RoutedEventArgs e)
         {
+
             gw.changeThingsDisplay();
         }
 
         private void btn_reset_Click(object sender, RoutedEventArgs e)
         {
+            gw.soldiers.ElementAt(0).goal.RemoveAllSubgoals();
             gameInit();
         }
 
@@ -328,8 +331,9 @@ namespace Game
 
             if (!gw.soldiers.Any()) return;
 
-
+            gw.soldiers.ElementAt(0).goal.RemoveAllSubgoals();
             gw.soldiers.ElementAt(0).goal.AddGoal_FindClosestWater();
+            
 
             foreach (MovingEntity m in gw.soldiers)
             {
@@ -343,6 +347,7 @@ namespace Game
 
             if (!gw.soldiers.Any()) return;
 
+            gw.soldiers.ElementAt(0).goal.RemoveAllSubgoals();
 
             gw.soldiers.ElementAt(0).goal.AddGoal_FindClosestStone();
 
@@ -354,6 +359,7 @@ namespace Game
 
         private void btn_return_Click(object sender, RoutedEventArgs e)
         {
+            gw.soldiers.ElementAt(0).goal.RemoveAllSubgoals();
             gw.soldiers.ElementAt(0).goal.AddGoal_GoBackToBase();
         }
     }

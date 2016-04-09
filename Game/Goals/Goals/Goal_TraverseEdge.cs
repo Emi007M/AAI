@@ -51,6 +51,7 @@ namespace Game.Goals
         {
             owner.seekOn = false;
             owner.arrivalOn = false;
+
         }
 
 

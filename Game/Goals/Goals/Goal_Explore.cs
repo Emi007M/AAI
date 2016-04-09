@@ -29,23 +29,29 @@ namespace Game.Goals
         public override int Process()
         {
             if (!isActive()) Activate();
+          //  Console.WriteLine("explore process");
 
-         if(owner.gw.collecting.Desired==Collecting.Resources.Stone && owner.gw.collecting.isNearStone(owner) !=null
-                || owner.gw.collecting.Desired == Collecting.Resources.Water && owner.gw.collecting.isNearWater(owner) != null
-                )
-            {
-                Console.WriteLine("CLOSEEEE");
-                status = (int)Status.completed;
-                Terminate();
-            }
+           // if (owner.gw.collecting.waterAmount < owner.gw.collecting.capacity && owner.gw.collecting.isNearWater(owner) != null)
+            //    if (owner.gw.collecting.isNearWater(owner) != null)
+            //    {
+            //    status = (int)Status.completed;
+
+            //}
+
+            //else if (owner.gw.collecting.isNearStone(owner) != null)
+            //{
+            //    status = (int)Status.completed;
+
+            //}
 
             return status;
         }
 
         public override void Terminate()
         {
-           
-              owner.exploreOn = false;
+            
+            Console.WriteLine("explore terminated");
+            owner.exploreOn = false;
         }
 
 

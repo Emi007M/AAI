@@ -6,47 +6,45 @@ using System.Threading.Tasks;
 
 namespace Game.Goals
 {
-    class Goal_Return : CompositeGoal
+    class Goal_DontMove : Goal
     {
-       
 
 
-        public Goal_Return(MovingEntity p) : base(p)
+        public Goal_DontMove(MovingEntity p) : base(p)
         {
-           
+
         }
 
 
         public override void Activate()
         {
             status = (int)Status.active;
-            AddSubgoal(new Goal_Wait(owner, 5));
-            AddSubgoal(new Goal_FollowPath(owner, new System.Windows.Vector(750.0, 320.0)));
 
+
+
+            owner.dontMoveOn = true;
         }
 
 
         public override int Process()
         {
             if (!isActive()) Activate();
-
-
-            //status = Subgoals.First().Process();
-            status = (int)ProcessSubgoals();
-
+            //  Console.WriteLine("explore process");
 
             return status;
         }
 
         public override void Terminate()
         {
-          
+
+           
+            owner.dontMoveOn = false;
         }
 
 
         public override void AddSubgoal(Goal g)
         {
-            Subgoals.AddFirst(g);
+            throw new NotImplementedException();
         }
     }
 }

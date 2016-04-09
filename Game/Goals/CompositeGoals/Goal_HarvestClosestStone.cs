@@ -19,6 +19,7 @@ namespace Game.Goals
 
         public override void Activate()
         {
+            //RemoveAllSubgoals();
             status = (int)Status.active;
 
             int start = owner.gw.grid.getVertex((int)owner.getX(), (int)owner.getY());
@@ -32,8 +33,11 @@ namespace Game.Goals
                 m.useLeaderFollow(owner);
             }
 
-            AddSubgoal(new Goal_Wait(owner,500));
+            //AddSubgoal(new Goal_Wait(owner,500));
+            AddSubgoal(new Goal_DontMove(owner));
             AddSubgoal(new Goal_FollowPath(owner, t));
+           
+            //  AddSubgoal(new Goal_Wait(owner,20));
 
         }
 
@@ -42,7 +46,11 @@ namespace Game.Goals
         {
             if (!isActive()) Activate();
 
+            if (owner.gw.collecting.stoneAmount >= owner.gw.collecting.capacity && owner.gw.collecting.isNearStone(owner) != null)
+            {
+                RemoveAllSubgoals();
 
+            }
             //status = Subgoals.First().Process();
             status = (int)ProcessSubgoals();
 
@@ -52,7 +60,9 @@ namespace Game.Goals
 
         public override void Terminate()
         {
+            Console.WriteLine("harvest stone complete");
 
+            RemoveAllSubgoals();
         }
 
 
