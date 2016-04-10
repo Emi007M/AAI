@@ -32,13 +32,11 @@ namespace Game
 
         public override void Draw()
         {
-       //     Uri imguri = new Uri("/Game;component/References/p1.png", UriKind.RelativeOrAbsolute);
+
             BitmapImage bi = new BitmapImage(new Uri("/Game;component/References/p1.png", UriKind.RelativeOrAbsolute));
             Image img = new Image();
             img.Source = bi;
-           // image.Width = img_bitmap.Width;
-          // image.Height = img_bitmap.Height;
-           img.Width = 30;
+          img.Width = 30;
           img.Height = 30;
     
 
@@ -59,6 +57,9 @@ namespace Game
             image.Children.Add(radius);
 
             gw.canv.Children.Add(image);
+
+            if (gw.showThings)
+                this.showRadius();
 
         }
     }

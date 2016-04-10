@@ -207,7 +207,8 @@ namespace Game
             }
 
 
-            goals_txt.Text = gw.soldiers.ElementAt(0).goal.getSubNames(0);
+            if(gw.soldiers.Any())
+                goals_txt.Text = gw.soldiers.ElementAt(0).goal.getSubNames(0);
 
 
 
@@ -334,6 +335,11 @@ namespace Game
             gw.soldiers.Add(p);
             if (gw.soldiers.Count == 1) p.goal = new Goals.Goal_Think(p);
             else p.useLeaderFollow(gw.soldiers.ElementAt(0));
+
+            foreach (MovingEntity m in gw.soldiers)
+            {
+                m.useLeaderFollow(gw.soldiers.ElementAt(0));
+            }
         }
 
         private void btn_remove_man_Click(object sender, RoutedEventArgs e)
@@ -346,8 +352,10 @@ namespace Game
             gw.soldiers.ElementAt(0).goal = new Goals.Goal_Think(gw.soldiers.ElementAt(0));
 
 
-
-           
+            foreach (MovingEntity m in gw.soldiers)
+            {
+                m.useLeaderFollow(gw.soldiers.ElementAt(0));
+            }
 
         }
 
