@@ -49,6 +49,7 @@ namespace Game
 
         public Vector zeroVec = new Vector(0, 0);
         public Vector target;
+        public Vector targetFlee;
         public MovingEntity leader;
         protected Vector force;
         protected List<Vector> collisionTargets = new List<Vector>();
@@ -102,7 +103,7 @@ namespace Game
 
             force = zeroVec;
             if (seekOn) force += seek(target);
-            if (fleeOn) force += 20 * flee(target);
+            if (fleeOn) force += 20 * flee(targetFlee);
             if (arrivalOn) force += 1.2 * arrival(target);
             if (leaderFollowOn) force += 1 * leaderFollow(leader);
             if (exploreOn) force += explore();
@@ -189,14 +190,12 @@ namespace Game
         {
 
 
-            Vector direction = -(new Vector(target.X - location.X, target.Y - location.Y));
+            Vector direction = new Vector(target.X - location.X, target.Y - location.Y);
             Vector desiredVelocity = normalize(direction) * maxspeed;
-            if (direction.Length > 150)
-            {
-                desiredVelocity = new Vector(desiredVelocity.X / direction.X, desiredVelocity.Y / direction.X);
-            }
 
-            Vector forceRes = new Vector(desiredVelocity.X - velocity.X, desiredVelocity.Y - velocity.Y);
+            if (direction.Length > 150) return new Vector();
+
+            Vector forceRes = -new Vector(desiredVelocity.X - velocity.X, desiredVelocity.Y - velocity.Y);
 
             return forceRes;
         }
@@ -402,9 +401,9 @@ namespace Game
             this.seekOn = true;
 
         }
-        public void useFlee(Vector target)
+        public void useFlee(Vector targetFlee)
         {
-            this.target = target;
+            this.targetFlee = targetFlee;
             this.fleeOn = true;
 
         }

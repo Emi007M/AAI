@@ -83,7 +83,7 @@ namespace Game
         {
             if (pigeon != null)
                 pigeon.kill();
-            pigeon = new Pigeon(this);
+            else pigeon = new Pigeon(this);
         }
 
         public void addRandPonds(int i)

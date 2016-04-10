@@ -26,10 +26,7 @@ namespace Game
             useSeek(new Vector(1000, 800));
             rotation = false;
 
-            foreach(MovingEntity p in gw.soldiers)
-            {
-                p.useFlee(this.location);
-            }
+            
 
 
             this.Draw();
@@ -64,6 +61,7 @@ namespace Game
         public void kill()
         {
             image.Visibility = Visibility.Hidden;
+            gw.pigeon = null;
         }
     }
 }

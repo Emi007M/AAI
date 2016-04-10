@@ -215,13 +215,16 @@ namespace Game
             gw.soldiers.ForEach(delegate (MovingEntity m) { m.update(); });
 
             if (gw.pigeon != null) {
+
                 gw.pigeon.update();
-                
+                foreach (MovingEntity p in gw.soldiers)
+                {
+                    p.useFlee(gw.pigeon.location);
+                }
                 gw.pigeon.life--;
                 if (gw.pigeon.life == 0)
                 {
                     gw.pigeon.kill();
-                    gw.pigeon = null;
                 }
             }
 
