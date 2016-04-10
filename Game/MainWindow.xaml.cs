@@ -205,7 +205,7 @@ namespace Game
             }
 
 
-
+            goals_txt.Text = gw.soldiers.ElementAt(0).goal.getSubNames(0);
 
 
 
@@ -388,6 +388,16 @@ namespace Game
         private void checkBox_fuzzy_Unchecked(object sender, RoutedEventArgs e)
         {
             fuzzy_txt.Visibility = Visibility.Hidden;
+        }
+
+        private void checkBox_goals_Checked(object sender, RoutedEventArgs e)
+        {
+            goals_txt.Visibility = Visibility.Visible;
+        }
+
+        private void checkBox_goals_Unchecked(object sender, RoutedEventArgs e)
+        {
+            goals_txt.Visibility = Visibility.Hidden;
         }
     }
 }

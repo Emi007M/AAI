@@ -12,16 +12,12 @@ namespace Game.Goals
 
         protected MovingEntity owner;
         protected int status;
-        protected int type;
-
-
+  
         public Goal(MovingEntity p)
         {
             owner = p;
             status = (int)Status.inactive;
         }
-
-
 
 
         public abstract void Activate();
@@ -55,12 +51,6 @@ namespace Game.Goals
         {
             return status == (int)Status.failed;
         }
-
-        //new public int GetType()
-        //{
-        //    return type;
-        //}
-
 
 
     }
