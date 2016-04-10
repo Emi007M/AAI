@@ -62,7 +62,7 @@ namespace Game
             gw.soldiers.Add(new Person(700, 310, 10, 15, gw));
             gw.soldiers.Add(new Person(730, 330, 10, 15, gw));
 
-            gw.AddPigeon();
+           // gw.AddPigeon();
 
             foreach (MovingEntity m in gw.soldiers)
                 m.useLeaderFollow(gw.soldiers.ElementAt(0));

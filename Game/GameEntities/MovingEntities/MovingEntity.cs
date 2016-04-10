@@ -102,7 +102,7 @@ namespace Game
 
             force = zeroVec;
             if (seekOn) force += seek(target);
-            if (fleeOn) force += flee(target);
+            if (fleeOn) force += 20 * flee(target);
             if (arrivalOn) force += 1.2 * arrival(target);
             if (leaderFollowOn) force += 1 * leaderFollow(leader);
             if (exploreOn) force += explore();
