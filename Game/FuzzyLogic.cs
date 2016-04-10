@@ -72,7 +72,7 @@ namespace Game
             //Defuzzification
             CountMaxAv();
 
-            info+="So take " + Buckets + " buckets and " + Bags + " barrows.";
+            info+="So take " + Buckets + " buckets and " + Bags + " bags.";
 
             Console.WriteLine(this);
             gw.mainWindow.fuzzy_txt.Text = this.ToString();
@@ -125,15 +125,13 @@ namespace Game
             int maxTake = gw.collecting.sCapacity * gw.soldiers.Count();
 
             //Max
-
-            //count water: y = -1/(maxTake/2) * x + 1 
-            double max_w = (-1 / (maxTake / 2) * collect_water + 1) / 2;
-
-            //count stones: y = 1/(maxTake/2) * x - 1
-            double max_s = (1 / (maxTake / 2) * collect_stone - 1 + maxTake) / 2;
-
+            //x=(y-b)/a
+            //count water: x = (y-1) / (-1/(maxTake/2)) 
+            double max_w = (double)(collect_water - 1) / (-1.0 / ((double)maxTake / 2.0));
+            //count stones: x = (y-(-1)) / (1/(maxTake/2))
+            double max_s = (double)(collect_stone-(-1)) / (1.0 / ((double)maxTake / 2.0));
             //count both
-            double max_b = maxTake / 2;
+            double max_b = (double)maxTake / 2;
 
             info += "Max: water=" + Math.Round(max_w,3) + ", stones=" + Math.Round(max_s,3) + ", both=" + Math.Round(max_b,3) + "\n";
 
@@ -160,7 +158,7 @@ namespace Game
                 Buckets = 0;
                 Bags = (int)(double)(((double)1 / ((double)maxTake / 2) * MaxAv - 1) * maxTake);
 
-                int both = (int)(double)(((double)-1 / ((double)maxTake / 2) * MaxAv - 2) * maxTake);
+                int both = (int)(double)(((double)-1 / ((double)maxTake / 2) * MaxAv + 2) * maxTake);
                 info += "Crisp values: buckets=" + Buckets + ", bags=" + Bags + ", random=" + both + "\n";
                 int x = new Random().Next(both);
                 Buckets += x;

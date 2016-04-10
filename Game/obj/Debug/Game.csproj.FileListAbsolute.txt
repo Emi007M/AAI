@@ -42,3 +42,4 @@ W:\Visual Projects\AAI\Game\obj\Debug\Game.Properties.Resources.resources
 W:\Visual Projects\AAI\Game\obj\Debug\Game.csproj.GenerateResource.Cache
 W:\Visual Projects\AAI\Game\obj\Debug\Game.exe
 W:\Visual Projects\AAI\Game\obj\Debug\Game.pdb
+W:\Visual Projects\AAI\Game\obj\Debug\Game.csprojResolveAssemblyReference.cache
