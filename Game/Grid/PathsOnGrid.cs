@@ -412,7 +412,7 @@ namespace Game.Grid
                 //    Console.WriteLine("Vertex: "+v);
                 }
 
-                i += grid.N / 20;
+                i += grid.N / 40;
             }
 
 

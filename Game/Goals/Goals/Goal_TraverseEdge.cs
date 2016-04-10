@@ -30,6 +30,7 @@ namespace Game.Goals
             }
             else
             {
+                owner.seekOn = false;
                 owner.arrivalOn = true;
                 owner.useArrival(target);
             }

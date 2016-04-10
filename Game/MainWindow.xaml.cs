@@ -318,9 +318,10 @@ namespace Game
 
         private void btn_add_man_Click(object sender, RoutedEventArgs e)
         {
-            Person p = new Person(700, 300, 5, 15, gw);
+            Person p = new Person(700, 300, 10, 15, gw);
             gw.soldiers.Add(p);
-            p.useLeaderFollow(gw.soldiers.ElementAt(0));
+            if (gw.soldiers.Count == 1) p.goal = new Goals.Goal_Think(p);
+            else p.useLeaderFollow(gw.soldiers.ElementAt(0));
         }
 
         private void btn_remove_man_Click(object sender, RoutedEventArgs e)
@@ -329,6 +330,13 @@ namespace Game
 
             CanvMain.Children.Remove(gw.soldiers.ElementAt(0).image);
             gw.soldiers.RemoveAt(0);
+            if (!gw.soldiers.Any()) return;
+            gw.soldiers.ElementAt(0).goal = new Goals.Goal_Think(gw.soldiers.ElementAt(0));
+
+
+
+           
+
         }
 
 
@@ -367,6 +375,7 @@ namespace Game
 
         private void btn_return_Click(object sender, RoutedEventArgs e)
         {
+            if (!gw.soldiers.Any()) return;
             gw.soldiers.ElementAt(0).goal.RemoveAllSubgoals();
             gw.soldiers.ElementAt(0).goal.AddGoal_GoBackToBase();
         }

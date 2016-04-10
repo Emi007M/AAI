@@ -102,13 +102,13 @@ namespace Game
             force = zeroVec;
             if (seekOn) force += seek(target);
             if (fleeOn) force += flee(target);
-            if (arrivalOn) force += arrival(target);
-            if (leaderFollowOn) force += leaderFollow(leader);
+            if (arrivalOn) force += 1.2*arrival(target);
+            if (leaderFollowOn) force += 1*leaderFollow(leader);
             if (exploreOn) force += explore();
            
            
-            force += 1.3* collisionAvoid(gw.trees);
-                   force += 0.7*Separation();
+                   force += 0.9* collisionAvoid(gw.trees);
+                   force += 0.8*Separation();
 
 
             
