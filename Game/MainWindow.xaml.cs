@@ -77,7 +77,7 @@ namespace Game
 
             isPath = -1;
 
-            fuzzy_txt.Visibility = Visibility.Hidden;
+            checkBox_help.IsChecked = true;
         }
 
         private int timerCounter = 0;
@@ -416,6 +416,17 @@ namespace Game
         {
             gw.AddPigeon();
         }
+
+        private void checkBox_help_Checked(object sender, RoutedEventArgs e)
+        {
+            Help.Visibility = Visibility.Visible;
+        }
+
+        private void checkBox_help_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Help.Visibility = Visibility.Hidden;
+        }
+
     }
 }
 
