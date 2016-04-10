@@ -62,6 +62,8 @@ namespace Game
             gw.soldiers.Add(new Person(700, 310, 10, 15, gw));
             gw.soldiers.Add(new Person(730, 330, 10, 15, gw));
 
+            gw.AddPigeon();
+
             foreach (MovingEntity m in gw.soldiers)
                 m.useLeaderFollow(gw.soldiers.ElementAt(0));
             
@@ -211,6 +213,16 @@ namespace Game
 
             gw.soldiers.ForEach(delegate (MovingEntity m) { m.update(); });
 
+            if (gw.pigeon != null) {
+                gw.pigeon.update();
+                
+                gw.pigeon.life--;
+                if (gw.pigeon.life == 0)
+                {
+                    gw.pigeon.kill();
+                    gw.pigeon = null;
+                }
+            }
 
         }
 
@@ -398,6 +410,11 @@ namespace Game
         private void checkBox_goals_Unchecked(object sender, RoutedEventArgs e)
         {
             goals_txt.Visibility = Visibility.Hidden;
+        }
+
+        private void pigeon_label_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            gw.AddPigeon();
         }
     }
 }

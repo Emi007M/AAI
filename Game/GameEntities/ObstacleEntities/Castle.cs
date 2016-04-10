@@ -63,19 +63,18 @@ namespace Game
             Canvas.SetLeft(image, location.X - image.Width / 2);
             Canvas.SetTop(image, location.Y - image.Height / 2);
 
+            Brush b = new SolidColorBrush(Color.FromArgb(150,255,255,255));
 
-            //capacity label
+            //LVL label
             Label txt_cap = new Label();
             txt_cap.Content = "";
             txt_cap.FontWeight = FontWeights.Black;
             txt_cap.FontSize = 16.0;
             txt_cap.Foreground = Brushes.Black;
-            txt_cap.Background = Brushes.LightGray;
+            txt_cap.Background = b;
             Canvas.SetLeft(txt_cap, 40);
-            Canvas.SetTop(txt_cap, 150);
+            Canvas.SetTop(txt_cap, 180);
             Canvas.SetZIndex(txt_cap, 0);
-
-
 
 
             image.Children.Add(img);

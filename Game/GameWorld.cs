@@ -17,7 +17,6 @@ namespace Game
         public Canvas canv;
         public MainWindow mainWindow;
 
-        public int explorePhase;
         public Castle castle;
 
         public Game.Grid.Grid grid;
@@ -26,7 +25,9 @@ namespace Game
         public bool leaveResources = false;
 
         public bool showThings = false;
-      //  public bool showThingsFlag = false;
+        //  public bool showThingsFlag = false;
+
+        public Pigeon pigeon = null;
 
         public GameWorld(Canvas canv, MainWindow mainWindow)
         {
@@ -57,8 +58,8 @@ namespace Game
 
                 //    Console.WriteLine("Tree: " + x + " " + y);
 
-                if (!(x>550 && y<350))//not on castle area
-                trees.Add(new Treee(x, y, this));
+                if (!(x > 550 && y < 350))//not on castle area
+                    trees.Add(new Treee(x, y, this));
             }
 
         }
@@ -73,9 +74,16 @@ namespace Game
                 x = r.Next(550);
                 y = r.Next(560);
 
-                //  Console.WriteLine("Tree: " + x + " " + y);
+
                 trees.Add(new Stone(x, y, this));
             }
+        }
+
+        internal void AddPigeon()
+        {
+            if (pigeon != null)
+                pigeon.kill();
+            pigeon = new Pigeon(this);
         }
 
         public void addRandPonds(int i)
@@ -105,6 +113,7 @@ namespace Game
                     e.hideRadius();
                 foreach (ObstacleEntity e in trees)
                     e.hideRadius();
+
                 grid.hide();
             }
             else
@@ -114,6 +123,7 @@ namespace Game
                     e.showRadius();
                 foreach (ObstacleEntity e in trees)
                     e.showRadius();
+
                 grid.show();
             }
         }
@@ -125,9 +135,9 @@ namespace Game
             int[] p = grid.Paths.Astar(a, b);
             grid.Paths.drawPaths(p, v1, v2, x1, x2);
 
-            
+
         }
 
-       
+
     }
 }

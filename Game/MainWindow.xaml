@@ -88,13 +88,14 @@
             </Button>
             <TextBlock x:Name="water_capacity" HorizontalAlignment="Left" Height="15" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="46" Canvas.Left="602" Canvas.Top="15" FontWeight="Bold" Text="water" Foreground="#FF070557"/>
             <TextBlock x:Name="stone_capacity" HorizontalAlignment="Left" Height="15" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="46" Canvas.Left="602" Canvas.Top="32" FontWeight="Bold" Text="stones" Foreground="#FF242425"/>
-            <TextBlock x:Name="fuzzy_txt" HorizontalAlignment="Left" Height="198.2" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="308" Canvas.Left="30" Canvas.Top="-570.2" FontWeight="Bold" Text="fuzzy" Foreground="#FF070557" Background="#99F9F9F9" Padding="10" UseLayoutRounding="False" Visibility="Hidden"/>
+            <TextBlock x:Name="fuzzy_txt" HorizontalAlignment="Left" Height="210" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="308" Canvas.Left="30" Canvas.Top="-570.2" FontWeight="Bold" Text="fuzzy" Foreground="#FF070557" Background="#99F9F9F9" Padding="10" UseLayoutRounding="False" Visibility="Hidden"/>
             <TextBlock x:Name="goals_txt" HorizontalAlignment="Left" Height="170.2" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="199.6" Canvas.Left="30" Canvas.Top="-191.8" FontWeight="Bold" Text="goals" Foreground="#FF070557" Background="#99F9F9F9" Padding="10" UseLayoutRounding="False" Visibility="Hidden"/>
-            <CheckBox x:Name="checkBox_fuzzy" Content="Show Fuzzy Logic" Height="15" Canvas.Left="201" Canvas.Top="15" Width="100" Background="#BBFFFFFF" FontSize="10" Checked="checkBox_fuzzy_Checked" Unchecked="checkBox_fuzzy_Unchecked"/>
-            <CheckBox x:Name="checkBox_help" Content="Help" Height="14" Canvas.Left="144" Canvas.Top="16" Width="54" Background="#BBFFFFFF" FontSize="10" FontWeight="Bold"/>
+            <CheckBox x:Name="checkBox_fuzzy" Content="Show Fuzzy Logic"  Cursor="Hand" Height="15" Canvas.Left="201" Canvas.Top="15" Width="100" Background="#BBFFFFFF" FontSize="10" Checked="checkBox_fuzzy_Checked" Unchecked="checkBox_fuzzy_Unchecked"/>
+            <CheckBox x:Name="checkBox_help" Content="Help" Height="14"  Cursor="Hand" Canvas.Left="144" Canvas.Top="16" Width="54" Background="#BBFFFFFF" FontSize="10" FontWeight="Bold"/>
+            <CheckBox x:Name="checkBox_goals" Content="Show Goals" Cursor="Hand"  Height="15" Canvas.Left="201" Canvas.Top="33" Width="100" Background="#BBFFFFFF" FontSize="10" Checked="checkBox_goals_Checked" Unchecked="checkBox_goals_Unchecked"/>
             <Rectangle Fill="#4CF4F4F5" Height="35" Canvas.Left="589" Stroke="Black" Canvas.Top="14" Width="59" StrokeThickness="0" Panel.ZIndex="-5
                        "/>
-            <CheckBox x:Name="checkBox_goals" Content="Show Goals" Height="15" Canvas.Left="201" Canvas.Top="33" Width="100" Background="#BBFFFFFF" FontSize="10" Checked="checkBox_goals_Checked" Unchecked="checkBox_goals_Unchecked"/>
+            <Label x:Name="pigeon_label" Content="Pigeon ?!" Canvas.Left="141" Canvas.Top="28" Height="24" FontSize="10" FontStyle="Italic" Cursor="Hand" Foreground="#FFB61E1E" MouseDown="pigeon_label_MouseDown" FontWeight="Bold"/>
         </Canvas>
         <Canvas x:Name="CanvMain" Margin="0,0,0,64" Cursor="None" MouseLeftButtonDown="CanvMain_MouseLeftButtonDown"/>
 

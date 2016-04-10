@@ -139,7 +139,7 @@ namespace Game
             //MaxAv
             double MaxAv = (max_w * collect_water + max_s * collect_stone + max_b * collect_both) / (collect_water + collect_stone + collect_both);
 
-            info += "MaxAv=" + Math.Round(MaxAv,3) + "\n";
+            info += "MaxAv=" + Math.Round(MaxAv,3) + "\n\n";
 
             //Defuzzification
             if (MaxAv < maxTake / 2) //first half
