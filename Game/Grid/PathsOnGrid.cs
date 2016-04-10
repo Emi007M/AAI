@@ -409,10 +409,10 @@ namespace Game.Grid
                 if (grid.matrix[v, v] != -1)
                 {
                     explorePath.Add(new Vector(grid.getX(v), grid.getY(v)));
-                    Console.WriteLine("Vertex: "+v);
+                //    Console.WriteLine("Vertex: "+v);
                 }
 
-                i += grid.N / 40;
+                i += grid.N / 20;
             }
 
 

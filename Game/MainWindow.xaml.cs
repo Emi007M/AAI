@@ -277,8 +277,10 @@ namespace Game
             //gw.findPath(gw.soldiers.ElementAt(0).getX(), gw.soldiers.ElementAt(0).getY(), Mouse.GetPosition(MainGrid).X, Mouse.GetPosition(MainGrid).Y);
 
             //isPath = 1;
+            Console.WriteLine(gw.soldiers.ElementAt(0).goal.getSubNames(0));
             gw.soldiers.ElementAt(0).goal.RemoveAllSubgoals();
             gw.soldiers.ElementAt(0).goal.AddGoal_FollowPath(new Vector(Mouse.GetPosition(MainGrid).X, Mouse.GetPosition(MainGrid).Y));
+
            
            // gw.soldiers.ElementAt(0).goal.RemoveAllSubgoals();
             //gw.soldiers.ElementAt(0).useExplore();

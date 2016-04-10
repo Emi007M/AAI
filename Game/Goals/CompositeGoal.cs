@@ -24,6 +24,32 @@ namespace Game.Goals
             Subgoals.AddFirst(g);
         }
 
+        public string getSubNames(int lvl)
+        {
+            string prefix = "";
+
+            for (int i = 0; i < lvl; i++) prefix += " ";
+            string res = prefix+getName(0);
+
+            foreach (Goal subg in Subgoals)
+            {
+                CompositeGoal Csubg = subg as CompositeGoal;
+                if(Csubg!= null)
+                {
+                    res += "\n"+prefix + Csubg.getSubNames(lvl+1);
+                }
+                else
+                {
+                    res += "\n" + prefix + subg.getName(lvl + 1) + "*";
+                }
+
+            }
+            return res;
+
+            
+        }
+
+      
         public Status ProcessSubgoals()
         {
 

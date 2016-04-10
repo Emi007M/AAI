@@ -22,10 +22,22 @@ namespace Game.Goals
         }
 
 
+
+
         public abstract void Activate();
         public abstract int Process();
         public abstract void Terminate();
         public abstract void AddSubgoal(Goal g);
+
+         public String getName(int lvl) {
+
+            string prefix = "";
+
+            for (int i = 0; i < lvl; i++) prefix += " ";
+
+            return prefix + this.GetType().Name;
+        }
+       
 
         public bool isActive()
         {
@@ -44,10 +56,10 @@ namespace Game.Goals
             return status == (int)Status.failed;
         }
 
-        new public int GetType()
-        {
-            return type;
-        }
+        //new public int GetType()
+        //{
+        //    return type;
+        //}
 
 
 

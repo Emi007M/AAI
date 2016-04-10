@@ -14,10 +14,7 @@ namespace Game.Goals
        // int takeBuckets = 0;
         int goHome = 0;
       //  int takeBags = 0;
-        int explore = 10;
-        int stopAtPond = 0;
-        int stopAtStone = 0;
-
+  
         int gather = 0;
 
 

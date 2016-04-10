@@ -21,10 +21,10 @@ namespace Game.Goals
         {
             RemoveAllSubgoals();
             status = (int)Status.active;
-            Console.WriteLine("Let's gather resources");
+            Console.WriteLine("let's gather!");
             
             AddSubgoal(new Goal_Explore(owner));
-            AddSubgoal(new Goal_Wait(owner, 50));
+           // AddSubgoal(new Goal_Wait(owner, 50));
 
             waterOn = false;
             stoneOn = false;
