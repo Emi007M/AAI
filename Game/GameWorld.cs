@@ -1,33 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Windows.Shapes;
 using System.Windows.Controls;
-using Game.Grid;
 
 namespace Game
 {
     class GameWorld
     {
-        public List<MovingEntity> soldiers = new List<MovingEntity>();
-        public int sCapacity = 0;
-        public List<ObstacleEntity> trees = new List<ObstacleEntity>();
-        public FuzzyLogic fl;
         public Canvas canv;
         public MainWindow mainWindow;
+        public Grid.Grid grid;
 
+        public List<MovingEntity> soldiers = new List<MovingEntity>();
+        public List<ObstacleEntity> trees = new List<ObstacleEntity>();
         public Castle castle;
-
-        public Game.Grid.Grid grid;
+        public Pigeon pigeon = null;
 
         public Collecting collecting;
+        public FuzzyLogic fl;
+
         public bool leaveResources = false;
-
         public bool showThings = false;
-        //  public bool showThingsFlag = false;
 
-        public Pigeon pigeon = null;
+
 
         public GameWorld(Canvas canv, MainWindow mainWindow)
         {
@@ -37,7 +32,6 @@ namespace Game
             castle = new Castle(this);
             trees.Add(castle);
             fl = new FuzzyLogic(this);
-
 
         }
 
@@ -55,8 +49,6 @@ namespace Game
             {
                 x = r.Next(880);
                 y = r.Next(560);
-
-                //    Console.WriteLine("Tree: " + x + " " + y);
 
                 if (!(x > 550 && y < 350))//not on castle area
                     trees.Add(new Treee(x, y, this));
@@ -79,12 +71,6 @@ namespace Game
             }
         }
 
-        internal void AddPigeon()
-        {
-            if (pigeon != null)
-                pigeon.kill();
-            else pigeon = new Pigeon(this);
-        }
 
         public void addRandPonds(int i)
         {
@@ -138,6 +124,12 @@ namespace Game
 
         }
 
+        internal void AddPigeon()
+        {
+            if (pigeon != null)
+                pigeon.kill();
+            else pigeon = new Pigeon(this);
+        }
 
     }
 }

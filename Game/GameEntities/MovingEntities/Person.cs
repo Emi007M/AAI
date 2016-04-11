@@ -1,32 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Game
 {
     class Person : MovingEntity
     {
-        public Person(GameWorld gw) : base(40,40,15,5, gw)
+        public Person(GameWorld gw) : base(40, 40, 15, 5, gw)
         {
 
-            this.Draw();
+            Draw();
 
         }
-        public Person(int x,int y, float _maxspeed,float _mass, GameWorld gw) : base(x, y,_maxspeed,_mass, gw)
+        public Person(int x, int y, float _maxspeed, float _mass, GameWorld gw) : base(x, y, _maxspeed, _mass, gw)
         {
-          
-            this.Draw();
+
+            Draw();
 
         }
 
@@ -36,11 +27,11 @@ namespace Game
             BitmapImage bi = new BitmapImage(new Uri("/Game;component/References/p1.png", UriKind.RelativeOrAbsolute));
             Image img = new Image();
             img.Source = bi;
-          img.Width = 30;
-          img.Height = 30;
-    
+            img.Width = 30;
+            img.Height = 30;
 
-          
+
+
             Ellipse radius = new Ellipse();
             radius.Width = r * 2;
             radius.Height = r * 2;
@@ -59,7 +50,7 @@ namespace Game
             gw.canv.Children.Add(image);
 
             if (gw.showThings)
-                this.showRadius();
+                showRadius();
 
         }
     }

@@ -1,26 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MathNet.Numerics.LinearAlgebra;
-using System.Windows;
 
 namespace Game.Goals
 {
     class Goal_Think : CompositeGoal
     {
-        //desirabilities
-       // int takeBuckets = 0;
         int goHome = 0;
-      //  int takeBags = 0;
-  
         int gather = 0;
 
 
         public Goal_Think(MovingEntity p) : base(p)
         {
-
         }
 
 
@@ -29,11 +19,7 @@ namespace Game.Goals
             Console.WriteLine("im thinking");
             status = (int)Status.active;
             RemoveAllSubgoals();
-           // explore = CalculateExplore();
-            // takeBuckets = CalculateWater();
-            //   takeBags = CalculateStone();
-            //stopAtPond = CalculateWater();
-            //stopAtStone = CalculateStone();
+
             gather = CalculateGather();
             goHome = CalculateGoHome();
 
@@ -57,8 +43,6 @@ namespace Game.Goals
 
         private int CalculateGather()
         {
-            //
-
             return 20;
         }
         private int CalculateGoHome()
@@ -69,20 +53,11 @@ namespace Game.Goals
             }
             return 0;
         }
-     
 
-        //public int CalculateExplore()
-        //{
-
-        //    return 0;
-        //}
-     
         public override int Process()
         {
             if (!isActive()) Activate();
-            //Console.WriteLine("procssing think");
             status = (int)ProcessSubgoals();
-            //
             return status;
         }
 
@@ -92,13 +67,13 @@ namespace Game.Goals
             double[] desirability = { gather, goHome };
 
             return desirability.ToList().IndexOf(desirability.Max()); //returns 0 for gather,        1 for home,      
-           
+
 
         }
         public override void Terminate()
         {
             RemoveAllSubgoals();
-    
+
         }
 
 
@@ -109,7 +84,7 @@ namespace Game.Goals
         }
 
         public void AddGoal_FollowPath(System.Windows.Vector target)
-        { 
+        {
             AddSubgoal(new Goal_FollowPath(owner, target));
         }
 

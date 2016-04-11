@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Game
 {
@@ -12,19 +9,18 @@ namespace Game
 
         private int lvl;
         private int desiredWater, desiredStone;
-        
+
         //fuzzy DOMs
         private double water_needed, water_not_needed;
         private double stone_needed, stone_not_needed;
         private double collect_water, collect_stone, collect_both;
-
 
         //crisp calculated values
         public int Buckets { get; private set; } //for water
         public int Bags { get; private set; } //for stones
 
         private string info;
-        
+
 
 
         public FuzzyLogic(GameWorld gw)
@@ -38,7 +34,7 @@ namespace Game
 
         public void CalculateFuzzy()
         {
-            info = System.String.Empty;
+            info = string.Empty;
 
             if (lvl != gw.castle.lvl)
                 UpdateData();
@@ -47,10 +43,10 @@ namespace Game
             UpdateWater(gw.castle.WaterAmount);
             UpdateStone(gw.castle.StoneAmount);
 
-            info += "Fuzzy logic for data: \nwater: " + gw.castle.WaterAmount + "/"+ desiredWater+", stones: " + gw.castle.StoneAmount + "/" + desiredStone + "\n";
-          
-           info += "\nWater:  needed=" + Math.Round(water_needed,3) + ", not_needed=" + Math.Round(water_not_needed,3) + "\n";
-           info += "Stones: needed=" + Math.Round(stone_needed,3) + ", not_needed=" + Math.Round(stone_not_needed,3) +"\n";
+            info += "Fuzzy logic for data: \nwater: " + gw.castle.WaterAmount + "/" + desiredWater + ", stones: " + gw.castle.StoneAmount + "/" + desiredStone + "\n";
+
+            info += "\nWater:  needed=" + Math.Round(water_needed, 3) + ", not_needed=" + Math.Round(water_not_needed, 3) + "\n";
+            info += "Stones: needed=" + Math.Round(stone_needed, 3) + ", not_needed=" + Math.Round(stone_not_needed, 3) + "\n";
 
 
             //Fuzzy Rules
@@ -58,7 +54,7 @@ namespace Game
             //IF stone_not_needed   AND water_needed        THEN collect_water
             //IF stone_not_needed   AND water_not_needed    THEN collect_both
             //IF stone_needed       AND water_not_needed    THEN collect_stone
-           
+
             collect_water = AND(stone_not_needed, water_needed);
             collect_stone = AND(water_not_needed, stone_needed);
 
@@ -66,17 +62,17 @@ namespace Game
             double tmp2 = AND(stone_not_needed, water_not_needed);
             collect_both = OR(tmp1, tmp2);
 
-            info += "Collect: water=" + Math.Round(collect_water,3) + ", stones=" + Math.Round(collect_stone,3) + ", both=" + Math.Round(collect_both,3) + "\n\n";
+            info += "Collect: water=" + Math.Round(collect_water, 3) + ", stones=" + Math.Round(collect_stone, 3) + ", both=" + Math.Round(collect_both, 3) + "\n\n";
 
 
             //Defuzzification
             CountMaxAv();
 
-            info+="So take " + Buckets + " buckets and " + Bags + " bags.";
+            info += "So take " + Buckets + " buckets and " + Bags + " bags.";
 
             Console.WriteLine(this);
             gw.mainWindow.fuzzy_txt.Text = this.ToString();
-                
+
         }
 
         private void UpdateData()
@@ -98,7 +94,7 @@ namespace Game
             }
             else
             {
-                double a =(double) 1 / desiredWater;
+                double a = (double)1 / desiredWater;
 
                 water_needed = -a * x + 1;
                 water_not_needed = a * x;
@@ -113,7 +109,7 @@ namespace Game
             }
             else
             {
-                double a = (double) 1 / desiredStone;
+                double a = (double)1 / desiredStone;
 
                 stone_needed = -a * x + 1;
                 stone_not_needed = a * x;
@@ -124,22 +120,18 @@ namespace Game
         {
             int maxTake = gw.collecting.sCapacity * gw.soldiers.Count();
 
-            //Max
-            //x=(y-b)/a
-            //count water: x = (y-1) / (-1/(maxTake/2)) 
-            double max_w = (double)(collect_water - 1) / (-1.0 / ((double)maxTake / 2.0));
-            //count stones: x = (y-(-1)) / (1/(maxTake/2))
-            double max_s = (double)(collect_stone-(-1)) / (1.0 / ((double)maxTake / 2.0));
-            //count both
+            //Maxima
+            double max_w = 0;
             double max_b = (double)maxTake / 2;
+            double max_s = maxTake;
 
-            info += "Max: water=" + Math.Round(max_w,3) + ", stones=" + Math.Round(max_s,3) + ", both=" + Math.Round(max_b,3) + "\n";
+            info += "Max: water=" + Math.Round(max_w, 3) + ", stones=" + Math.Round(max_s, 3) + ", both=" + Math.Round(max_b, 3) + "\n";
 
 
             //MaxAv
             double MaxAv = (max_w * collect_water + max_s * collect_stone + max_b * collect_both) / (collect_water + collect_stone + collect_both);
 
-            info += "MaxAv=" + Math.Round(MaxAv,3) + "\n\n";
+            info += "MaxAv=" + Math.Round(MaxAv, 3) + "\n\n";
 
             //Defuzzification
             if (MaxAv < maxTake / 2) //first half
@@ -148,12 +140,12 @@ namespace Game
                 Bags = 0;
 
                 int both = (int)(double)(((double)1 / ((double)maxTake / 2) * MaxAv) * maxTake);
-                info += "Crisp values: buckets=" + Buckets + ", bags=" + Bags + ", random=" + both+"\n";
+                info += "Crisp values: buckets=" + Buckets + ", bags=" + Bags + ", random=" + both + "\n";
                 int x = new Random().Next(both);
                 Buckets += x;
                 Bags += both - x;
             }
-            else if(MaxAv > maxTake/2) //second half
+            else if (MaxAv > maxTake / 2) //second half
             {
                 Buckets = 0;
                 Bags = (int)(double)(((double)1 / ((double)maxTake / 2) * MaxAv - 1) * maxTake);
@@ -171,7 +163,7 @@ namespace Game
                 int x = new Random().Next(maxTake);
                 Buckets = x;
                 Bags = maxTake - x;
-              
+
             }
 
         }

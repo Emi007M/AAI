@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Game
 {
@@ -26,13 +16,10 @@ namespace Game
             useSeek(new Vector(1000, 800));
             rotation = false;
 
-            
-
-
-            this.Draw();
+            Draw();
 
         }
-     
+
 
         public override void Draw()
         {
@@ -44,8 +31,6 @@ namespace Game
             img.Height = 60;
 
 
-
-
             image = new Canvas();
             image.Width = img.Width;
             image.Height = img.Height;
@@ -53,7 +38,7 @@ namespace Game
             Canvas.SetTop(image, location.Y - image.Height / 2);
 
             image.Children.Add(img);
-         
+
             gw.canv.Children.Add(image);
 
         }

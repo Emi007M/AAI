@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Game.Goals
 {
@@ -13,17 +11,15 @@ namespace Game.Goals
 
         public Goal_HarvestClosestStone(MovingEntity p) : base(p)
         {
-
         }
 
 
         public override void Activate()
         {
-            //RemoveAllSubgoals();
             status = (int)Status.active;
 
             int start = owner.gw.grid.getVertex((int)owner.getX(), (int)owner.getY());
-            IEnumerable<ObstacleEntity> targets = from s in owner.gw.collecting.stones where s.capacity>0 select s;
+            IEnumerable<ObstacleEntity> targets = from s in owner.gw.collecting.stones where s.capacity > 0 select s;
 
 
             int target = owner.gw.grid.Paths.DijkstraClosest(start, targets);
@@ -34,11 +30,8 @@ namespace Game.Goals
                 m.useLeaderFollow(owner);
             }
 
-            //AddSubgoal(new Goal_Wait(owner,500));
             AddSubgoal(new Goal_DontMove(owner));
             AddSubgoal(new Goal_FollowPath(owner, t));
-           
-            //  AddSubgoal(new Goal_Wait(owner,20));
 
         }
 
@@ -48,12 +41,10 @@ namespace Game.Goals
             if (!isActive()) Activate();
 
             if (owner.gw.collecting.stoneAmount >= owner.gw.collecting.capacityStone || (owner.gw.collecting.isNearStone(owner) != null && owner.gw.collecting.isNearStone(owner).capacity == 0))
-
             {
                 RemoveAllSubgoals();
-
             }
-            //status = Subgoals.First().Process();
+
             status = (int)ProcessSubgoals();
 
 

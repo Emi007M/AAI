@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using MathNet.Numerics;
 
 namespace Game.Grid
 {
@@ -21,9 +16,9 @@ namespace Game.Grid
 
         //structures
         internal int[,] matrix;  //incidence matrix of all vertices and edges of a grid
-                        // 0 - vertex, no edges, 1 - edge, -1 - no vertex
+                                 // 0 - vertex, no edges, 1 - edge, -1 - no vertex
 
-        
+
 
         public PathsOnGrid Paths;
 
@@ -43,17 +38,13 @@ namespace Game.Grid
 
             gridInit();
 
-
-
             addObstacles();
             removeDisjointSets();
 
 
-
-
             Paths = new PathsOnGrid(this);
 
-            this.Draw();
+            Draw();
 
         }
 
@@ -74,12 +65,6 @@ namespace Game.Grid
 
                     // |
                     addEdge(i + j * width, i + width + j * width);
-
-                    // \
-                    //   addEdge(i + j * width, i + 1 + width + j * width);
-
-                    // /
-                    //    addEdge(i + j * width+1, i  + width + j * width);
 
                 }
 
@@ -140,7 +125,6 @@ namespace Game.Grid
                 {
                     for (int j = y_start; j <= y_end; j += space)
                     {
-                        //Console.Write("point:"+i + " " + j + "; ");
                         if (isObstacle(i, j, o))
                             removeVertex(getVertex(i, j));
 
@@ -266,8 +250,6 @@ namespace Game.Grid
             for (int i = 0; i < N; i++)
             {
 
-                // double xp = getX(matrix[i, j]);
-                // double yp = getY(matrix[i, j]);
                 if (matrix[i, i] == -1) continue;
                 double r = Math.Sqrt(((xe - getCoords(i).X) * (xe - getCoords(i).X) + (ye - getCoords(i).Y) * (ye - getCoords(i).Y)));
 
@@ -295,7 +277,7 @@ namespace Game.Grid
 
 
 
-       
+
 
 
         //
@@ -344,10 +326,7 @@ namespace Game.Grid
             Paths.path3 = new Path();
 
 
-
-            //  Canvas.SetZIndex(image, 3);
-
-            this.hide();
+            hide();
         }
 
         public void hide()

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Game.Goals
+﻿namespace Game.Goals
 {
     class Goal_FollowPath : CompositeGoal
     {
@@ -12,12 +6,9 @@ namespace Game.Goals
         private System.Windows.Vector target;
         private int i;
 
-       // private LinkedList<Goal> Subgoals;
 
-
-        public Goal_FollowPath(MovingEntity p,System.Windows.Vector t) : base(p)
+        public Goal_FollowPath(MovingEntity p, System.Windows.Vector t) : base(p)
         {
-            //this.path = path;
             target = t;
             i = 0;
         }
@@ -27,7 +18,7 @@ namespace Game.Goals
         {
             status = (int)Status.active;
 
-            if(path==null)
+            if (path == null)
             {
                 owner.gw.findPath(owner.getX(), owner.getY(), target.X, target.Y);
                 path = owner.gw.grid.Paths.smoothedPath;
@@ -39,7 +30,7 @@ namespace Game.Goals
 
             AddSubgoal(new Goal_TraverseEdge(owner, edge, isLastEdge));
 
-            
+
             i++;
         }
 
@@ -48,8 +39,6 @@ namespace Game.Goals
         {
             if (!isActive()) Activate();
 
-
-            //status = Subgoals.First().Process();
             status = (int)ProcessSubgoals();
 
             if (status == (int)Status.completed && i != path.Length / 2)

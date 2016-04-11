@@ -1,17 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using MathNet.Numerics.LinearAlgebra;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Game
@@ -21,11 +12,6 @@ namespace Game
         public GameWorld gw;
         public Goals.Goal_Think goal = null;
 
-        //  protected int pos_x;
-        // protected int pos_y;
-
-        //  protected BitmapImage img_bitmap;
-        //protected Image image;
         public Canvas image;
 
         //--
@@ -37,7 +23,7 @@ namespace Game
 
         protected float mass;
         public float r;
-        //protected float maxforce;
+
         protected float maxspeed;
 
         public Boolean seekOn = false;
@@ -71,7 +57,6 @@ namespace Game
             force = new Vector(0, 0);
 
             r = 15;
-
 
         }
 
@@ -125,10 +110,8 @@ namespace Game
             location.Y += velocity.Y;
 
 
-
             Canvas.SetLeft(image, location.X - image.Width / 2);
             Canvas.SetTop(image, location.Y - image.Height / 2);
-            //     Console.WriteLine("Velocity:" + velocity);
 
 
             if (rotation)
@@ -176,7 +159,6 @@ namespace Game
             if (direction.Length < 10 * velocity.Length + maxspeed)
             {
                 desiredVelocity = direction / (10 * maxspeed + (mass / 2));
-                //desiredVelocity = direction/10;
             }
 
             Vector forceRes = new Vector(desiredVelocity.X - velocity.X, desiredVelocity.Y - velocity.Y);
@@ -226,7 +208,7 @@ namespace Game
             {
                 Vector o_center = new Vector(o.location.X, o.location.Y);
 
-                // force += collisionAvoid(o);
+
                 if (distance(o_center, ahead) <= o.r + r || distance(o_center, ahead2) <= o.r + r) //if exists collision
                 {
                     if ((obstacle == null || distance(this_center, o_center) < distance(this_center, obstacle)))
@@ -247,7 +229,6 @@ namespace Game
             }
             return new Vector(0, 0);
 
-            // Vector forceRes = new Vector(desiredVelocity.X - velocity.X, desiredVelocity.Y - velocity.Y);
 
 
         }
@@ -278,15 +259,6 @@ namespace Game
         }
 
 
-        //public void PathFindSeek(Vector target)
-        //{
-        //    int start = gw.grid.FindClosest(location.X, location.Y);
-        //    int end = gw.grid.FindClosest(target.X, target.Y);
-        //    //int[] path = gw.grid.Dijkstra(start, end);
-
-        //  //  Vector nextV =  
-
-        //}
 
         public Vector seek(Vector target)
         {
@@ -432,8 +404,6 @@ namespace Game
 
         public void moveTo(double x, double y)
         {
-            //pos_x = x;
-            //pos_y = y;
             location.X = x;
             location.Y = y;
             update();

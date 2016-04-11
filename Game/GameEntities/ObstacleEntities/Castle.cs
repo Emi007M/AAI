@@ -1,36 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-
-using Game;
 
 namespace Game
 {
     class Castle : ObstacleEntity
     {
-        //static Random r = new Random();
         public int lvl = 0;
 
         int[] WaterCapacity = { 10, 30, 50, 1000 };
-        int[] StoneCapacity = { 20, 20, 50, 1000};
+        int[] StoneCapacity = { 20, 20, 50, 1000 };
 
         public int WaterAmount = 0;
         public int StoneAmount = 0;
 
         public Castle(GameWorld gw) : base(770, 80, gw)
         {
-            this.Draw();
+            Draw();
             WaterAmount = StoneAmount = lvl = 0;
         }
 
@@ -48,7 +37,7 @@ namespace Game
             img_bitmap = new BitmapImage(new Uri("/Game;component/References/castle0.png", UriKind.RelativeOrAbsolute));
             Image img = new Image();
             img.Source = img_bitmap;
-            img.Width = img.Height = 228*2;
+            img.Width = img.Height = 228 * 2;
             base.r = (int)228;
 
 
@@ -59,11 +48,11 @@ namespace Game
 
             //canvas containing image and radius
             image = new Canvas();
-            image.Width = image.Height = base.r*2;
+            image.Width = image.Height = base.r * 2;
             Canvas.SetLeft(image, location.X - image.Width / 2);
             Canvas.SetTop(image, location.Y - image.Height / 2);
 
-            Brush b = new SolidColorBrush(Color.FromArgb(150,255,255,255));
+            Brush b = new SolidColorBrush(Color.FromArgb(150, 255, 255, 255));
 
             //LVL label
             Label txt_cap = new Label();
@@ -103,7 +92,7 @@ namespace Game
                 StoneAmount -= getStoneCapacity();
 
                 lvl++;
-                c.Source = new BitmapImage(new Uri("/Game;component/References/castle"+lvl+".png", UriKind.RelativeOrAbsolute));
+                c.Source = new BitmapImage(new Uri("/Game;component/References/castle" + lvl + ".png", UriKind.RelativeOrAbsolute));
 
 
             }

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Game
 {
@@ -13,15 +10,15 @@ namespace Game
         GameWorld gw;
         public int capacityWater; 
         public int capacityStone;
-        public int sCapacity = 3;
+        public int sCapacity = 3; //capacity of a single soldier
 
         public List<Pond> ponds;
         public int maxPondsCapacity = 5;
-        public int waterAmount = 0; //how much units have right know
+        public int waterAmount = 0; //how much of water units have right know
 
         public List<Stone> stones;
         public int maxStonesCapacity = 3;
-        public int stoneAmount = 0; //how much units have right know
+        public int stoneAmount = 0; //how much of stone units have right know
 
         public Resources Desired = Resources.Water;
 

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using System.Windows;
 
 namespace Game.Grid
 {
@@ -76,10 +76,8 @@ namespace Game.Grid
             {
                 int u = minDistance(dist, sptSet);
                 if (u == end)
-
-
                     break;
-                // return dist;
+
                 sptSet[u] = true;
 
                 for (int j = 0; j < N; j++)
@@ -87,7 +85,6 @@ namespace Game.Grid
                     if (grid.matrix[u, j] > 0 && !sptSet[j] && dist[u] != Int32.MaxValue && dist[u] + grid.matrix[u, j] < dist[j])
                     {
                         dist[j] = dist[u] + grid.matrix[u, j]; // +1
-                        //path[j] = u;
                     }
                 }
             }
@@ -106,7 +103,7 @@ namespace Game.Grid
                 }
             }
             int[] ret = path.ToArray<int>();
-            //drawPaths(ret);
+
 
             return ret;
         }
@@ -126,7 +123,6 @@ namespace Game.Grid
 
             }
             dist[start] = 0;
-            //path[start] = 0;
 
             for (int i = 0; i < N; i++)
             {
@@ -264,10 +260,7 @@ namespace Game.Grid
                 {
                     if (canWalkBetween(e1, e2, smoothedPath))
                     {
-                        //   Console.WriteLine(e1 + " " + e2);
                         to_remove = e2;
-                        // smoothedPath = removeFromPath(e1,e2, smoothedPath);
-                        //e2=e1+2;
                         e2++;
                     }
                     else
@@ -303,8 +296,6 @@ namespace Game.Grid
                     P = new System.Windows.Vector((b - b2) / (a2 - a), a * (b - b2) / (a2 - a) + b);
 
 
-                    // Console.WriteLine(x1 + "," + y1 + " " + x2 + "," + y2 + " obs=" + o.location + ",r=" + o.r+", inter="+P.X+","+P.Y+ " a="+a+" b="+b);
-
                     if (MovingEntity.distance(P, o.location) <= (double)o.r)
                     {
                         if ((P.X >= x1 || P.X >= x2) && (P.X <= x1 || P.X <= x2) &&
@@ -322,11 +313,11 @@ namespace Game.Grid
 
                 double b = x1;
 
-                System.Windows.Vector P;
+                Vector P;
                 foreach (ObstacleEntity o in grid.gw.trees)
                 {
 
-                    P = new System.Windows.Vector(b, o.location.Y);
+                    P = new Vector(b, o.location.Y);
 
                     if (MovingEntity.distance(P, o.location) <= (double)o.r)
                     {
@@ -383,7 +374,7 @@ namespace Game.Grid
 
             pathSmoothing();
 
-            if (this.path2.StrokeThickness != 0)
+            if (path2.StrokeThickness != 0)
             {
                 grid.hide(); grid.show();
             }
@@ -403,13 +394,12 @@ namespace Game.Grid
             int i = 0;
             Random rand = new Random();
             int v;
-            while (i<grid.N)
+            while (i < grid.N)
             {
                 v = rand.Next(10) + i;
                 if (grid.matrix[v, v] != -1)
                 {
                     explorePath.Add(new Vector(grid.getX(v), grid.getY(v)));
-                //    Console.WriteLine("Vertex: "+v);
                 }
 
                 i += grid.N / 40;

@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Game.Goals
 {
-    class Goal_Wait : Goal 
+    class Goal_Wait : Goal
     {
         private int counter;
 
@@ -21,7 +17,7 @@ namespace Game.Goals
             status = (int)Status.active;
 
             owner.gw.leaveResources = true;
-     
+
         }
 
 
@@ -41,7 +37,7 @@ namespace Game.Goals
 
         public override void Terminate()
         {
-          
+
             owner.gw.leaveResources = false;
         }
 

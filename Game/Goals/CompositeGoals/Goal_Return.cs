@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Game.Goals
+﻿namespace Game.Goals
 {
     class Goal_Return : CompositeGoal
     {
-       
-
 
         public Goal_Return(MovingEntity p) : base(p)
         {
-           
         }
 
 
@@ -33,13 +24,11 @@ namespace Game.Goals
 
             status = (int)ProcessSubgoals();
 
-
             return status;
         }
 
         public override void Terminate()
         {
-          
         }
 
 

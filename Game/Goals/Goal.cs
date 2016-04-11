@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Game.Goals
 {
     abstract class Goal
     {
-        public enum Status { inactive, active, completed, failed};
+        public enum Status { inactive, active, completed, failed };
 
         protected MovingEntity owner;
         protected int status;
-  
+
         public Goal(MovingEntity p)
         {
             owner = p;
@@ -25,7 +21,8 @@ namespace Game.Goals
         public abstract void Terminate();
         public abstract void AddSubgoal(Goal g);
 
-         public String getName(int lvl) {
+        public String getName(int lvl)
+        {
 
             string prefix = "";
 
@@ -33,7 +30,7 @@ namespace Game.Goals
 
             return prefix + this.GetType().Name;
         }
-       
+
 
         public bool isActive()
         {

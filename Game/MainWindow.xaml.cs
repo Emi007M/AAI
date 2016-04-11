@@ -7,35 +7,33 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
 
+
 namespace Game
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+
     public partial class MainWindow : Window
     {
         BitmapImage target_img;
         Image target;
 
-     //   BitmapImage btn_img;
-    //    private Vector targetC = new Vector();
+
         GameWorld gw;
 
-        private BackgroundWorker worker = null;
+        private BackgroundWorker worker;
 
         int isPath;
 
-        
-       
+
+
 
         public MainWindow()
         {
             InitializeComponent();
             CanvInit();
+
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 20);
-
 
             gameInit();
 
@@ -46,7 +44,6 @@ namespace Game
         void gameInit()
         {
 
-            //gw = null;
             CanvMain.Children.Clear();
             gw = new GameWorld(CanvMain, this);
 
@@ -54,7 +51,7 @@ namespace Game
 
             gw.addRandStones(5);
             gw.addRandPonds(3);
-            gw.addRandTrees(55);
+            gw.addRandTrees(45);
             gw.grid = new Grid.Grid(gw);
 
             gw.soldiers.Add(new Person(700, 320, 10, 15, gw));
@@ -62,17 +59,12 @@ namespace Game
             gw.soldiers.Add(new Person(700, 310, 10, 15, gw));
             gw.soldiers.Add(new Person(730, 330, 10, 15, gw));
 
-           // gw.AddPigeon();
-
-            foreach (MovingEntity m in gw.soldiers)
+             foreach (MovingEntity m in gw.soldiers)
                 m.useLeaderFollow(gw.soldiers.ElementAt(0));
-            
-            //  gw.moveMan(1,100,300);
 
 
             gw.collecting = new Collecting(gw);
 
-   //         gw.soldiers.ElementAt(0).useExplore();
             gw.soldiers.ElementAt(0).goal = new Goals.Goal_Think(gw.soldiers.ElementAt(0));
 
             isPath = -1;
@@ -84,32 +76,31 @@ namespace Game
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-      
+
 
 
             //-----resources-----
             timerCounter++;
-            if(timerCounter==50||timerCounter==100||timerCounter==150||timerCounter==200)
+            if (timerCounter == 50 || timerCounter == 100 || timerCounter == 150 || timerCounter == 200)
             {
-               // Console.WriteLine("counter next");
+     
+                timerCounter = (timerCounter == 200) ? 0 : timerCounter + 1;
 
-                timerCounter = (timerCounter==200) ? 0 : timerCounter+1;
-
-                if(gw.soldiers.Any())
+                if (gw.soldiers.Any())
                 {
-                    
+
                     //--actions
 
                     //water
                     Pond p = gw.collecting.isNearWater(gw.soldiers.ElementAt(0));
-                    if(p!=null)
+                    if (p != null)
                     {
                         Console.WriteLine("close to water");
                         //gather water
                         if (p.capacity > 0 && gw.collecting.waterAmount < gw.collecting.capacityWater)
                         {
                             p.capacity -= 1;
-                           // gw.sCapacity++;
+                           
                             gw.collecting.waterAmount++;
                             if (timerCounter == 0) p.capacity--;
                         }
@@ -126,7 +117,7 @@ namespace Game
                         if (s.capacity > 0 && gw.collecting.stoneAmount < gw.collecting.capacityStone)
                         {
                             s.capacity -= 1;
-                            //gw.sCapacity++;
+                           
                             gw.collecting.stoneAmount++;
                             if (timerCounter == 0) s.capacity--;
                         }
@@ -138,8 +129,8 @@ namespace Game
                         gw.castle.StoneAmount += gw.collecting.stoneAmount;
                         gw.castle.WaterAmount += gw.collecting.waterAmount;
 
-                        gw.collecting.stoneAmount = gw.collecting.waterAmount = gw.sCapacity = 0;
-                        
+                        gw.collecting.stoneAmount = gw.collecting.waterAmount = 0;
+
 
                         if (gw.castle.canBeUpgraded())
                         {
@@ -154,7 +145,7 @@ namespace Game
                     }
 
 
-                
+
 
 
                 }
@@ -179,13 +170,13 @@ namespace Game
                 //--Updating labels
                 foreach (Pond p in gw.collecting.ponds)
                 {
-           //         Console.WriteLine(p.capacity);
+                    //         Console.WriteLine(p.capacity);
                     Label txt = (Label)p.image.Children[2];
                     txt.Content = p.capacity + "/" + gw.collecting.maxPondsCapacity;
                 }
                 foreach (Stone p in gw.collecting.stones)
                 {
-             //       Console.WriteLine(p.capacity);
+                    //       Console.WriteLine(p.capacity);
                     Label txt = (Label)p.image.Children[2];
                     txt.Content = p.capacity + "/" + gw.collecting.maxStonesCapacity;
                 }
@@ -200,21 +191,19 @@ namespace Game
                 stone_capacity.Text = gw.collecting.stoneAmount + "/" + gw.fl.Bags;
 
 
-
-
-
-
             }
 
 
-            if(gw.soldiers.Any())
+            //Goals debugging
+            if (gw.soldiers.Any())
                 goals_txt.Text = gw.soldiers.ElementAt(0).goal.getSubNames(0);
 
 
 
             gw.soldiers.ForEach(delegate (MovingEntity m) { m.update(); });
 
-            if (gw.pigeon != null) {
+            if (gw.pigeon != null)
+            {
 
                 gw.pigeon.update();
                 foreach (MovingEntity p in gw.soldiers)
@@ -262,45 +251,30 @@ namespace Game
 
         }
 
-       
+
 
         private void MainGrid_MouseMove(object sender, MouseEventArgs e)
         {
-
-
             Canvas.SetLeft(target, Mouse.GetPosition(MainGrid).X - target.Width / 2);
             Canvas.SetTop(target, Mouse.GetPosition(MainGrid).Y - target.Height / 2);
 
             consoleTxt.Text = Mouse.GetPosition(MainGrid).X + " " + Mouse.GetPosition(MainGrid).Y;
-
-
         }
-
-   
 
 
         private void CanvMain_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 
-          //  Console.WriteLine("click!");
-            if (!gw.soldiers.Any()) return; //if no moving soldiers
+           if (!gw.soldiers.Any()) return; //if no moving soldiers
 
-            foreach (MovingEntity m in gw.soldiers) 
+            foreach (MovingEntity m in gw.soldiers)
                 m.useLeaderFollow(gw.soldiers.ElementAt(0));
 
-
-            //// gw.soldiers.ElementAt(0).useArrival(new Vector(Mouse.GetPosition(MainGrid).X, (int)Mouse.GetPosition(MainGrid).Y));
-            //gw.findPath(gw.soldiers.ElementAt(0).getX(), gw.soldiers.ElementAt(0).getY(), Mouse.GetPosition(MainGrid).X, Mouse.GetPosition(MainGrid).Y);
-
-            //isPath = 1;
+     
             Console.WriteLine(gw.soldiers.ElementAt(0).goal.getSubNames(0));
             gw.soldiers.ElementAt(0).goal.RemoveAllSubgoals();
             gw.soldiers.ElementAt(0).goal.AddGoal_FollowPath(new Vector(Mouse.GetPosition(MainGrid).X, Mouse.GetPosition(MainGrid).Y));
 
-           
-           // gw.soldiers.ElementAt(0).goal.RemoveAllSubgoals();
-            //gw.soldiers.ElementAt(0).useExplore();
-          //  Console.WriteLine("clicked!");
         }
 
 
@@ -325,7 +299,7 @@ namespace Game
             if (!gw.castle.canBeUpgraded()) return;
 
             gw.castle.upgrade();
-           
+
             System.Windows.Media.ImageBrush brush = new System.Windows.Media.ImageBrush();
             brush.ImageSource = new BitmapImage(new Uri("../../References/buttons/btn5_disabled.png", UriKind.RelativeOrAbsolute));
             btn_upgrade.Background = brush;
@@ -372,7 +346,7 @@ namespace Game
 
             gw.soldiers.ElementAt(0).goal.RemoveAllSubgoals();
             gw.soldiers.ElementAt(0).goal.AddGoal_FindClosestWater();
-            
+
 
             foreach (MovingEntity m in gw.soldiers)
             {

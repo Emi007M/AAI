@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Game.Goals
 {
     class Goal_Gather : CompositeGoal
     {
-        Boolean waterOn;
-        Boolean stoneOn;
+        bool waterOn;
+        bool stoneOn;
 
         public Goal_Gather(MovingEntity p) : base(p)
         {
-
         }
 
 
@@ -22,9 +17,8 @@ namespace Game.Goals
             RemoveAllSubgoals();
             status = (int)Status.active;
             Console.WriteLine("let's gather!");
-            
+
             AddSubgoal(new Goal_Explore(owner));
-           // AddSubgoal(new Goal_Wait(owner, 50));
 
             waterOn = false;
             stoneOn = false;
@@ -34,14 +28,12 @@ namespace Game.Goals
 
         public override int Process()
         {
-            
+
             if (!isActive()) Activate();
 
             if (owner.gw.collecting.waterAmount < owner.gw.collecting.capacityWater && owner.gw.collecting.isNearWater(owner) != null
-                &&owner.gw.collecting.isNearWater(owner).capacity != 0)
+                && owner.gw.collecting.isNearWater(owner).capacity != 0)
             {
-                //Console.WriteLine("Exploring interupted - water");
-                //  RemoveAllSubgoals();
 
                 if (!waterOn)
                 {
@@ -49,16 +41,13 @@ namespace Game.Goals
                     RemoveAllSubgoals();
                     AddSubgoal(new Goal_HarvestClosestWater(owner));
                 }
-            
+
 
             }
 
             else if (owner.gw.collecting.stoneAmount < owner.gw.collecting.capacityStone && owner.gw.collecting.isNearStone(owner) != null
                 && owner.gw.collecting.isNearStone(owner).capacity != 0)
             {
-                // Console.WriteLine("Exploring interupted - stone");
-
-                // RemoveAllSubgoals();
 
                 if (!stoneOn)
                 {
@@ -66,12 +55,9 @@ namespace Game.Goals
                     stoneOn = true;
                     AddSubgoal(new Goal_HarvestClosestStone(owner));
                 }
-               
-
-                
 
             }
-            
+
             status = (int)ProcessSubgoals();
 
 
